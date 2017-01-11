@@ -18,9 +18,18 @@ class CustomPostsItem extends Telescope.components.PostsItem {
     if (post.sticky) postClass += " posts-sticky";
 
     // ⭐ custom code starts here ⭐
-    if (post.color) {
-      postClass += " post-"+post.color;
-    }
+    //if (post.color) {
+    //  postClass += " post-"+post.color;
+    //}
+    // this was below
+    //  {post.thumbnailUrl ? <Telescope.components.PostsThumbnail post={post}/> : null}
+    //<div className="posts-item-comments">
+    //  <Link to={Posts.getPageUrl(post)}>
+    //    <FormattedMessage id="comments.count" values={{count: post.commentCount}}/>
+    //  </Link>
+    //</div>
+    //
+    //<Telescope.components.UsersAvatar user={post.user} size="small"/>
     // ⭐ custom code ends here ⭐
 
     return (
@@ -28,9 +37,10 @@ class CustomPostsItem extends Telescope.components.PostsItem {
 
         <div className="posts-item-vote">
           <Telescope.components.Vote post={post} />
+          <Telescope.components.Rate post={post} />
         </div>
 
-        {post.thumbnailUrl ? <Telescope.components.PostsThumbnail post={post}/> : null}
+
 
         <div className="posts-item-content">
 
@@ -42,13 +52,14 @@ class CustomPostsItem extends Telescope.components.PostsItem {
           </h3>
 
           <div className="posts-item-meta">
-            {post.user? <div className="posts-item-user"><Telescope.components.UsersAvatar user={post.user} size="small"/><Telescope.components.UsersName user={post.user}/></div> : null}
+            {post.user? <div className="posts-item-user"><Telescope.components.UsersName user={post.user}/></div> : null}
             <div className="posts-item-date"><FormattedRelative value={post.postedAt}/></div>
-            <div className="posts-item-comments">
-              <Link to={Posts.getPageUrl(post)}>
-                <FormattedMessage id="comments.count" values={{count: post.commentCount}}/>
-              </Link>
-            </div>
+
+            <div className="posts-item-date"> {post.url} </div>
+            
+            {post.URL? <div className="posts-item-user"><Telescope.components.UsersName user={post.URL}/></div> : null}
+            
+
             {this.context.currentUser && this.context.currentUser.isAdmin ? <Telescope.components.PostsStats post={post} /> : null}
             {this.renderActions()}
           </div>

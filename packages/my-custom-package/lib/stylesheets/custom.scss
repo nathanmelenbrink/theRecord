@@ -1,3 +1,5 @@
+.header-wrapper { background: white;}
+
 .post-red{
   background-color: #FFD3D2;
 }
@@ -9,4 +11,26 @@
 }
 .post-green{
   background-color: #D2FFD2;
+}
+
+.posts-item-title{
+  
+}
+
+input[type=button] {
+    color:#08233e;
+    font:2.4em Futura, ‘Century Gothic’, AppleGothic, sans-serif;
+    font-size:70%;
+    /* ... other rules ... */
+    cursor:pointer;
+}
+
+input[type=button]:hover {
+    background-color:rgba(255,204,0,0.8);
+}
+
+.posts-item-title .posts-item-title-link {
+  
+  font-size: 1.2rem;
+  color: #333;
 }

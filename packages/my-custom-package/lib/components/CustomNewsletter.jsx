@@ -18,7 +18,7 @@ class CustomNewsletter extends Telescope.components.Newsletter {
     return this.state.showBanner
       ? (
         <div className="newsletter">
-          <h4 className="newsletter-tagline">✉️<FormattedMessage id="newsletter.subscribe_prompt"/>✉️</h4>
+          <h4 className="newsletter-tagline">Subscribe to theRecord</h4>
           {this.context.currentUser ? this.renderButton() : this.renderForm()}
           <a onClick={this.dismissBanner} className="newsletter-close"><Telescope.components.Icon name="close"/></a>
         </div>

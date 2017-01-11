@@ -1,9 +1,9 @@
 {
   "public": {
-    "title": "Your site title",
-    "tagline":"Your site tagline",
+    "title": "theRecord",
+    "tagline":"",
 
-    "logoUrl": "http://placekitten.com/250/80",
+    "logoUrl": "",
     "logoHeight": "80",
     "logoWidth": "250",
     "faviconUrl": "/favicon.ico",
@@ -11,7 +11,7 @@
     "requirePostsApproval":false,
     "requireViewInvite":false,
     "requirePostInvite":false,
-    "enableNewsletter":true,
+    "enableNewsletter":false,
     "autoSubscribe":false,
     "emailNotifications":true,
     "postInterval": 20,
@@ -40,24 +40,7 @@
   "mailChimpListId": "123foo",
 
   "categories": [
-    {
-      "name": "Test Category 1",
-      "description": "The first test category",
-      "order": 4,
-      "slug": "testcat1"
-    },
-    {
-      "name": "Test Category 2",
-      "description": "The second test category",
-      "order": 7,
-      "slug": "testcat2"
-    },
-    {
-      "name": "Test Category 3",
-      "description": "The third test category",
-      "order": 10,
-      "slug": "testcat3"
-    }
+    
   ],
   "oAuth": {
     "twitter": {
