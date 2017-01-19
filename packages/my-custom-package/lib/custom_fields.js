@@ -23,6 +23,8 @@ Users.addField(
 Posts.removeField('body');
 Posts.removeField('thumbnailUrl');
 
+// just a test
+
 //var latLng = Geolocation.latLng();
 
 // meteor add aldeed:geocoder, in order to pull location strings from lat,lng
