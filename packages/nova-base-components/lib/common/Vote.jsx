@@ -49,7 +49,7 @@ class Vote extends Component {
         <a className="upvote-button" onClick={this.upvote}>
           <Telescope.components.Icon name="upvote" />
           <div className="sr-only">Upvote</div>
-          <div className="vote-count">{post.baseScore || 0}</div>
+          <div className="vote-count">{80 + post.baseScore || 0}%</div> 
         </a>
       </div>
     )

@@ -6,14 +6,14 @@ import Users from 'meteor/nova:users';
 //<div className="sr-only">Upvote</div>
 //<div className="vote-count">{post.baseScore || 0}</div>
 
-class Rate extends Component {
+class Flag extends Component {
 
   constructor() {
     super();
-    this.rate = this.rate.bind(this);
+    this.flag = this.flag.bind(this);
   }
 
-  rate(e) {
+  flag(e) {
     e.preventDefault();
 
     const post = this.props.post;
@@ -21,13 +21,13 @@ class Rate extends Component {
 
     if(!user){
       this.context.messages.flash("Please log in first");
-    } else if (user.hasRated(post)) {
-      this.context.actions.call('posts.cancelRate', post._id, () => {
-        this.context.events.track("post rate cancelled", {'_id': post._id});
+    } else if (user.hasFlagged(post)) {
+      this.context.actions.call('posts.cancelFlag', post._id, () => {
+        this.context.events.track("post flag cancelled", {'_id': post._id});
       });        
     } else {
-      this.context.actions.call('posts.rate', post._id, () => {
-        this.context.events.track("post rated", {'_id': post._id});
+      this.context.actions.call('posts.flag', post._id, () => {
+        this.context.events.track("post flagged", {'_id': post._id});
       });
     }
 
@@ -51,8 +51,8 @@ class Rate extends Component {
 
     return (
       <div className={actionsClass}>
-        <a className="upvote-button" onClick={this.upvote}>
-          <Telescope.components.Icon name="best" />
+        <a className="upvote-button" onClick={this.flag}>
+          <Telescope.components.Icon name="flag" />
         </a>
        
       </div>
@@ -63,16 +63,16 @@ class Rate extends Component {
 
 }
 
-Rate.propTypes = {
+Flag.propTypes = {
   post: React.PropTypes.object.isRequired, // the current post
 };
 
-Rate.contextTypes = {
+Flag.contextTypes = {
   currentUser: React.PropTypes.object,
   actions: React.PropTypes.object,
   events: React.PropTypes.object,
   messages: React.PropTypes.object
 };
 
-module.exports = Rate;
-export default Rate;
+module.exports = Flag;
+export default Flag;

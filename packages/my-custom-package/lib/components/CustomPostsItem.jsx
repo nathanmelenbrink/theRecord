@@ -17,27 +17,13 @@ class CustomPostsItem extends Telescope.components.PostsItem {
     let postClass = "posts-item";
     if (post.sticky) postClass += " posts-sticky";
 
-    // ⭐ custom code starts here ⭐
-    //if (post.color) {
-    //  postClass += " post-"+post.color;
-    //}
-    // this was below
-    //  {post.thumbnailUrl ? <Telescope.components.PostsThumbnail post={post}/> : null}
-    //<div className="posts-item-comments">
-    //  <Link to={Posts.getPageUrl(post)}>
-    //    <FormattedMessage id="comments.count" values={{count: post.commentCount}}/>
-    //  </Link>
-    //</div>
-    //
-    //<Telescope.components.UsersAvatar user={post.user} size="small"/>
-    // ⭐ custom code ends here ⭐
 
     return (
       <div className={postClass}>
 
         <div className="posts-item-vote">
           <Telescope.components.Vote post={post} />
-          <Telescope.components.Rate post={post} />
+          
         </div>
 
 
@@ -58,6 +44,7 @@ class CustomPostsItem extends Telescope.components.PostsItem {
             <div className="posts-item-date"> {post.url} </div>
             
             {post.URL? <div className="posts-item-user"><Telescope.components.UsersName user={post.URL}/></div> : null}
+             <Telescope.components.Flag post={post} />
             
 
             {this.context.currentUser && this.context.currentUser.isAdmin ? <Telescope.components.PostsStats post={post} /> : null}
@@ -66,7 +53,7 @@ class CustomPostsItem extends Telescope.components.PostsItem {
 
         </div>
 
-        {this.renderCommenters()}
+        
 
 
       </div>

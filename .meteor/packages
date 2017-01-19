@@ -19,7 +19,7 @@ nova:embedly
 nova:api
 nova:email
 nova:rss
-# nova:subscribe
+nova:subscribe
 # nova:cloudinary
 
 ############ Customizable Packages ############

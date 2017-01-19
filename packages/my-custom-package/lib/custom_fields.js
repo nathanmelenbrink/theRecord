@@ -7,6 +7,19 @@ const canInsert = user => Users.canDo(user, "posts.new");
 // check if user can edit a post
 const canEdit = Users.canEdit;
 
+Users.addField(
+  {
+    fieldName: "posts_per_day",
+    fieldSchema: {
+      type: Number,
+      optional: true,
+      publish: true,
+      defaultValue: 10
+    }
+  }
+);
+
+
 Posts.removeField('body');
 Posts.removeField('thumbnailUrl');
 
@@ -83,7 +96,7 @@ Posts.addField([
     How many rates the post has received
   */
   {
-    fieldName: "rates",
+    fieldName: "flags",
     fieldSchema: {
       type: Number,
       optional: true,
@@ -95,7 +108,7 @@ Posts.addField([
     An array containing the `_id`s of the post's raters
   */
   {
-    fieldName: "raters",
+    fieldName: "flaggers",
     fieldSchema: {
       type: [String],
       optional: true,
@@ -112,6 +125,6 @@ so we also add our new field to that object:
 
 import PublicationUtils from 'meteor/utilities:smart-publications';
 
-PublicationUtils.addToFields(Posts.publishedFields.list, ["location", "eventDate", "color", "rates", "raters"]);
+PublicationUtils.addToFields(Posts.publishedFields.list, ["location", "eventDate", "color", "flags", "flaggers"]);
 
 

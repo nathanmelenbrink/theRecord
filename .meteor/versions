@@ -91,6 +91,7 @@ nova:posts@0.27.5-nova
 nova:rss@0.27.5-nova
 nova:search@0.27.5-nova
 nova:settings@0.27.5-nova
+nova:subscribe@0.27.5-nova
 nova:users@0.27.5-nova
 nova:voting@0.27.5-nova
 npm-bcrypt@0.9.2
