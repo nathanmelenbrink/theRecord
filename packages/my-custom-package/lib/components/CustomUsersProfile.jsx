@@ -13,15 +13,36 @@ const UsersProfile = ({user}, {currentUser}) => {
   const terms = {view:"userPosts", userId: user._id};
   const {selector, options} = Posts.parameters.get(terms);
 
+  const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts);
+  const numberOfVotesInPast24Hours = 4; //Users.numberOfItemsInPast24Hours(user, Upvotes);
+  const numberOfFlagsInPast24Hours = 1; //Users.numberOfItemsInPast24Hours(user, Flags);
+
+  const postsPerDay = Math.ceil(user.telescope.karma * 0.05);
+  const votesPerDay = Math.ceil(user.telescope.karma * 0.1);
+  const flagsPerDay = Math.ceil(user.telescope.karma * 0.01);
+  
+  const remainingPosts = postsPerDay - numberOfPostsInPast24Hours;
+  const remainingVotes = votesPerDay - numberOfVotesInPast24Hours;
+  const remainingFlags = flagsPerDay - numberOfFlagsInPast24Hours;
+
+
   return (
     <div className="page users-profile">
-      <Telescope.components.HeadTags url={Users.getProfileUrl(user, true)} title={Users.getDisplayName(user)} description={user.telescope.bio} />
+      {/* don't know why this suddenly started causing errors 
+    <Telescope.components.HeadTags url={Users.getProfileUrl(user, true)} title={Users.getDisplayName(user)} description={} />*/}
       <h2 className="page-title">{Users.getDisplayName(user)}</h2>
-      <p className="page-title">karma = {user.telescope.karma}</p>
-      <p className="page-title">post count = {user.telescope.postCount}</p>
-      <p className="page-title">posts per day = {user.telescope.karma / 10}</p>
-      <p className="page-title">upvotes per day = {user.telescope.karma}</p>
-      <p className="page-title">flags per day = {user.telescope.karma / 10}</p>
+      <p className="page-title">
+      Reputation = {user.telescope.karma} &nbsp;
+      Post Count = {user.telescope.postCount} &nbsp;
+      Posts per day = {postsPerDay} &nbsp;
+      Upvotes per day = {votesPerDay} &nbsp;
+      Flags per day = {flagsPerDay} </p>
+
+       <p className="page-title">
+       Remaining Posts: {remainingPosts}  &nbsp;
+       Remaining Votes: {remainingVotes}  &nbsp;
+       Remaining Flags: {remainingFlags}  &nbsp;
+       </p>
 
       <p>{user.telescope.bio}</p>
       <ul>

@@ -19,15 +19,16 @@ class Flag extends Component {
     const post = this.props.post;
     const user = this.context.currentUser;
 
+    console.log("flagged");
     if(!user){
       this.context.messages.flash("Please log in first");
-    } else if (user.hasFlagged(post)) {
-      this.context.actions.call('posts.cancelFlag', post._id, () => {
-        this.context.events.track("post flag cancelled", {'_id': post._id});
+    } else if (user.hasDownvoted(post)) {
+      this.context.actions.call('posts.cancelDownvote', post._id, () => {
+        this.context.events.track("post downvote cancelled", {'_id': post._id});
       });        
     } else {
-      this.context.actions.call('posts.flag', post._id, () => {
-        this.context.events.track("post flagged", {'_id': post._id});
+      this.context.actions.call('posts.downvote', post._id, () => {
+        this.context.events.track("post downvoted", {'_id': post._id});
       });
     }
 

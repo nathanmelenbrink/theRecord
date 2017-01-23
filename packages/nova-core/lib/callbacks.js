@@ -37,6 +37,8 @@ function updateUser (item, user, collection, operation) {
     power: votePower
   };
 
+  console.log("updating user");
+
   switch (operation) {
     case "upvote":
       update.$addToSet = {'telescope.upvotedPosts': vote};

@@ -7,17 +7,43 @@ const canInsert = user => Users.canDo(user, "posts.new");
 // check if user can edit a post
 const canEdit = Users.canEdit;
 
-Users.addField(
+Users.addField([
+
+
+  /**
+    User's current remaining posts
+  */
   {
-    fieldName: "posts_per_day",
+    fieldName: "telescope.remainingPosts",
     fieldSchema: {
       type: Number,
-      optional: true,
+      publish: true,
+      defaultValue: 10
+    }
+  },
+  /**
+    User's current remaining flags
+  */
+  {
+    fieldName: "telescope.remainingFlags",
+    fieldSchema: {
+      type: Number,
+      publish: true,
+      defaultValue: 10
+    }
+  },
+  /**
+    User's current remaining votes
+  */
+  {
+    fieldName: "telescope.remainingVotes",
+    fieldSchema: {
+      type: Number,
       publish: true,
       defaultValue: 10
     }
   }
-);
+]);
 
 
 Posts.removeField('body');
@@ -60,7 +86,11 @@ Posts.removeField('thumbnailUrl');
 //   }
 // );
 
-Posts.addField(
+
+Posts.addField([
+  /**
+    Location the post refers to (defaults to current)
+  */
   {
     fieldName: 'location',
     fieldSchema: {
@@ -75,10 +105,10 @@ Posts.addField(
       },
       publish: true // make that field public and send it to the client
     }
-  }
-);
-
-Posts.addField(
+  },
+  /**
+    Time the post refers to (defaults to current)
+  */
   {
     fieldName: 'eventDate',
     fieldSchema: {
@@ -90,12 +120,9 @@ Posts.addField(
       control: "datetime"
       //group: Posts.formGroups.admin
     }
-  }
-);
-
-Posts.addField([
+  },
   /**
-    How many rates the post has received
+    How many flags the post has received
   */
   {
     fieldName: "flags",
@@ -107,7 +134,7 @@ Posts.addField([
     }
   },
   /**
-    An array containing the `_id`s of the post's raters
+    An array containing the `_id`s of the post's flaggers
   */
   {
     fieldName: "flaggers",
@@ -128,5 +155,7 @@ so we also add our new field to that object:
 import PublicationUtils from 'meteor/utilities:smart-publications';
 
 PublicationUtils.addToFields(Posts.publishedFields.list, ["location", "eventDate", "color", "flags", "flaggers"]);
+
+PublicationUtils.addToFields(Users.publishedFields.list, ["remainingPosts", "remainingFlags", "remainingVotes"]);
 
 
