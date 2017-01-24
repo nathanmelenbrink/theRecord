@@ -7,43 +7,43 @@ const canInsert = user => Users.canDo(user, "posts.new");
 // check if user can edit a post
 const canEdit = Users.canEdit;
 
-Users.addField([
+//Users.addField([
 
 
-  /**
-    User's current remaining posts
-  */
-  {
-    fieldName: "telescope.remainingPosts",
-    fieldSchema: {
-      type: Number,
-      publish: true,
-      defaultValue: 10
-    }
-  },
-  /**
-    User's current remaining flags
-  */
-  {
-    fieldName: "telescope.remainingFlags",
-    fieldSchema: {
-      type: Number,
-      publish: true,
-      defaultValue: 10
-    }
-  },
-  /**
-    User's current remaining votes
-  */
-  {
-    fieldName: "telescope.remainingVotes",
-    fieldSchema: {
-      type: Number,
-      publish: true,
-      defaultValue: 10
-    }
-  }
-]);
+//   /**
+//     User's current remaining posts
+//   */
+//   {
+//     fieldName: "telescope.remainingPosts",
+//     fieldSchema: {
+//       type: Number,
+//       publish: true,
+//       defaultValue: 10
+//     }
+//   },
+//   /**
+//     User's current remaining flags
+//   */
+//   {
+//     fieldName: "telescope.remainingFlags",
+//     fieldSchema: {
+//       type: Number,
+//       publish: true,
+//       defaultValue: 10
+//     }
+//   },
+//   /**
+//     User's current remaining votes
+//   */
+//   {
+//     fieldName: "telescope.remainingVotes",
+//     fieldSchema: {
+//       type: Number,
+//       publish: true,
+//       defaultValue: 10
+//     }
+//   }
+// ]);
 
 
 Posts.removeField('body');

@@ -20,6 +20,7 @@ class Flag extends Component {
     const user = this.context.currentUser;
 
     console.log("flagged");
+    
     if(!user){
       this.context.messages.flash("Please log in first");
     } else if (user.hasDownvoted(post)) {

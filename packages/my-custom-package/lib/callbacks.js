@@ -9,6 +9,7 @@
 // *Build flags with "downvote" functionality
 // *Add flags and flaggers fields to post schema  
 // *Decrease karma if post has been flagged
+// *remove comments after posts
 // *Fix ranking algorithm
 // *Make daily allotments cumulative? Maybe not? Rounding up for now
 // *Add functionality for flagging users 
@@ -76,16 +77,16 @@ function PostsNewRateLimit (post, user) {
 
   }
 
-  function numberOfUpvotesInPast24Hours (user){
-  	var mNow = moment();
-  	var items = 0;
+ //  function numberOfUpvotesInPast24Hours (user){
+ //  	var mNow = moment();
+ //  	var items = 0;
 
-  	user.telescope.upvotedPosts.forEach(function (entry){	
-  		if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
-  	});
+ //  	user.telescope.upvotedPosts.forEach(function (entry){	
+ //  		if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
+ //  	});
 
-	return items;
-  }
+	// return items;
+ //  }
 
   return post;
 }
@@ -123,6 +124,38 @@ function UpvotesNewRateLimit (post, user) {
   return user;
 }
 Telescope.callbacks.add("upvote", UpvotesNewRateLimit);
+
+/**
+ * @summary Downvotes (flags) Rate limiting
+ */
+function DownvotesNewRateLimit (post, user) {
+
+  if(!Users.isAdmin(user)){
+	
+  	function numberOfDownvotesInPast24Hours (user){
+	  	var mNow = moment();
+	  	var items = 0;
+
+	  	user.telescope.downvotedPosts.forEach(function (entry){	
+	  		if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
+	  	});
+
+		return items;
+	}
+
+    var maxDownvotesPer24Hours = Math.ceil(user.telescope.karma * 0.01);
+
+    // check that the user doesn't post more than Y posts per day
+    // it doesn't want to let me throw this meteor error, need to fix that
+    // but at least it prevents upvotes
+    //this.context.messages.flash("Please log in first");
+    if(numberOfDownvotesInPast24Hours(user) > maxDownvotesPer24Hours)
+      throw new Meteor.Error(607, 'sorry_you_cannot_submit_more_than'+maxDownvotesPer24Hours+'flags_per_day');
+
+  }
+  return user;
+}
+Telescope.callbacks.add("downvote", DownvotesNewRateLimit);
 
 
 
