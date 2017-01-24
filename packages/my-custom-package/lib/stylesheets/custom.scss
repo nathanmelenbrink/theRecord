@@ -14,7 +14,7 @@
 }
 
 .posts-item-title{
-  
+
 }
 
 input[type=button] {
@@ -30,7 +30,20 @@ input[type=button]:hover {
 }
 
 .posts-item-title .posts-item-title-link {
-  
+
   font-size: 1.2rem;
   color: #333;
+}
+
+.beta-tag {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.divider {
+  margin: 40px 0;
+}
+
+.text-center {
+  text-align: center;
 }
