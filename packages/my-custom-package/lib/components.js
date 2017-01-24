@@ -1,5 +1,5 @@
 /*
-This file centralizes all our custom component overrides. 
+This file centralizes all our custom component overrides.
 */
 
 import Telescope from 'meteor/nova:lib';
@@ -11,7 +11,7 @@ import CustomUsersMenu from "./components/CustomUsersMenu.jsx";
 import CustomUsersProfile from "./components/CustomUsersProfile.jsx";
 import Flag from "./components/Flag.jsx";
 
-//Telescope.components.Logo = CustomLogo;
+Telescope.components.Logo = CustomLogo;
 Telescope.components.Newsletter = CustomNewsletter;
 Telescope.components.PostsItem = CustomPostsItem;
 Telescope.components.UsersMenu = CustomUsersMenu;
