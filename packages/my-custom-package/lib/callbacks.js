@@ -8,7 +8,8 @@
 // _Prevent users from exceeding flags per 24 hours
 // _Build flags with "downvote" functionality
 // _Decrease karma if post has been flagged
-// *remove comments after posts
+// _remove comments after posts
+// *Replace nova-voting package
 // *Fix ranking algorithm
 // *Make daily allotments cumulative? Maybe not? Rounding up for now
 // *Add functionality for flagging users 
