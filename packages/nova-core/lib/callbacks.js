@@ -37,7 +37,7 @@ function updateUser (item, user, collection, operation) {
     power: votePower
   };
 
-  console.log("updating user");
+  //operation = "upvote";
 
   switch (operation) {
     case "upvote":
@@ -54,13 +54,15 @@ function updateUser (item, user, collection, operation) {
       break;
   }
 
+  console.log(operation);
+
   Users.update({_id: user._id}, update);
 
 }
-Telescope.callbacks.add("upvote.async", updateUser);
-Telescope.callbacks.add("downvote.async", updateUser);
-Telescope.callbacks.add("cancelUpvote.async", updateUser);
-Telescope.callbacks.add("cancelDownvote.async", updateUser);
+// Telescope.callbacks.add("upvote.async", updateUser);
+// Telescope.callbacks.add("downvote.async", updateUser);
+// Telescope.callbacks.add("cancelUpvote.async", updateUser);
+// Telescope.callbacks.add("cancelDownvote.async", updateUser);
 
 
 /**
@@ -76,15 +78,15 @@ function updateKarma (item, user, collection, operation) {
 
   var votePower = Telescope.getVotePower(user);
   var karmaAmount = (operation === "upvote" || operation === "cancelDownvote") ? votePower : -votePower;
-
+  console.log(karmaAmount)
   // only update karma is the operation isn't done by the item's author
   if (item.userId !== user._id) {
     Users.update({_id: item.userId}, {$inc: {"telescope.karma": karmaAmount}});
   }
 
 }
-Telescope.callbacks.add("upvote.async", updateKarma);
-Telescope.callbacks.add("downvote.async", updateKarma);
-Telescope.callbacks.add("cancelUpvote.async", updateKarma);
-Telescope.callbacks.add("cancelDownvote.async", updateKarma);
+//Telescope.callbacks.add("upvote.async", updateKarma);
+//Telescope.callbacks.add("downvote.async", updateKarma);
+//Telescope.callbacks.add("cancelUpvote.async", updateKarma);
+//Telescope.callbacks.add("cancelDownvote.async", updateKarma);
 

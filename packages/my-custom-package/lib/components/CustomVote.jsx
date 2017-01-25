@@ -6,46 +6,48 @@ import moment from 'moment';
 //<div className="sr-only">Upvote</div>
 //<div className="vote-count">{post.baseScore || 0}</div>
 
-class Flag extends Component {
+class CustomVote extends Component {
 
   constructor() {
     super();
-    this.flag = this.flag.bind(this);
+    this.upvote = this.upvote.bind(this);
   }
 
-  flag(e) {
+  upvote(e) {
     e.preventDefault();
 
     const post = this.props.post;
     const user = this.context.currentUser;
 
-    //console.log(user.hasDownvoted(post));
-    function numberOfDownvotesInPast24Hours (user){
+    console.log(user.hasUpvoted(post));
+    function numberOfUpvotesInPast24Hours (user){
       var mNow = moment();
       var items = 0;
 
-      user.telescope.downvotedPosts.forEach(function (entry){ 
+      user.telescope.upvotedPosts.forEach(function (entry){ 
         if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
       });
 
       return items;
     }
 
-    var maxDownvotesPer24Hours = Math.ceil(user.telescope.karma * 0.01);
+    var maxUpvotesPer24Hours = Math.ceil(user.telescope.karma * 0.2);
 
     if(!user){
       this.context.messages.flash("Please log in first");
-    } else if (user.hasDownvoted(post)) { 
-      this.context.actions.call('posts.cancelDownvote', post._id, () => { //adding/ removing posts. has no effect
-        this.context.events.track("post downvote cancelled", {'_id': post._id});
+    } else if (user.hasUpvoted(post)) { // this function may be working, it's just that the array is empty
+      console.log("cancel upvote");
+      this.context.actions.call('posts.cancelUpvote', post._id, () => { //adding/ removing posts. has no effect
+        this.context.events.track("post upvote cancelled", {'_id': post._id});
       });  
-    } else if (numberOfDownvotesInPast24Hours(user) >= maxDownvotesPer24Hours){
-      this.context.messages.flash("No more flags remaining");
+    } else if (numberOfUpvotesInPast24Hours(user) >= maxUpvotesPer24Hours){
+      console.log(numberOfUpvotesInPast24Hours(user));
+      this.context.messages.flash("No more upvotes remaining");
 
     } else {
-      console.log("downvote");
-      this.context.actions.call('posts.downvote', post._id, () => {
-        this.context.events.track("post downvoted", {'_id': post._id});
+      console.log("upvote");
+      this.context.actions.call('posts.upvote', post._id, () => {
+        this.context.events.track("post upvoted", {'_id': post._id});
       });
     }
 
@@ -69,8 +71,10 @@ class Flag extends Component {
 
     return (
       <div className={actionsClass}>
-        <a className="upvote-button" onClick={this.flag}>
-          <Telescope.components.Icon name="flag" />
+        <a className="upvote-button" onClick={this.upvote}>
+          <Telescope.components.Icon name="upvote" />
+          <div className="sr-only">Upvote</div>
+          <div className="vote-count">{80 + post.baseScore || 0}%</div> 
         </a>
        
       </div>
@@ -81,16 +85,16 @@ class Flag extends Component {
 
 }
 
-Flag.propTypes = {
+CustomVote.propTypes = {
   post: React.PropTypes.object.isRequired, // the current post
 };
 
-Flag.contextTypes = {
+CustomVote.contextTypes = {
   currentUser: React.PropTypes.object,
   actions: React.PropTypes.object,
   events: React.PropTypes.object,
   messages: React.PropTypes.object
 };
 
-module.exports = Flag;
-export default Flag;
+module.exports = CustomVote;
+export default CustomVote;

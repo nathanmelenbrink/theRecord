@@ -18,8 +18,8 @@ const UsersProfile = ({user}, {currentUser}) => {
   const numberOfVotesInPast24Hours = numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
   const numberOfFlagsInPast24Hours = numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
 
-  const postsPerDay = Math.ceil(user.telescope.karma * 0.05);
-  const votesPerDay = Math.ceil(user.telescope.karma * 0.1);
+  const postsPerDay = Math.round(user.telescope.karma * 0.05) + 1;
+  const votesPerDay = Math.ceil(user.telescope.karma * 0.2);
   const flagsPerDay = Math.ceil(user.telescope.karma * 0.01);
   
   const remainingPosts = postsPerDay - numberOfPostsInPast24Hours;

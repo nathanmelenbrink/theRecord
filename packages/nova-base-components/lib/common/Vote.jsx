@@ -16,6 +16,9 @@ class Vote extends Component {
     const post = this.props.post;
     const user = this.context.currentUser;
 
+    //console.log(post);
+
+    //console.log(user);
     if(!user){
       this.context.messages.flash("Please log in first");
     } else if (user.hasUpvoted(post)) {

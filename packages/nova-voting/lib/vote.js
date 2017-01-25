@@ -37,6 +37,8 @@ Telescope.operateOnItem = function (collection, itemId, user, operation) {
   // ------------------------------ Sync Callbacks ------------------------------ //
   item = Telescope.callbacks.run(operation, item, user);
 
+  //console.log(item);
+  
   switch (operation) {
 
     case "upvote":
@@ -79,7 +81,7 @@ Telescope.operateOnItem = function (collection, itemId, user, operation) {
   }
 
   update["$set"] = {inactive: false};
-  var result = collection.update({_id: item._id}, update);
+  var result = 0;//collection.update({_id: item._id}, update);
 
 
   if (result > 0) {
