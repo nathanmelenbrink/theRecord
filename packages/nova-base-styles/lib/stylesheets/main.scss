@@ -16,32 +16,4 @@
 @import "forms";
 @import "posts";
 @import "users";
-
-.new-post-button{
-  margin-bottom: 15px;
-}
-
-code{
-  font-family: monospace;
-  background: #fafafa;
-  border: 1px solid #ddd;
-  padding: 3px 6px;
-}
-
-.avatar{
-  height: 24px;
-  width: 24px;
-  display: inline-block;
-}
-
-.sr-only{
-  display: none;
-}
-
-.upvoted .upvote{
-  opacity: 0.3;
-}
-
-.posts-day h2{
-  font-weight: bold;
-}
+@import "overrides";
