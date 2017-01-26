@@ -69,12 +69,16 @@ class CustomVote extends Component {
       {downvoted: hasDownvoted}
     );
 
+    var highPost = Posts.find({},{limit: 1, sort: {baseScore: -1}});
+    highPost = highPost.fetch();
+    maxBaseScore = highPost[0].baseScore;
+
     return (
       <div className={actionsClass}>
         <a className="upvote-button" onClick={this.upvote}>
           <Telescope.components.Icon name="upvote" />
           <div className="sr-only">Upvote</div>
-          <div className="vote-count">{80 + post.baseScore || 0}%</div> 
+          <div className="vote-count">{Math.round((post.baseScore / maxBaseScore) * 100) || 0}%</div> 
         </a>
        
       </div>

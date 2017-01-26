@@ -1,6 +1,8 @@
 // Flagging is stored as downvotes, need to change weighting and add callback
 // Had to remove the updateUser callbacks from the core/lib, it won't remove them from this file
 
+// Check console for server errors, cancelUV and DV are called from server, not sure if we keep this? 
+
 // TODO: 
 // _Increase karma after posting
 // _Prevent users from exceeding posts per 24 hours
@@ -14,44 +16,12 @@
 // *Make daily allotments cumulative? Maybe not? Rounding up for now
 // *Add functionality for flagging users 
 // *Make post fields required
+// *Add categories 
 
 import Telescope from 'meteor/nova:lib';
 import moment from 'moment';
 
 // ------------------------------------- posts.new.async -------------------------------- //
-
-/**
- * @summary Increment the user's karma after posting
- */
-// function PostsNewIncrementKarma (post) {
-//   var userId = post.userId;
-//   Users.update({_id: userId}, {$inc: {"telescope.karma": 10}});
-// }
-//Telescope.callbacks.add("posts.new.async", PostsNewIncrementKarma);
-//Telescope.callbacks.add("upvote", PostsNewIncrementKarma);
-// this isn't the right callback?
-
-// TODO: remove karma points if user removes post
-// posts being upvoted already increases author's karma
-
-/**
- * @summary Decrease the user's votes after voting 
- */
-// function VoteDecreaseVotes (user) {
-//   var userId = user._id;
-//   Users.update({_id: userId}, {$inc: {"telescope.remainingVotes": -1}});
-// }
-// Telescope.callbacks.add("upvote.sync", VoteDecreaseVotes);
-
-/**
- * @summary Increase the user's votes after canceled voting
- */
-// function CancelVoteIncreaseVotes (post) {
-//   var userId = post.userId;
-//   Users.update({_id: userId}, {$inc: {"telescope.remainingVotes": 1}});
-// }
-// Telescope.callbacks.add("cancelUpvote.async", CancelVoteIncreaseVotes);
-
 
 /**
  * @summary Posts Rate limiting, and add karma

@@ -120,30 +120,30 @@ Posts.addField([
       control: "datetime"
       //group: Posts.formGroups.admin
     }
-  },
-  /**
-    How many flags the post has received
-  */
-  {
-    fieldName: "flags",
-    fieldSchema: {
-      type: Number,
-      optional: true,
-      publish: true,
-      defaultValue: 0
-    }
-  },
-  /**
-    An array containing the `_id`s of the post's flaggers
-  */
-  {
-    fieldName: "flaggers",
-    fieldSchema: {
-      type: [String],
-      optional: true,
-      publish: true
-    }
   }
+  // /**
+  //   How many flags the post has received
+  // */
+  // {
+  //   fieldName: "flags",
+  //   fieldSchema: {
+  //     type: Number,
+  //     optional: true,
+  //     publish: true,
+  //     defaultValue: 0
+  //   }
+  // },
+  // /**
+  //   An array containing the `_id`s of the post's flaggers
+  // */
+  // {
+  //   fieldName: "flaggers",
+  //   fieldSchema: {
+  //     type: [String],
+  //     optional: true,
+  //     publish: true
+  //   }
+  // }
   ]);
 
 
