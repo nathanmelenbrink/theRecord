@@ -19,7 +19,7 @@ class Flag extends Component {
     const post = this.props.post;
     const user = this.context.currentUser;
 
-    //console.log(user.hasDownvoted(post));
+    console.log(user.hasDownvoted(post));
     function numberOfDownvotesInPast24Hours (user){
       var mNow = moment();
       var items = 0;

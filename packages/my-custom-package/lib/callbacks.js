@@ -1,7 +1,10 @@
-// Flagging is stored as downvotes, need to change weighting and add callback
+
 // Had to remove the updateUser callbacks from the core/lib, it won't remove them from this file
 
 // Check console for server errors, cancelUV and DV are called from server, not sure if we keep this? 
+// Cancel upvote needs to return vote back to user
+
+// Posts collection is working, users is not
 
 // TODO: 
 // _Increase karma after posting
@@ -63,26 +66,26 @@ Telescope.callbacks.add("posts.new.method", PostsNewRateLimit);
 function UpvotesNewRateLimit (post, user) {
 	 
     //console.log("votin")
-  	function numberOfUpvotesInPast24Hours (user){
-	  	var mNow = moment();
-	  	var items = 0;
+  	// function numberOfUpvotesInPast24Hours (user){
+	  // 	var mNow = moment();
+	  // 	var items = 0;
 
-	  	user.telescope.upvotedPosts.forEach(function (entry){	
-	  		if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
-	  	});
+	  // 	user.telescope.upvotedPosts.forEach(function (entry){	
+	  // 		if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
+	  // 	});
 
-		  return items;
-	   }
+		 //  return items;
+	  //  }
 
-    var maxUpvotesPer24Hours = Math.ceil(user.telescope.karma * 0.2);
+   //  var maxUpvotesPer24Hours = Math.ceil(user.telescope.karma * 0.2);
 
-    // it doesn't want to let me throw this meteor error, need to fix that
-    // but at least it prevents upvotes
+   //  // it doesn't want to let me throw this meteor error, need to fix that
+   //  // but at least it prevents upvotes
 
-    if(numberOfUpvotesInPast24Hours(user) >= maxUpvotesPer24Hours){
-      console.log("denied");
-      //throw new Meteor.Error(607, 'sorry_you_cannot_submit_more_than'+maxUpvotesPer24Hours+'upvotes_per_day');
-    } else {
+   //  if(numberOfUpvotesInPast24Hours(user) >= maxUpvotesPer24Hours){
+   //    console.log("denied");
+   //    //throw new Meteor.Error(607, 'sorry_you_cannot_submit_more_than'+maxUpvotesPer24Hours+'upvotes_per_day');
+   //  } else {
         var update = {};
         var votePower = Telescope.getVotePower(user);
         var vote = {
@@ -101,16 +104,16 @@ function UpvotesNewRateLimit (post, user) {
         }
 
         // update post's list of users
-        update = {
-          $addToSet: {upvoters: user._id},
-          $inc: {upvotes: 1, baseScore: 1}
-        }
+        //update = {
+        //  $addToSet: {upvoters: user._id},
+        //  $inc: {upvotes: 1, baseScore: 1}
+        //}
 
-        update["$set"] = {inactive: false};
-        var result = Posts.update({_id: post._id}, update);
-    }
+        //update["$set"] = {inactive: false};
+        //var result = Posts.update({_id: post._id}, update);
+    //}
 
-  return user;
+  return post;
 }
 Telescope.callbacks.add("upvote", UpvotesNewRateLimit);
 
@@ -122,22 +125,22 @@ Telescope.callbacks.add("upvote", UpvotesNewRateLimit);
  */
 function DownvotesNewRateLimit (post, user) {
 	
-  	function numberOfDownvotesInPast24Hours (user){
-	  	var mNow = moment();
-	  	var items = 0;
+  	// function numberOfDownvotesInPast24Hours (user){
+	  // 	var mNow = moment();
+	  // 	var items = 0;
 
-	  	user.telescope.downvotedPosts.forEach(function (entry){	
-	  		if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
-	  	});
+	  // 	user.telescope.downvotedPosts.forEach(function (entry){	
+	  // 		if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
+	  // 	});
 
-		  return items;
-	  }
+		 //  return items;
+	  // }
 
-    var maxDownvotesPer24Hours = Math.ceil(user.telescope.karma * 0.01);
+   //  var maxDownvotesPer24Hours = Math.ceil(user.telescope.karma * 0.01);
 
-    if(numberOfDownvotesInPast24Hours(user) >= maxDownvotesPer24Hours){
-      //console.log("denied");
-    } else {
+   //  if(numberOfDownvotesInPast24Hours(user) >= maxDownvotesPer24Hours){
+   //    //console.log("denied");
+   //  } else {
         var update = {};
         var votePower = Telescope.getVotePower(user);
         var vote = {
@@ -156,16 +159,16 @@ function DownvotesNewRateLimit (post, user) {
         }
 
         // update post's list of users
-        update = {
-          $addToSet: {downvoters: user._id},
-          $inc: {downvotes: 1, baseScore: 1}
-        }
+        //update = {
+        //  $addToSet: {downvoters: user._id},
+        //  $inc: {downvotes: 1, baseScore: -10}
+        //}
 
-        update["$set"] = {inactive: false};
-        var result = Posts.update({_id: post._id}, update);
-    }
+        //update["$set"] = {inactive: false};
+        //var result = Posts.update({_id: post._id}, update);
+    //s}
 
-  return user;
+  return post;
 }
 Telescope.callbacks.add("downvote", DownvotesNewRateLimit);
 
@@ -177,6 +180,7 @@ Telescope.callbacks.add("downvote", DownvotesNewRateLimit);
 function cancelUpvoteSync (post, user) {
 
   console.log ("cancel uv function")
+  console.log (user)
   var update = {};
   var votePower = Telescope.getVotePower(user);
   var vote = {
@@ -193,15 +197,17 @@ function cancelUpvoteSync (post, user) {
   if (post.userId !== user._id) {
     Users.update({_id: post.userId}, {$inc: {"telescope.karma": -1}});
   }
-
+  console.log (user)
   // update post's list of users
-  update = {
-    $pull: {upvoters: user._id},
-    $inc: {upvotes: -1, baseScore: -1}
-  }
+  //update = {
+  //  $pull: {upvoters: user._id},
+  //  $inc: {upvotes: -1, baseScore: -1}
+  //}
 
-  update["$set"] = {inactive: false};
-  var result = Posts.update({_id: post._id}, update);
+  //update["$set"] = {inactive: false};
+  //var result = Posts.update({_id: post._id}, update);
+
+  return post;
 
 }
 
@@ -215,6 +221,7 @@ Telescope.callbacks.add("cancelUpvote", cancelUpvoteSync);
 function cancelDownvoteSync (post, user) {
 
   console.log ("cancel dv function")
+  console.log (user)
   var update = {};
   var votePower = Telescope.getVotePower(user);
   var vote = {
@@ -227,19 +234,22 @@ function cancelDownvoteSync (post, user) {
   update.$pull = {'telescope.downvotedPosts': {itemId: post._id}};
   Users.update({_id: user._id}, update);
 
-  // update user's karma
+  // update post author's karma
   if (post.userId !== user._id) {
     Users.update({_id: post.userId}, {$inc: {"telescope.karma": 10}});
   }
 
+console.log (user)
   // update post's list of users
-  update = {
-    $pull: {downvoters: user._id},
-    $inc: {downvotes: -1, baseScore: -1}
-  }
+  //update = {
+  //  $pull: {downvoters: user._id},
+  //  $inc: {downvotes: -1, baseScore: 10}
+  //}
 
-  update["$set"] = {inactive: false};
-  var result = Posts.update({_id: post._id}, update);
+  //update["$set"] = {inactive: false};
+  //var result = Posts.update({_id: post._id}, update);
+
+  return post;
 
 }
 
