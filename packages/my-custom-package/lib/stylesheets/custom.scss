@@ -1,17 +1,5 @@
 .header-wrapper { background: white;}
 
-.post-red{
-  background-color: #FFD3D2;
-}
-.post-blue{
-  background-color: #D2F5FF;
-}
-.post-yellow{
-  background-color: #FBFFD2;
-}
-.post-green{
-  background-color: #D2FFD2;
-}
 
 .posts-item-title{
 
@@ -46,4 +34,9 @@ input[type=button]:hover {
 
 .text-center {
   text-align: center;
+}
+
+.text-center-small {
+  text-align: center;
+  font-size: 0.8rem;
 }

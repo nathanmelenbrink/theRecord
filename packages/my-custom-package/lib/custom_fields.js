@@ -7,47 +7,12 @@ const canInsert = user => Users.canDo(user, "posts.new");
 // check if user can edit a post
 const canEdit = Users.canEdit;
 
-//Users.addField([
-
-
-//   /**
-//     User's current remaining posts
-//   */
-//   {
-//     fieldName: "telescope.remainingPosts",
-//     fieldSchema: {
-//       type: Number,
-//       publish: true,
-//       defaultValue: 10
-//     }
-//   },
-//   /**
-//     User's current remaining flags
-//   */
-//   {
-//     fieldName: "telescope.remainingFlags",
-//     fieldSchema: {
-//       type: Number,
-//       publish: true,
-//       defaultValue: 10
-//     }
-//   },
-//   /**
-//     User's current remaining votes
-//   */
-//   {
-//     fieldName: "telescope.remainingVotes",
-//     fieldSchema: {
-//       type: Number,
-//       publish: true,
-//       defaultValue: 10
-//     }
-//   }
-// ]);
-
+Users.removeField('twitterUsername');
 
 Posts.removeField('body');
 Posts.removeField('thumbnailUrl');
+Posts.removeField('url');
+//Posts.removeField('title');
 
 // just a test
 
@@ -89,6 +54,72 @@ Posts.removeField('thumbnailUrl');
 
 Posts.addField([
   /**
+    URL
+  */
+  {
+    fieldName: 'url',
+
+    fieldSchema: {
+      type: String,
+      optional: false,
+      max: 500,
+      insertableIf: canInsert,
+      editableIf: canEdit,
+      control: "text",
+      publish: true,
+      order: 10
+    }
+  },
+  /**
+    URL
+  */
+  {
+    fieldName: 'link2',
+    fieldSchema: {
+      type: String,
+      optional: true,
+      max: 500,
+      insertableIf: canInsert,
+      editableIf: canEdit,
+      control: "text",
+      publish: true,
+      order: 10
+    }
+  },
+  /**
+    URL
+  */
+  {
+    fieldName: 'link3',
+    fieldSchema: {
+      type: String,
+      optional: true,
+      max: 500,
+      insertableIf: canInsert,
+      editableIf: canEdit,
+      control: "text",
+      publish: true,
+      order: 10
+    }
+  },
+  /**
+    Body
+  */
+  // {
+  //   fieldName: 'text',
+  //   fieldSchema: {
+  //     label: 'Content',
+  //     type: String,
+  //     optional: false,
+  //     max: 500,
+  //     insertableIf: canInsert,
+  //     editableIf: canEdit,
+  //     control: "text",
+  //     publish: true,
+  //     order: 20
+  //   }
+  // },
+  /**
     Location the post refers to (defaults to current)
   */
   {
@@ -116,34 +147,13 @@ Posts.addField([
       type: Date,
       insertableIf: canInsert,
       editableIf: canEdit,
+      optional: false,
       publish: true,
       control: "datetime"
       //group: Posts.formGroups.admin
     }
   }
-  // /**
-  //   How many flags the post has received
-  // */
-  // {
-  //   fieldName: "flags",
-  //   fieldSchema: {
-  //     type: Number,
-  //     optional: true,
-  //     publish: true,
-  //     defaultValue: 0
-  //   }
-  // },
-  // /**
-  //   An array containing the `_id`s of the post's flaggers
-  // */
-  // {
-  //   fieldName: "flaggers",
-  //   fieldSchema: {
-  //     type: [String],
-  //     optional: true,
-  //     publish: true
-  //   }
-  // }
+
   ]);
 
 
