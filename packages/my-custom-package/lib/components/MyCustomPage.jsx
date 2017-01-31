@@ -12,6 +12,22 @@ const MyCustomPage = () => {
 
       <hr className="divider"></hr>
 
+      <h1>How It Works</h1>
+      <p>The Record is designed for simplicity and transparency. All users are given equal privileges -- the ability to post, upvote posts, and flag posts that are not credible. Posts that receive more flags than upvotes will appear at the bottom of the feed. The more you participate, the more you'll rack up “karma points.” As your karma increases, so will your privileges, including the number of times you can post or upvote per day. If, however, a user is seen as being excessively biased or antagonizing, that user can be flagged by other users, which will result in a deduction of karma points. This creates a "community policing" effect. The users with the most karma points are those that are able to propagate the most meaningful information without marginalizing others.</p>
+      <p>To further promote transparency to all readers, anything you post, upvote, or flag will be permanently listed on your public profile. In exchange, we promise full disclosure of the source code that makes the site work -- if we ever make any changes to our algorithms, we will thoroughly explain them in a blog post.</p>
+
+      <hr className="divider"></hr>
+
+      <div>
+        <img src = '+1.svg' width='250px'/>
+        <img src = '-10.svg' width='250px'/>
+        <img src = '+10.svg' width='250px'/>
+        <img src = '-100.svg' width='250px'/>
+      </div>
+
+
+      <hr className="divider"></hr>
+
       <h1>About The Record</h1>
       <p>The Internet has given us unprecedented access to information, so why do we feel so surrounded by misinformation? Have you ever wished for a way to access informative daily news without worrying about media bias? What if there was a web platform that prioritized enriching the worldviews of its users over simply feeding them "likable" content?</p>
 
@@ -23,16 +39,16 @@ const MyCustomPage = () => {
 
       <hr className="divider"></hr>
 
+      <div>
+        <img src = 'features.svg' width="70%"/>
+        <img src = 'profile.svg' width="20%"/>
+      </div>
+        <hr className="divider"></hr>
+
       <h1>What Makes The Record Different</h1>
       <p>Unlike any other news outlet, we can guarantee no editorial bias, simply because we have no editors. The posts that get promoted are simply the ones that are most upvoted by the community -- no exceptions.
       We have no corporate sponsors or shareholders, and are funded solely through small contributions from users like you.</p>
       <p>The Record has no hierarchy -- all users have an equal opportunity to express their opinions and be heard.</p>
-
-      <hr className="divider"></hr>
-
-      <h1>How It Works</h1>
-      <p>The Record is designed for simplicity and transparency. All users are given equal privileges -- the ability to post, upvote posts, and flag posts that are not credible. Posts that receive more flags than upvotes will appear at the bottom of the feed. The more you participate, the more you'll rack up “karma points.” As your karma increases, so will your privileges, including the number of times you can post or upvote per day. If, however, a user is seen as being excessively biased or antagonizing, that user can be flagged by other users, which will result in a deduction of karma points. This creates a "community policing" effect. The users with the most karma points are those that are able to propagate the most meaningful information without marginalizing others.</p>
-      <p>To further promote transparency to all readers, anything you post, upvote, or flag will be permanently listed on your public profile. In exchange, we promise full disclosure of the source code that makes the site work -- if we ever make any changes to our algorithms, we will thoroughly explain them in a blog post.</p>
 
       <hr className="divider"></hr>
 
