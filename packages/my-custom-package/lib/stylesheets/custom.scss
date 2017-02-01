@@ -47,3 +47,50 @@ input[type=button]:hover {
 .text-center {
   text-align: center;
 }
+
+.warning, .error {
+  border: 1px solid #ebcccc;
+  border-radius: 3px;
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 5px 5px 5px 10px;
+  margin-top: 10px;
+}
+
+.upvote-button {
+  border-color: #0275d8;
+}
+
+.upvoted > .upvote-button {
+  border-color: #3c763d;
+  background-color: rgba(60,118,61,0.1);
+}
+
+.downvoted > .upvote-button {
+  border-color: #a94442;
+  background-color: rgba(169,68,66,0.1);
+}
+
+.upvote-button > .icon {
+  color: #0275d8;
+}
+
+.upvoted > .upvote-button > .icon {
+  color: #3c763d;
+}
+
+.downvoted > .upvote-button .icon {
+  color: #a94442;
+}
+
+.upvote-button:hover {
+  background-color: rgba(2,117,216,0.2);
+}
+
+.upvoted > .upvote-button:hover {
+  background-color: rgba(60,118,61,0.2);
+}
+
+.downvoted > .upvote-button:hover {
+  background-color: rgba(169,68,66,0.2);
+}
