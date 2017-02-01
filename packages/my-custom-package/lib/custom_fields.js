@@ -12,7 +12,7 @@ Users.removeField('twitterUsername');
 Posts.removeField('body');
 Posts.removeField('thumbnailUrl');
 Posts.removeField('url');
-//Posts.removeField('title');
+Posts.removeField('title');
 
 // just a test
 
@@ -53,12 +53,27 @@ Posts.removeField('url');
 
 
 Posts.addField([
+   /**
+    Title
+  */
+  {
+    fieldName: 'title',
+    fieldSchema: {
+      type: String,
+      optional: false,
+      max: 300,
+      insertableIf: canInsert,
+      editableIf: canEdit,
+      control: "text",
+      publish: true,
+      order: 20
+    }
+  },
   /**
     URL
   */
   {
     fieldName: 'url',
-
     fieldSchema: {
       type: String,
       optional: false,
