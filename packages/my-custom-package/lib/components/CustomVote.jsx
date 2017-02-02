@@ -3,8 +3,7 @@ import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 import Users from 'meteor/nova:users';
 import moment from 'moment';
-//<div className="sr-only">Upvote</div>
-//<div className="vote-count">{post.baseScore || 0}</div>
+
 
 class CustomVote extends Component {
 
@@ -31,7 +30,7 @@ class CustomVote extends Component {
       return items;
     }
 
-    var maxUpvotesPer24Hours = Math.ceil(user.telescope.karma * 0.2);
+    var maxUpvotesPer24Hours = Math.ceil(user.telescope.karma * 0.2 + 1);
 
     if(!user){
       this.context.messages.flash("Please log in first");
@@ -42,7 +41,8 @@ class CustomVote extends Component {
       });  
     } else if (numberOfUpvotesInPast24Hours(user) >= maxUpvotesPer24Hours){
       console.log(numberOfUpvotesInPast24Hours(user));
-      this.context.messages.flash("No more upvotes remaining");
+       this.context.messages.flash("Sorry, you cannot upvote more than " +maxUpvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation by 10 points.");
+
 
     } else {
       console.log("upvote");

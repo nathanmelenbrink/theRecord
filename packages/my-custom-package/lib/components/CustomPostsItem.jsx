@@ -41,8 +41,18 @@ class CustomPostsItem extends Telescope.components.PostsItem {
             {post.user? <div className="posts-item-user"><Telescope.components.UsersName user={post.user}/></div> : null}
             <div className="posts-item-date"><FormattedRelative value={post.postedAt}/></div>
 
-            <div className="posts-item-date"> {post.url} </div>
+            <div className="posts-item-date"> <Link to={post.url} className="posts-item-date" target={Posts.getLinkTarget(post)}>
+              {Telescope.utils.getDomain(post.url)} 
+            </Link> </div>
+            <div className="posts-item-date"> <Link to={post.link2} className="posts-item-date" target={Posts.getLinkTarget(post)}>
+              {Telescope.utils.getDomain(post.link2)} 
+            </Link> </div>
+            <div className="posts-item-date"> <Link to={post.link3} className="posts-item-date" target={Posts.getLinkTarget(post)}>
+              {Telescope.utils.getDomain(post.link3)} 
+            </Link> </div>
             
+            <div className="posts-item-date">  </div>
+
             {post.URL? <div className="posts-item-user"><Telescope.components.UsersName user={post.URL}/></div> : null}
              <Telescope.components.Flag post={post} />
             

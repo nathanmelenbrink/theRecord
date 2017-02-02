@@ -222,7 +222,10 @@ Meteor.methods({
     }
 
     // decrement post count
-    Users.update({_id: post.userId}, {$inc: {"telescope.postCount": -1}});
+    //Users.update({_id: post.userId}, {$inc: {"telescope.postCount": -1}});
+
+    // decrement user karma
+    Users.update({_id: post.userId}, {$inc: {"telescope.karma": -10}});
 
     // delete post
     Posts.remove(postId);

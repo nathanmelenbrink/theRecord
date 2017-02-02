@@ -22,7 +22,7 @@ Telescope.strings.en = {
   "posts.no_more": "No more posts.",
   "posts.no_results": "No posts to display.",
   "posts.search": "Search",
-  "posts.view": "View",
+  "posts.view": "Top",
   "posts.top": "Top",
   "posts.new": "New",
   "posts.best": "Best",

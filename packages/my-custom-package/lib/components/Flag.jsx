@@ -40,7 +40,7 @@ class Flag extends Component {
         this.context.events.track("post downvote cancelled", {'_id': post._id});
       });  
     } else if (numberOfDownvotesInPast24Hours(user) >= maxDownvotesPer24Hours){
-      this.context.messages.flash("No more flags remaining");
+      this.context.messages.flash("Sorry, you cannot flag more than " +maxDownvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation by 10 points.");
 
     } else {
       console.log("downvote");

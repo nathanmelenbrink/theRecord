@@ -19,7 +19,7 @@ const UsersProfile = ({user}, {currentUser}) => {
   const numberOfFlagsInPast24Hours = numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
 
   const postsPerDay = Math.round(user.telescope.karma * 0.05) + 1;
-  const votesPerDay = Math.ceil(user.telescope.karma * 0.2);
+  const votesPerDay = Math.ceil(user.telescope.karma * 0.2) + 1;
   const flagsPerDay = Math.ceil(user.telescope.karma * 0.01);
   
   const remainingPosts = postsPerDay - numberOfPostsInPast24Hours;
@@ -67,10 +67,7 @@ const UsersProfile = ({user}, {currentUser}) => {
        Remaining Flags: {remainingFlags}  &nbsp;
        </p>
 
-      <p>{user.telescope.bio}</p>
       <ul>
-        {twitterName ? <li><a href={"http://twitter.com/" + twitterName}>@{twitterName}</a></li> : null }
-        {user.telescope.website ? <li><a href={user.telescope.website}>{user.telescope.website}</a></li> : null }
         <Telescope.components.CanDo document={user} action="users.edit">
           <li><Link to={Users.getEditUrl(user)}><FormattedMessage id="users.edit_account"/></Link></li>
         </Telescope.components.CanDo>
