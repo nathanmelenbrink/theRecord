@@ -25,6 +25,8 @@ class Layout extends Component {
         </div>
       
       
+        <Telescope.components.Footer {...this.props}/>
+
       </div>
     )
 

@@ -12,6 +12,7 @@ import CustomUsersProfile from "./components/CustomUsersProfile.jsx";
 import CustomPostsCommentsThread from "./components/CustomPostsCommentsThread.jsx";
 import CustomVote from "./components/CustomVote.jsx";
 import Flag from "./components/Flag.jsx";
+import CustomFooter from "./components/CustomFooter.jsx";
 
 Telescope.components.Logo = CustomLogo;
 Telescope.components.Newsletter = CustomNewsletter;
@@ -21,3 +22,4 @@ Telescope.components.UsersProfile = CustomUsersProfile;
 Telescope.components.PostsCommentsThread = CustomPostsCommentsThread;
 Telescope.components.Flag = Flag;
 Telescope.components.Vote = CustomVote;
+Telescope.components.Footer = CustomFooter;

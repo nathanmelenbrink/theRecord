@@ -16,8 +16,8 @@ Telescope.operateOnItem = function (collection, itemId, user, operation) {
   var hasDownvotedItem = user.hasDownvoted(item);
   var update = {};
 
-  // console.log(collection)
-  // console.log(item)
+  //console.log(collection)
+  //console.log(item)
   // console.log(user)
   // console.log(operation)
 
@@ -37,15 +37,17 @@ Telescope.operateOnItem = function (collection, itemId, user, operation) {
   // ------------------------------ Sync Callbacks ------------------------------ //
   item = Telescope.callbacks.run(operation, item, user);
 
+  //console.log("operate on item function");
+  //console.log(operation);
   //console.log(item);
-  
+
   switch (operation) {
 
     case "upvote":
 
-      if (hasDownvotedItem) {
-        Telescope.operateOnItem(collection, itemId, user, "cancelDownvote");
-      }
+      //if (hasDownvotedItem) {
+      //  Telescope.operateOnItem(collection, itemId, user, "cancelDownvote");
+      //}
       update = {
         $addToSet: {upvoters: user._id},
         $inc: {upvotes: 1, baseScore: votePower}
@@ -53,10 +55,10 @@ Telescope.operateOnItem = function (collection, itemId, user, operation) {
       break;
 
     case "downvote":
-
-      if (hasUpvotedItem) {
-        Telescope.operateOnItem(collection, itemId, user, "cancelUpvote");
-      }
+      console.log("in switch downvote")
+      //if (hasUpvotedItem) {
+      //  Telescope.operateOnItem(collection, itemId, user, "cancelUpvote");
+      //}
       update = {
         $addToSet: {downvoters: user._id},
         $inc: {downvotes: 1, baseScore: -votePower}
@@ -72,7 +74,7 @@ Telescope.operateOnItem = function (collection, itemId, user, operation) {
       break;
 
     case "cancelDownvote":
-
+      console.log("in switch cancel")
       update = {
         $pull: {downvoters: user._id},
         $inc: {downvotes: -1, baseScore: votePower}
@@ -81,7 +83,7 @@ Telescope.operateOnItem = function (collection, itemId, user, operation) {
   }
 
   update["$set"] = {inactive: false};
-  var result = 0;//collection.update({_id: item._id}, update);
+  var result = collection.update({_id: item._id}, update);
 
 
   if (result > 0) {
