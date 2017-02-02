@@ -26,32 +26,6 @@ Posts.removeField('title');
 // });
 
 
-// Posts.addField(
-//   {
-//     fieldName: 'color',
-//     fieldSchema: {
-//       type: String,
-//       control: "select", // use a select form control
-//       optional: true, // this field is not required
-//       insertableIf: canInsert,
-//       editableIf: canEdit,
-//       form: {
-//         options: function () { // options for the select form control
-//           return [
-//             {value: "white", label: "White"},
-//             {value: "yellow", label: "Yellow"},
-//             {value: "blue", label: "Blue"},
-//             {value: "red", label: "Red"},
-//             {value: "green", label: "Green"}
-//           ];
-//         }
-//       },
-//       publish: true // make that field public and send it to the client
-//     }
-//   }
-// );
-
-
 Posts.addField([
    /**
     Title
@@ -64,7 +38,7 @@ Posts.addField([
       max: 300,
       insertableIf: canInsert,
       editableIf: canEdit,
-      control: "text",
+      control: "textarea",
       publish: true,
       order: 20
     }
@@ -182,5 +156,3 @@ import PublicationUtils from 'meteor/utilities:smart-publications';
 PublicationUtils.addToFields(Posts.publishedFields.list, ["location", "eventDate", "color", "flags", "flaggers"]);
 
 PublicationUtils.addToFields(Users.publishedFields.list, ["remainingPosts", "remainingFlags", "remainingVotes"]);
-
-

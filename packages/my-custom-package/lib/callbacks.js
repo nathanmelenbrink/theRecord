@@ -19,6 +19,7 @@
 // _Deleting posts needs to also remove 10 karma points (Nathan)
 // *Edit Account - hide all fields except username / password, leave subscribe button (Nathan) 
 // _Filters should show current selected…filter (Nathan)
+// _Make post text box larger 
 
 
 import Telescope from 'meteor/nova:lib';
@@ -103,7 +104,7 @@ Telescope.callbacks.add("upvote", upvoteUpdateUser);
  * @summary Update user after downvote (sync)
  */
 function downvoteUpdateUser (post, user) {
-	
+  
     var update = {};
     var votePower = Telescope.getVotePower(user);
     var vote = {
@@ -188,5 +189,3 @@ Telescope.callbacks.add("cancelDownvote", cancelDownvoteUpdateUser);
 // Telescope.callbacks.remove("downvote.async", updateUser);
 // Telescope.callbacks.remove("cancelUpvote.async", updateUser);
 // Telescope.callbacks.remove("cancelDownvote.async", updateUser);
-
-
