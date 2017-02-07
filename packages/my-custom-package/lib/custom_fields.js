@@ -40,7 +40,7 @@ Posts.addField([
       editableIf: canEdit,
       control: "textarea",
       publish: true,
-      order: 20
+      order: 2
     }
   },
   /**
@@ -72,7 +72,7 @@ Posts.addField([
       editableIf: canEdit,
       control: "text",
       publish: true,
-      order: 10
+      order: 11
     }
   },
   /**
@@ -88,7 +88,7 @@ Posts.addField([
       editableIf: canEdit,
       control: "text",
       publish: true,
-      order: 10
+      order: 12
     }
   },
   /**
