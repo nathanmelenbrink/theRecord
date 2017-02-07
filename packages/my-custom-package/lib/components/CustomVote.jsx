@@ -30,7 +30,7 @@ class CustomVote extends Component {
       return items;
     }
 
-    var maxUpvotesPer24Hours = Math.ceil(user.telescope.karma * 0.05 + 5);
+    var maxUpvotesPer24Hours = Math.ceil(user.telescope.karma * 0.05) + 5;
 
     if(!user){
       this.context.messages.flash("Please log in first");
@@ -78,7 +78,7 @@ class CustomVote extends Component {
         <a className="upvote-button" onClick={this.upvote}>
           <Telescope.components.Icon name="upvote" />
           <div className="sr-only">Upvote</div>
-          <div className="vote-count">{Math.round((post.baseScore / maxBaseScore) * 100) || 0}%</div> 
+          <div className="vote-count">{Math.round(post.baseScore) || 0}</div> 
         </a>
        
       </div>
