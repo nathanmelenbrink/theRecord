@@ -1,43 +1,104 @@
+
 import Telescope from 'meteor/nova:lib';
 //import React from 'react';
 import Users from 'meteor/nova:users';
 import { FormattedMessage } from 'react-intl';
-import { ListContainer } from "meteor/utilities:react-list-container";
 import React, { PropTypes, Component } from 'react';
-import { Components, registerComponent } from 'meteor/nova:core';
+import { ListContainer } from "meteor/utilities:react-list-container";
+import NovaForm from "meteor/nova:forms";
+import { Button } from 'react-bootstrap';
+import { Accounts } from 'meteor/std:accounts-ui';
+import { ModalTrigger, /* Messages, */ FlashContainer } from "meteor/nova:core";
 
-const Leaderboard = () => {
+class Leaderboard extends Component {
+  render() {
+      return (
+        <div className="wrapper">
 
-  //const terms = {view:"userPosts", userId: user._id};
-  //const {selector, options} = Posts.parameters.get(terms);
+          <div className="main">
 
-  // Posts.views.add("new", function (terms) {
-  // return {
-  //   options: {sort: {sticky: -1, postedAt: -1}}
-  //   };
-  // });
+            <ListContainer
+              collection={Users}
+              publication="users.list"
+              terms={{options: {sort: {createdAt: -1}}}}
+              options={{sort: {createdAt: -1}}}
+              joins={Users.getJoins()}
+              limit={5}
+              component={UsersList}
+              listId="users.list"
+            />
+          </div>
+
+        </div>
+      )
+    }
+}
+
+//////////////////////////////////////////////////////
+// MoviesList                                       //
+//////////////////////////////////////////////////////
+
+class UsersList extends Component {
 
 
+  render() {
+
+    return (
+      <div className="users">
+        {this.props.results.map(leader => <Leader key={user.username} {...user} currentUser={this.props.currentUser}/>)}
+        {this.props.hasMore ? (this.props.ready ? <LoadMore {...this.props}/> : <p>Loading…</p>) : <p>No more movies</p>}
+      </div>
+    )
+  }
+}
+
+//////////////////////////////////////////////////////
+// Movie                                            //
+//////////////////////////////////////////////////////
+
+class Leader extends Component {
+
+  render() {
+
+    const user = this.props;
+
+    return (
+      <div key={user.username} style={{paddingBottom: "15px",marginBottom: "15px", borderBottom: "1px solid #ccc"}}>
+        <h2>{user.username} ({user.telescope.karma})</h2>
+      </div>
+    )
+  }
 
 }
 
-Leaderboard.propTypes = {
-  user: React.PropTypes.object.isRequired,
+//////////////////////////////////////////////////////
+// Methods                                          //
+//////////////////////////////////////////////////////
+
+// Movies.smartMethods({
+//   createName: "movies.create",
+//   editName: "movies.edit",
+//   createCallback: function (user, document) {
+//     document = _.extend(document, {
+//       createdAt: new Date(),
+//       userId: Meteor.userId()
+//     });
+//     return document;
+//   },
+//   deleteCallback: isOwner
+// });
+
+//////////////////////////////////////////////////////
+// Publications                                     //
+//////////////////////////////////////////////////////
+
+if (Meteor.isServer) {
+  Users.smartPublish("users.list");
 }
 
-Leaderboard.contextTypes = {
-  currentUser: React.PropTypes.object
-}
+
+
+const LoadMore = props => <a href="#" className="load-more button button--primary" onClick={props.loadMore}>Load More ({props.count}/{props.totalCount})</a>
+
 //registerComponent('Leaderboard', Leaderboard);
 export default Leaderboard;
-
-       // <ListContainer
-       //   collection={Users}
-       //   publication="users.list"
-       //   terms={{options: {sort: {createdAt: -1}}}}
-       //   joins={Users.getJoins()}
-       //   cacheSubscription={false}
-       //   component={Telescope.components.UsersList}
-       //   componentProps={{showHeader: false}}
-       // listId="posts.list.user"
-       // />

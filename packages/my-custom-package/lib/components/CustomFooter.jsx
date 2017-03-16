@@ -5,6 +5,7 @@ const Footer = props => {
   return (
     <div className="footer">
     	<p className="text-center">
+            <a href="/leaderboard">Leaderboard</a>  &nbsp;
     		<a href="/about">About</a>  &nbsp;
             <a href="/blog">Blog</a>  &nbsp;
     		<a href="/account">Subscribe to the Newsletter</a>  &nbsp;
