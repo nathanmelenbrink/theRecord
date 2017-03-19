@@ -16,7 +16,7 @@
     "requirePostsApproval":false,
     "requireViewInvite":false,
     "requirePostInvite":false,
-    "enableNewsletter":false,
+    "enableNewsletter":true,
     "autoSubscribe":false,
     "emailNotifications":true,
     "postInterval": 20,
@@ -29,14 +29,14 @@
     "language": "en",
     "locale": "en",
     
-    "twitterAccount": "foo",
+    "twitterAccount": "_TheRecord_",
     "facebookPage": "http://facebook.com/foo",
 
     "googleAnalyticsId":"123foo"
   },
 
 
-  "defaultEmail": "hello@world.com",
+  "defaultEmail": "melenbrink@gmail.com",
   "mailUrl": "smtp://postmaster%40foo.mailgun.org:foo123@smtp.mailgun.org:587/",
   "scoreUpdateInterval": "30",
 

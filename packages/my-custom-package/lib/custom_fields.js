@@ -35,7 +35,7 @@ Posts.addField([
     fieldSchema: {
       type: String,
       optional: false,
-      max: 300,
+      max: 400,
       insertableIf: canInsert,
       editableIf: canEdit,
       control: "textarea",

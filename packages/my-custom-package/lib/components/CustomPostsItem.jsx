@@ -23,15 +23,12 @@ class CustomPostsItem extends Telescope.components.PostsItem {
 
         <div className="posts-item-vote">
           <Telescope.components.Vote post={post} />
-          
         </div>
-
-
 
         <div className="posts-item-content">
 
           <h3 className="posts-item-title">
-            <Link to={Posts.getLink(post)} className="posts-item-title-link" target={Posts.getLinkTarget(post)}>
+            <Link to={Posts.getPageUrl(post)} className="posts-item-title-link" target={Posts.getPageUrl(post)}>
               {post.title}
             </Link>
             {this.renderCategories()}
@@ -51,6 +48,11 @@ class CustomPostsItem extends Telescope.components.PostsItem {
               {Telescope.utils.getDomain(post.link3)} 
             </Link> </div>
             
+            <div className="posts-item-date">  </div>
+
+            <Telescope.components.SocialButton type="facebook" post={post} /> 
+            <Telescope.components.SocialButton type="twitter" post={post} /> 
+
             <div className="posts-item-date">  </div>
 
             {post.URL? <div className="posts-item-user"><Telescope.components.UsersName user={post.URL}/></div> : null}

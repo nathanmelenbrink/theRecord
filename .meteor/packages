@@ -42,3 +42,4 @@ nova:debug
 ############ Your Packages ############
 
 my-custom-package
+xavcz:nova-social-share

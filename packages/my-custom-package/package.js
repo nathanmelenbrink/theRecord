@@ -12,7 +12,8 @@ Package.onUse( function(api) {
     'nova:core',
     'nova:base-components',
     'nova:posts',
-    'nova:users'
+    'nova:users',
+    'xavcz:nova-social-share',
   ]);
 
   api.addFiles([

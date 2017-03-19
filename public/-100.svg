@@ -1,1 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2314 -1659 306 206"><defs><style>.a{clip-path:url(#b);}.b{fill:#999;}.c,.d,.e{fill:#fff;}.c{font-size:33px;}.c,.d{font-family:HelveticaNeue-Bold, Helvetica Neue;font-weight:700;}.d{font-size:14px;}</style><clipPath id="b"><rect x="-2314" y="-1659" width="306" height="206"/></clipPath></defs><g id="a" class="a"><rect class="e" x="-2314" y="-1659" width="306" height="206"/><path class="b" d="M199.3,309.8v37.5a21.211,21.211,0,0,1-21.2,21.2H30.1A21.211,21.211,0,0,1,8.9,347.3V309.8a21.211,21.211,0,0,1,21.2-21.2H178A21.232,21.232,0,0,1,199.3,309.8Z" transform="translate(-2265 -1885)"/><g transform="translate(-2265 -1885)"><text class="c" transform="matrix(1, -0.017, 0.017, 1, 66.46, 324.011)"><tspan x="0" y="0">-100 </tspan></text><text class="d" transform="matrix(1, -0.017, 0.017, 1, 56.854, 341.876)"><tspan x="0" y="0">POINTS FOR </tspan></text><text class="d" transform="matrix(1, -0.017, 0.017, 1, 30.258, 360.027)"><tspan x="0" y="0">FLAGGED PROFILES</tspan></text></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2314 -1659 306 206">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-_-100);
+      }
+
+      .cls-2 {
+        fill: #999;
+      }
+
+      .cls-3, .cls-5 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        font-size: 25px;
+        font-family: HelveticaNeue-Bold, Helvetica Neue;
+        font-weight: 700;
+      }
+
+      .cls-4 {
+        font-size: 14px;
+      }
+    </style>
+    <clipPath id="clip-_-100">
+      <rect x="-2314" y="-1659" width="306" height="206"/>
+    </clipPath>
+  </defs>
+  <g id="_-100" data-name="-100" class="cls-1">
+    <rect class="cls-5" x="-2314" y="-1659" width="306" height="206"/>
+    <path id="Path_46" data-name="Path 46" class="cls-2" d="M199.3,309.8v37.5a21.211,21.211,0,0,1-21.2,21.2H30.1A21.211,21.211,0,0,1,8.9,347.3V309.8a21.211,21.211,0,0,1,21.2-21.2H178A21.232,21.232,0,0,1,199.3,309.8Z" transform="translate(-2265 -1885)"/>
+    <text id="_-100_POINTS_FOR_FLAGGED_PROFILES" data-name="-100 
+POINTS FOR 
+FLAGGED PROFILES" class="cls-3" transform="translate(-2161 -1567)"><tspan x="-27.883" y="0">-100</tspan><tspan class="cls-4" y="0"> </tspan><tspan class="cls-4"><tspan x="-44.73" y="20">POINTS FOR </tspan><tspan x="-70.007" y="37">FLAGGED PROFILES</tspan></tspan></text>
+  </g>
+</svg>

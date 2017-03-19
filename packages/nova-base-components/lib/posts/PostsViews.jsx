@@ -22,6 +22,7 @@ const PostsViews = (props, context) => {
         bsStyle="default"
         className="views btn-secondary"
         title={context.intl.formatMessage({id: "posts.view"})}
+        //title = "view"
         id="views-dropdown"
       >
         {views.map(view =>

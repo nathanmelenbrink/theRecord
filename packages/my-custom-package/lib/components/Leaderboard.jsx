@@ -2,6 +2,7 @@
 import Telescope from 'meteor/nova:lib';
 //import React from 'react';
 import Users from 'meteor/nova:users';
+import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import React, { PropTypes, Component } from 'react';
 import { ListContainer } from "meteor/utilities:react-list-container";
@@ -22,8 +23,8 @@ class Leaderboard extends Component {
               publication="users.list"
               terms={{options: {sort: {'telescope.karma': -1}}}}
               options={{sort: {'telescope.karma': -1}}}
-              // joins={Users.getJoins()}
-              // limit={5}
+              joins={Users.getJoins()}
+              limit={10}
               component={UsersList}
               listId="users.list"
             />
@@ -45,9 +46,13 @@ class UsersList extends Component {
 
     return (
       <div className="users">
+     <div  style={{paddingBottom: "15px",marginBottom: "15px", borderBottom: "1px solid #ccc"}}>
+  
+        <h3>Leaderboard</h3>
+    </div>
         {this.props.results.map(user => <Leader key={user._id} {...user} currentUser={this.props.currentUser}/>)}
-        {this.props.hasMore ? (this.props.ready ? <LoadMore {...this.props}/> : <p>Loading…</p>) : <p>No more movies</p>}
-           </div>
+        {this.props.hasMore ? (this.props.ready ? <LoadMore {...this.props}/> : <p>Loading…</p>) : <p>No more users</p>}
+    </div>
     )
   }
 }
@@ -63,7 +68,10 @@ class Leader extends Component {
     const user = this.props;
     return (
       <div key={user.username} style={{paddingBottom: "15px",marginBottom: "15px", borderBottom: "1px solid #ccc"}}>
-        <h2>{user.username}: {user.telescope.karma}</h2>
+        <div > <Link to={Users.getProfileUrl(user, false)} target={Users.getProfileUrl(user, false)}>
+          {user.username}:
+
+        </Link>  &nbsp;{user.telescope.karma}</div>
       </div>
     )
   }
@@ -75,10 +83,8 @@ class Leader extends Component {
 //////////////////////////////////////////////////////
 
 if (Meteor.isServer) {
-  Meteor.publish('users.list', function () { return Meteor.users.find({}, {fields: {username: 1, 'telescope.karma': 1}}); }); 
-  //Users.smartPublish("users.list");
-  //Users.smartPublish();
-  //Meteor.users.find({}, {fields: {username: 1, karma: 1}})
+  Meteor.publish('users.list', function () { return Meteor.users.find({}, {limit: 20},  {fields: {username: 1, 'telescope.karma': 1, 'telescope.slug': 1}}); }); 
+
 }
 
 

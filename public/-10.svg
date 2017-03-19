@@ -1,1 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2657 -1659 306 206"><defs><style>.a{clip-path:url(#b);}.b{fill:#999;}.c,.d,.e{fill:#fff;}.c{font-size:33px;}.c,.d{font-family:HelveticaNeue-Bold, Helvetica Neue;font-weight:700;}.d{font-size:14px;}</style><clipPath id="b"><rect x="-2657" y="-1659" width="306" height="206"/></clipPath></defs><g id="a" class="a"><rect class="e" x="-2657" y="-1659" width="306" height="206"/><path class="b" d="M506.6,73.8v37.5a21.211,21.211,0,0,1-21.2,21.2H337.5a21.211,21.211,0,0,1-21.2-21.2V73.8a21.211,21.211,0,0,1,21.2-21.2H485.4A21.211,21.211,0,0,1,506.6,73.8Z" transform="translate(-2915 -1649)"/><g transform="translate(-2915 -1649)"><text class="c" transform="matrix(1, -0.017, 0.017, 1, 384.006, 87.853)"><tspan x="0" y="0">-10 </tspan></text><text class="d" transform="matrix(1, -0.017, 0.017, 1, 338.094, 106.328)"><tspan x="0" y="0">POINTS FOR EVERY </tspan></text><text class="d" transform="matrix(1, -0.017, 0.017, 1, 354.984, 123.747)"><tspan x="0" y="0">FLAGGED POST</tspan></text></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2657 -1659 306 206">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-_-10);
+      }
+
+      .cls-2 {
+        fill: #999;
+      }
+
+      .cls-3, .cls-5 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        font-size: 25px;
+        font-family: HelveticaNeue-Bold, Helvetica Neue;
+        font-weight: 700;
+      }
+
+      .cls-4 {
+        font-size: 14px;
+      }
+    </style>
+    <clipPath id="clip-_-10">
+      <rect x="-2657" y="-1659" width="306" height="206"/>
+    </clipPath>
+  </defs>
+  <g id="_-10" data-name="-10" class="cls-1">
+    <rect class="cls-5" x="-2657" y="-1659" width="306" height="206"/>
+    <path id="Path_45" data-name="Path 45" class="cls-2" d="M506.6,73.8v37.5a21.211,21.211,0,0,1-21.2,21.2H337.5a21.211,21.211,0,0,1-21.2-21.2V73.8a21.211,21.211,0,0,1,21.2-21.2H485.4A21.211,21.211,0,0,1,506.6,73.8Z" transform="translate(-2915 -1649)"/>
+    <text id="_-10_POINTS_FOR_EVERY_FLAGGED_POST" data-name="-10 
+POINTS FOR EVERY
+FLAGGED POST" class="cls-3" transform="translate(-2504 -1567)"><tspan x="-20.934" y="0">-10</tspan><tspan class="cls-4" y="0"> </tspan><tspan class="cls-4"><tspan x="-67.676" y="20">POINTS FOR EVERY</tspan><tspan x="-54.327" y="37">FLAGGED POST</tspan></tspan></text>
+  </g>
+</svg>
