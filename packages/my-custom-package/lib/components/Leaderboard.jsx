@@ -20,10 +20,10 @@ class Leaderboard extends Component {
             <ListContainer
               collection={Users}
               publication="users.list"
-              terms={{options: {sort: {createdAt: -1}}}}
-              options={{sort: {createdAt: -1}}}
-              joins={Users.getJoins()}
-              limit={5}
+              terms={{options: {sort: {'telescope.karma': -1}}}}
+              options={{sort: {'telescope.karma': -1}}}
+              // joins={Users.getJoins()}
+              // limit={5}
               component={UsersList}
               listId="users.list"
             />
@@ -45,9 +45,9 @@ class UsersList extends Component {
 
     return (
       <div className="users">
-        {this.props.results.map(leader => <Leader key={user.username} {...user} currentUser={this.props.currentUser}/>)}
+        {this.props.results.map(user => <Leader key={user._id} {...user} currentUser={this.props.currentUser}/>)}
         {this.props.hasMore ? (this.props.ready ? <LoadMore {...this.props}/> : <p>Loading…</p>) : <p>No more movies</p>}
-      </div>
+           </div>
     )
   }
 }
@@ -61,10 +61,9 @@ class Leader extends Component {
   render() {
 
     const user = this.props;
-
     return (
       <div key={user.username} style={{paddingBottom: "15px",marginBottom: "15px", borderBottom: "1px solid #ccc"}}>
-        <h2>{user.username} ({user.telescope.karma})</h2>
+        <h2>{user.username}: {user.telescope.karma}</h2>
       </div>
     )
   }
@@ -72,28 +71,14 @@ class Leader extends Component {
 }
 
 //////////////////////////////////////////////////////
-// Methods                                          //
-//////////////////////////////////////////////////////
-
-// Movies.smartMethods({
-//   createName: "movies.create",
-//   editName: "movies.edit",
-//   createCallback: function (user, document) {
-//     document = _.extend(document, {
-//       createdAt: new Date(),
-//       userId: Meteor.userId()
-//     });
-//     return document;
-//   },
-//   deleteCallback: isOwner
-// });
-
-//////////////////////////////////////////////////////
 // Publications                                     //
 //////////////////////////////////////////////////////
 
 if (Meteor.isServer) {
-  Users.smartPublish("users.list");
+  Meteor.publish('users.list', function () { return Meteor.users.find({}, {fields: {username: 1, 'telescope.karma': 1}}); }); 
+  //Users.smartPublish("users.list");
+  //Users.smartPublish();
+  //Meteor.users.find({}, {fields: {username: 1, karma: 1}})
 }
 
 

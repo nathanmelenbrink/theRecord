@@ -3,23 +3,10 @@
 
 
 // TODO: 
-// _Increase karma after posting
-// _Prevent users from exceeding posts per 24 hours
-// _Prevent users from exceeding votes per 24 hours
-// _Prevent users from exceeding flags per 24 hours
-// _Build flags with "downvote" functionality
-// _Decrease karma if post has been flagged
-// _Remove comments after posts
 // *Replace nova-voting package
-// _Fix ranking algorithm
 // *Add functionality for flagging users 
-// _Make post fields required
-// _Add categories
 // *Forgot password emails not sending
-// _Deleting posts needs to also remove 10 karma points (Nathan)
 // *Edit Account - hide all fields except username / password, leave subscribe button (Nathan) 
-// _Filters should show current selected…filter (Nathan)
-// _Make post text box larger 
 
 
 import Telescope from 'meteor/nova:lib';

@@ -5,7 +5,7 @@
   },
 
   "public": {
-    "title": "theRecord",
+    "title": "The Record",
     "tagline":"",
 
     "logoUrl": "",
@@ -40,7 +40,6 @@
   "mailUrl": "smtp://postmaster%40foo.mailgun.org:foo123@smtp.mailgun.org:587/",
   "scoreUpdateInterval": "30",
 
-  "embedlyKey":"2dff18161b024c4e8e46e8b3347c5063",
   "mailChimpAPIKey": "daa4da9a90523e06dc1bcb5ba7b91ea3-us14",
   "mailChimpListId": "d321f77bf5",
 
