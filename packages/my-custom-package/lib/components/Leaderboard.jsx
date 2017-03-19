@@ -86,6 +86,4 @@ if (Meteor.isServer) {
 const LoadMore = props => <a href="#" className="load-more button button--primary" onClick={props.loadMore}>Load More ({props.count}/{props.totalCount})</a>
 
 //registerComponent('Leaderboard', Leaderboard);
-
-// delete this comment
 export default Leaderboard;
