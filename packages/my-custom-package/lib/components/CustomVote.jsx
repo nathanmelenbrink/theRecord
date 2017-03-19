@@ -30,7 +30,7 @@ class CustomVote extends Component {
       return items;
     }
 
-    var maxUpvotesPer24Hours = Math.ceil(user.telescope.karma * 0.05 + 5);
+    var maxUpvotesPer24Hours = Math.ceil(user.telescope.karma * 0.05) + 5;
 
     if(!user){
       this.context.messages.flash("Please log in first");

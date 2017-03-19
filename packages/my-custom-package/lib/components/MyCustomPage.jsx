@@ -16,7 +16,8 @@ const MyCustomPage = () => {
 
       <h3>How It Works</h3>
       <p>The Record is designed for simplicity and transparency. All users are given equal privileges -- the ability to post, upvote posts, and flag posts that are not credibly sourced. Posts that receive more flags than upvotes will appear at the bottom of the feed. The more you participate, the more you'll rack up Reputation points. As your Reputation increases, so will your privileges, including the number of times you can post or upvote per day. If, however, a user is seen as being excessively biased or antagonizing, that user can be flagged by other users, which will result in a deduction of Reputation points. This creates a "community policing" effect. The users with the highest Reputation are those that are able to propagate the most meaningful information without marginalizing others. </p>
-      <p>To further promote transparency to all readers, anything you post, upvote, or flag will be permanently listed on your public profile. In exchange, we promise full disclosure of the source code that makes the site work -- if we ever make any changes to our algorithms, we will thoroughly explain them in a blog post. </p>
+      <p>To further promote transparency to all readers, anything you post, upvote, or flag will be permanently listed on your public profile. In exchange, we promise full disclosure of the source code that makes the site work -- if we ever make any changes to our algorithms, we will thoroughly explain them in a blog post. </p> 
+      <p>Email addresses, passwords and all other account information will be kept private and secure, and will never be disclosed to other users. </p>
 
       <hr className="divider"></hr>
 
