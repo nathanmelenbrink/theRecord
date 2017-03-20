@@ -83,7 +83,7 @@ class Leader extends Component {
 //////////////////////////////////////////////////////
 
 if (Meteor.isServer) {
-  Meteor.publish('users.list', function () { return Meteor.users.find({}, {limit: 20},  {fields: {username: 1, 'telescope.karma': 1, 'telescope.slug': 1}}); }); 
+  Meteor.publish('users.list', function () { return Meteor.users.find({}, {fields: {username: 1, 'telescope.karma': 1, 'telescope.slug': 1}},{limit: 20}); }); 
 
 }
 

@@ -17,7 +17,7 @@
     "requireViewInvite":false,
     "requirePostInvite":false,
     "enableNewsletter":true,
-    "autoSubscribe":false,
+    "autoSubscribe":true,
     "emailNotifications":true,
     "postInterval": 20,
     "RSSLinksPointTo": "link",

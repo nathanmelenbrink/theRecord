@@ -69,11 +69,17 @@ class Flag extends Component {
 
     return (
       <div className={actionsClass}>
-        <a className="upvote-button" onClick={this.flag}>
+        {/*<a className="upvote-button" onClick={this.flag}>
           <Telescope.components.Icon name="flag" />
           <div className="vote-count">{post.downvotes}</div> 
-        </a>
-       
+        </a>*/}
+        <Telescope.components.SocialButton type="facebook" post={post} /> 
+        <Telescope.components.SocialButton type="twitter" post={post} /> 
+
+        <a onClick={this.flag}> 
+
+        <Telescope.components.Icon name="flag" />
+       </a>
       </div>
     )
 

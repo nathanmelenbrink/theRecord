@@ -47,7 +47,7 @@ Posts.addField([
     URL
   */
   {
-    fieldName: 'url',
+    fieldName: 'link1',
     fieldSchema: {
       type: String,
       optional: false,
@@ -153,6 +153,6 @@ so we also add our new field to that object:
 
 import PublicationUtils from 'meteor/utilities:smart-publications';
 
-PublicationUtils.addToFields(Posts.publishedFields.list, ["location", "eventDate", "color", "flags", "flaggers"]);
+PublicationUtils.addToFields(Posts.publishedFields.list, ["location", "eventDate", "link1", "link2", "link3"]);
 
 PublicationUtils.addToFields(Users.publishedFields.list, ["remainingPosts", "remainingFlags", "remainingVotes"]);
