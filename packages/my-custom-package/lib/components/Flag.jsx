@@ -21,10 +21,11 @@ class Flag extends Component {
 
     console.log(user.hasDownvoted(post));
     function numberOfDownvotesInPast24Hours (user){
-      var mNow = moment();
+      
       var items = 0;
 
       user.telescope.downvotedPosts.forEach(function (entry){ 
+        var mNow = moment();
         if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
       });
 

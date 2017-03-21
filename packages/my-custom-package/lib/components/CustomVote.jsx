@@ -20,10 +20,11 @@ class CustomVote extends Component {
 
     console.log(user.hasUpvoted(post));
     function numberOfUpvotesInPast24Hours (user){
-      var mNow = moment();
+      
       var items = 0;
 
       user.telescope.upvotedPosts.forEach(function (entry){ 
+        var mNow = moment();
         if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
       });
 

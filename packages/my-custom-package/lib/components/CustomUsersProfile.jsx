@@ -26,23 +26,27 @@ const UsersProfile = ({user}, {currentUser}) => {
   const remainingVotes = votesPerDay - numberOfVotesInPast24Hours;
   const remainingFlags = flagsPerDay - numberOfFlagsInPast24Hours;
 
+  //const mNow = moment();
   // these should be helper functions in the User object, but how do you do that?
   function numberOfUpvotesInPast24Hours (user){
-    var mNow = moment();
+    
     var items = 0;
 
     user.telescope.upvotedPosts.forEach(function (entry){ 
+      var mNow = moment();
       if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
     });
 
+    console.log(items);
   return items;
   }
 
   function numberOfDownvotesInPast24Hours (user){
-      var mNow = moment();
+      
       var items = 0;
 
       user.telescope.downvotedPosts.forEach(function (entry){ 
+        var mNow = moment();
         if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
       });
 
