@@ -37,7 +37,6 @@ const UsersProfile = ({user}, {currentUser}) => {
       if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
     });
 
-    console.log(items);
   return items;
   }
 
@@ -55,8 +54,7 @@ const UsersProfile = ({user}, {currentUser}) => {
   
   return (
     <div className="page users-profile">
-      {/* don't know why this suddenly started causing errors 
-    <Telescope.components.HeadTags url={Users.getProfileUrl(user, true)} title={Users.getDisplayName(user)} description={} />*/}
+    <Telescope.components.HeadTags url={Users.getProfileUrl(user, true)} title={Users.getDisplayName(user)}  />
       <h2 className="page-title">{Users.getDisplayName(user)}</h2>
       <p className="page-title">
       Reputation = {user.telescope.karma} &nbsp;

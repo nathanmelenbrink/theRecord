@@ -168,7 +168,7 @@ Telescope.utils.getDomain = function(url) {
   try {
     return urlObject.parse(url).hostname.replace('www.', '');
   } catch (error) {
-    return null;
+    return url;//null;
   }
 };
 

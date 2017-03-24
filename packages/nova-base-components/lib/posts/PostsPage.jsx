@@ -10,8 +10,9 @@ const PostsPage = ({document, currentUser}) => {
   return (
     <div className="posts-page">
 
-      <Telescope.components.HeadTags url={Posts.getLink(post)} title={post.title} image={post.thumbnailUrl} />
-      
+      <Telescope.components.HeadTags url={Posts.getLink(post)} title={post.title} image='http://howtodesign.mit.edu/02_seeing/contrast.jpg' />
+         
+
       <Telescope.components.PostsItem post={post}/>
 
       {post.htmlBody ? <div className="posts-page-body" dangerouslySetInnerHTML={htmlBody}></div> : null}

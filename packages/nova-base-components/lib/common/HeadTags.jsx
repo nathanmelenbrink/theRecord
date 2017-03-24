@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 class HeadTags extends Component {
 	render() {
 
+		console.log(this.props);
 		const url = !!this.props.url ? this.props.url : Telescope.utils.getSiteUrl();
 		const title = !!this.props.title ? this.props.title : Telescope.settings.get("title", "Nova");
 		const description = !!this.props.description ? this.props.description : Telescope.settings.get("tagline");
@@ -30,6 +31,7 @@ class HeadTags extends Component {
 			// facebook
 			{ property: "og:type", content: "article" },
 			{ property: "og:url", content: url },
+			//{ property: "og:url", content: metaUrl },
 			{ property: "og:image", content: image },
 			{ property: "og:title", content: title },
 			{ property: "og:description", content: description },
@@ -42,8 +44,11 @@ class HeadTags extends Component {
 
 		const link = Telescope.headtags.link.concat([
 			{ rel: "canonical", href: Telescope.utils.getSiteUrl() },
+			//{ rel: "canonical", href: Meteor.absoluteUrl(this.props.url.replace('/', '')) },
 			{ rel: "shortcut icon", href: Telescope.settings.get("faviconUrl", "/img/favicon.ico") }
 		]);
+
+		console.log(meta);
 
 		return (
 			<div>

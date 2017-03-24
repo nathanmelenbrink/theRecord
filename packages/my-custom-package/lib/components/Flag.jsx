@@ -74,8 +74,8 @@ class Flag extends Component {
           <Telescope.components.Icon name="flag" />
           <div className="vote-count">{post.downvotes}</div> 
         </a>*/}
-        <Telescope.components.SocialButton type="facebook" post={post} /> 
-        <Telescope.components.SocialButton type="twitter" post={post} /> 
+        <Telescope.components.SocialButton type="facebook" post={post} url={ Posts.getLink(post) } title={ post.title } /> 
+        <Telescope.components.SocialButton type="twitter" post={post} url={ Posts.getLink(post) } title={ post.title } /> 
 
         <a onClick={this.flag}> 
 
