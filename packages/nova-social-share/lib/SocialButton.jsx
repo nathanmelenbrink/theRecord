@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import Helmet from "react-helmet";
 import Telescope from 'meteor/nova:lib';
 import { Components, registerComponent, getSetting } from 'meteor/nova:core';
 import Posts from 'meteor/nova:posts';
@@ -31,11 +32,17 @@ const SocialButton = ({type, post, className}) => {
   }
   
   return (
+    
     <a 
       className={className ? className : `posts-social-share posts-social-share-${type}`}
       href={socialUrl}
       target="_blank"
     >
+    <Helmet>
+                <meta charSet="utf-8" />
+                <title>My Title</title>
+                <link rel="canonical" href="http://mysite.com/example" />
+      </Helmet>
       <Telescope.components.Icon name={icon} />
     </a>      
   );

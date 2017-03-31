@@ -5,10 +5,10 @@ import Helmet from 'react-helmet';
 class HeadTags extends Component {
 	render() {
 
-		console.log(this.props);
+		//console.log(this.props);
 		const url = !!this.props.url ? this.props.url : Telescope.utils.getSiteUrl();
 		const title = !!this.props.title ? this.props.title : Telescope.settings.get("title", "Nova");
-		const description = !!this.props.description ? this.props.description : Telescope.settings.get("tagline");
+		const description = !!this.props.description ? this.props.description : 'A community dedicated to promoting neutral and verifiable news on the web';
 
 		// default image meta: logo url, else site image defined in settings
 		let image = !!Telescope.settings.get("siteImage") ? Telescope.settings.get("siteImage"): Telescope.settings.get("logoUrl");
@@ -22,6 +22,9 @@ class HeadTags extends Component {
 		if (!!image && image.indexOf('//') === -1) {
 			image = Telescope.utils.getSiteUrl() + image;
 		}
+
+		image = `http://howtodesign.mit.edu/02_seeing/contrast.jpg`;
+		//console.log(image);
 
 		const meta = Telescope.headtags.meta.concat([
 			{ charset: "utf-8" },
@@ -43,12 +46,12 @@ class HeadTags extends Component {
 		]);
 
 		const link = Telescope.headtags.link.concat([
-			{ rel: "canonical", href: Telescope.utils.getSiteUrl() },
+			{ rel: "canonical", href: "http://therecord.org" },
 			//{ rel: "canonical", href: Meteor.absoluteUrl(this.props.url.replace('/', '')) },
 			{ rel: "shortcut icon", href: Telescope.settings.get("faviconUrl", "/img/favicon.ico") }
 		]);
 
-		console.log(meta);
+		//console.log(meta);
 
 		return (
 			<div>

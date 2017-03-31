@@ -14,16 +14,6 @@ Posts.removeField('thumbnailUrl');
 Posts.removeField('url');
 Posts.removeField('title');
 
-// just a test
-
-//var latLng = Geolocation.latLng();
-
-// meteor add aldeed:geocoder, in order to pull location strings from lat,lng
-// var geo = new GeoCoder({
-//   geocoderProvider: "google",
-//   httpAdapter: "https",
-//   apiKey: 'YOUR API KEY'
-// });
 
 
 Posts.addField([

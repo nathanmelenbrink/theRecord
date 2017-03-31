@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 // import moment from 'moment';
 // import { ModalTrigger } from "meteor/nova:core";
 import Categories from "meteor/nova:categories";
+import Helmet from "react-helmet";
 
 class CustomPostsItem extends Telescope.components.PostsItem {
 
@@ -19,6 +20,12 @@ class CustomPostsItem extends Telescope.components.PostsItem {
 
     return (
       <div className={postClass}>
+        <Helmet>
+                <meta charSet="utf-8" />
+                <title>The Record</title>
+                <description> {post.title} </description>
+                <link rel="canonical" href="http://therecord.org" />
+        </Helmet>
 
         <div className="posts-item-vote">
           <Telescope.components.Vote post={post} />
@@ -30,7 +37,7 @@ class CustomPostsItem extends Telescope.components.PostsItem {
         <div className="posts-item-content">
 
           <h3 className="posts-item-title">
-            <Link to={Posts.getLink(post)} className="posts-item-title-link" target={Posts.getLinkTarget(post)}>
+            <Link to={post.link1} className="posts-item-title-link" target={Posts.getLinkTarget(post)}>
               {post.title}
             </Link>
             {this.renderCategories()}

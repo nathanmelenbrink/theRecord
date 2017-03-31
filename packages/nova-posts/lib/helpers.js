@@ -15,8 +15,8 @@ Posts.helpers({getCollectionName: () => "posts"});
  * @param {Object} post
  */
 Posts.getLink = function (post, isAbsolute = false, isRedirected = true) {
-  const url = isRedirected ? Telescope.utils.getOutgoingUrl(post.url) : post.url;
-  return !!post.url ? url : this.getPageUrl(post, isAbsolute);
+  const url = isRedirected ? Telescope.utils.getOutgoingUrl(Telescope.utils.addHttp(post.link1)) : Telescope.utils.addHttp(post.link1);
+  return !!post.link1 ? url : this.getPageUrl(post, isAbsolute);
 };
 Posts.helpers({getLink: function (isAbsolute) {return Posts.getLink(this, isAbsolute);}});
 
@@ -34,7 +34,7 @@ Posts.helpers({getShareableLink: function () {return Posts.getShareableLink(this
  * @param {Object} post
  */
 Posts.getLinkTarget = function (post) {
-  return !!post.url ? "_blank" : "";
+  return !!post.link1 ? "_blank" : "";
 };
 Posts.helpers({getLinkTarget: function () {return Posts.getLinkTarget(this);}});
 

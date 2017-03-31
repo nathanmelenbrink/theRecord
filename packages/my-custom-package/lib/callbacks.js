@@ -40,6 +40,12 @@ function PostsNewRateLimit (post, user) {
   var userId = post.userId;
   Users.update({_id: userId}, {$inc: {"telescope.karma": 10}});
 
+  // set the post URL field to link1
+  post.url = post.link1; 
+  post.link1 = Telescope.utils.addHttp(post.link1);
+  post.link2 = Telescope.utils.addHttp(post.link2);
+  post.link3 = Telescope.utils.addHttp(post.link3);
+
   return post;
 }
 Telescope.callbacks.add("posts.new.method", PostsNewRateLimit);

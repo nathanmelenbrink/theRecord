@@ -128,7 +128,12 @@ Telescope.utils.getSiteUrl = function () {
  * @param {String} url - the URL to redirect
  */
 Telescope.utils.getOutgoingUrl = function (url) {
-  return Telescope.utils.getSiteUrl() + "out?url=" + encodeURIComponent(url);
+  //const linkUrl = post.link;
+  //if (!!url) {
+    //return url.indexOf('//') > -1 ? Telescope.utils.getSiteUrl() + "out?url=" + encodeURIComponent(Telescope.utils.addHttp(url)) : Telescope.utils.getSiteUrl() + "out?url=" + encodeURIComponent(url);
+  //}
+
+  return Telescope.utils.getSiteUrl() + "out?url=" + encodeURIComponent(Telescope.utils.addHttp(url));
 };
 
 Telescope.utils.slugify = function (s) {
@@ -180,7 +185,7 @@ Telescope.utils.invitesEnabled = function() {
 Telescope.utils.addHttp = function (url) {
   try {
     if (url.substring(0, 5) !== "http:" && url.substring(0, 6) !== "https:") {
-      url = "http:"+url;
+      url = "http://"+url;
     }
     return url;
   } catch (error) {
