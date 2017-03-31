@@ -32,9 +32,10 @@
     "twitterAccount": "_TheRecord_",
     "facebookPage": "http://facebook.com/foo",
 
-    "googleAnalyticsId":"123foo"
+    "googleAnalyticsId":"123foo",
+    "useSegment": false,
+    "segmentWriteKey": "456bar"
   },
-
 
   "defaultEmail": "melenbrink@gmail.com",
   "mailUrl": "smtp://postmaster%40foo.mailgun.org:foo123@smtp.mailgun.org:587/",
@@ -42,6 +43,12 @@
 
   "mailChimpAPIKey": "daa4da9a90523e06dc1bcb5ba7b91ea3-us14",
   "mailChimpListId": "d321f77bf5",
+
+  "newsletterFrequency": [1,2,3,4,5,6,7],
+  "newsletterTime": "14:20",
+  "newsletterExcerptLength": 20,
+  "postExcerptLength": 30,
+
 
   "categories": [
         {

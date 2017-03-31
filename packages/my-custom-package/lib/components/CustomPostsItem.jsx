@@ -20,12 +20,7 @@ class CustomPostsItem extends Telescope.components.PostsItem {
 
     return (
       <div className={postClass}>
-        <Helmet>
-                <meta charSet="utf-8" />
-                <title>The Record</title>
-                <description> {post.title} </description>
-                <link rel="canonical" href="http://therecord.org" />
-        </Helmet>
+
 
         <div className="posts-item-vote">
           <Telescope.components.Vote post={post} />
