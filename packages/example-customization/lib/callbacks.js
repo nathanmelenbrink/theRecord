@@ -8,11 +8,9 @@
 // *Forgot password emails not sending
 // *Edit Account - hide all fields except username / password, leave subscribe button (Nathan) 
 
-
-<<<<<<< HEAD:packages/my-custom-package/lib/callbacks.js
-import Telescope from 'meteor/nova:lib';
+//import Telescope from 'meteor/nova:lib';
 import moment from 'moment';
-
+import { addCallback } from 'meteor/vulcan:core';
 // ------------------------------------- posts.new.async -------------------------------- //
 
 /**
@@ -49,7 +47,7 @@ function PostsNewRateLimit (post, user) {
 
   return post;
 }
-Telescope.callbacks.add("posts.new.method", PostsNewRateLimit);
+addCallback("posts.new.method", PostsNewRateLimit);
 
 
 /**
@@ -61,7 +59,7 @@ function DeletePostUpdateUser (post, user) {
 
   return post;
 }
-Telescope.callbacks.add("posts.remove.sync", DeletePostUpdateUser);
+addCallback("posts.remove.sync", DeletePostUpdateUser);
 
 
 
@@ -89,7 +87,7 @@ function upvoteUpdateUser (post, user) {
 
   return post;
 }
-Telescope.callbacks.add("upvote", upvoteUpdateUser);
+addCallback("upvote", upvoteUpdateUser);
 
 
 
@@ -118,7 +116,7 @@ function downvoteUpdateUser (post, user) {
 
   return post;
 }
-Telescope.callbacks.add("downvote", downvoteUpdateUser);
+addCallback("downvote", downvoteUpdateUser);
 
 
 /**
@@ -133,9 +131,6 @@ function cancelUpvoteUpdateUser (post, user) {
     votedAt: new Date(),
     power: votePower
   };
-=======
-import { addCallback } from 'meteor/vulcan:core';
->>>>>>> 3c41de5617043c14c6658e18c9b39171307e55b6:packages/example-customization/lib/callbacks.js
 
   // update user's upvoted posts list
   update.$pull = {'telescope.upvotedPosts': {itemId: post._id}};
@@ -150,7 +145,7 @@ import { addCallback } from 'meteor/vulcan:core';
 
 }
 
-Telescope.callbacks.add("cancelUpvote", cancelUpvoteUpdateUser);
+addCallback("cancelUpvote", cancelUpvoteUpdateUser);
 
 
 /**
@@ -179,14 +174,11 @@ function cancelDownvoteUpdateUser (post, user) {
   return post;
 
 }
-<<<<<<< HEAD:packages/my-custom-package/lib/callbacks.js
 
-Telescope.callbacks.add("cancelDownvote", cancelDownvoteUpdateUser);
+addCallback("cancelDownvote", cancelDownvoteUpdateUser);
 
 // Telescope.callbacks.remove("upvote.async", updateUser);
 // Telescope.callbacks.remove("downvote.async", updateUser);
 // Telescope.callbacks.remove("cancelUpvote.async", updateUser);
 // Telescope.callbacks.remove("cancelDownvote.async", updateUser);
-=======
-addCallback("posts.new.sync", PostsNewAddRandomEmoji);
->>>>>>> 3c41de5617043c14c6658e18c9b39171307e55b6:packages/example-customization/lib/callbacks.js
+

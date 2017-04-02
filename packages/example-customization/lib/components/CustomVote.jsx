@@ -1,7 +1,7 @@
-import Telescope from 'meteor/nova:lib';
+//import Telescope from 'meteor/nova:lib';
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
-import Users from 'meteor/nova:users';
+import Users from 'meteor/vulcan:users';
 import moment from 'moment';
 
 

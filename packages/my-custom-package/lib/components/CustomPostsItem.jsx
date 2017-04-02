@@ -1,12 +1,12 @@
-import Telescope from 'meteor/nova:lib';
-import Posts from "meteor/nova:posts";
+//import Telescope from 'meteor/nova:lib';
+import Posts from "meteor/vulcan:posts";
 import React, { PropTypes, Component } from 'react';
 import { FormattedMessage, FormattedRelative } from 'react-intl';
 import { Link } from 'react-router';
 // import { Button } from 'react-bootstrap';
 // import moment from 'moment';
 // import { ModalTrigger } from "meteor/nova:core";
-import Categories from "meteor/nova:categories";
+import Categories from "meteor/vulcan:categories";
 import Helmet from "react-helmet";
 
 class CustomPostsItem extends Telescope.components.PostsItem {

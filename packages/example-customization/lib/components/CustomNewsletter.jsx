@@ -19,15 +19,11 @@ class CustomNewsletter extends getRawComponent('Newsletter') {
     return this.state.showBanner
       ? (
         <div className="newsletter">
-<<<<<<< HEAD:packages/my-custom-package/lib/components/CustomNewsletter.jsx
-          <h4 className="newsletter-tagline">Subscribe to theRecord</h4>
+
+          <h4 className="newsletter-tagline">Subscribe to The Record</h4>
           {this.context.currentUser ? this.renderButton() : this.renderForm()}
-          <a onClick={this.dismissBanner} className="newsletter-close"><Telescope.components.Icon name="close"/></a>
-=======
-          <h4 className="newsletter-tagline">✉️<FormattedMessage id="newsletter.subscribe_prompt"/>✉️</h4>
-          {this.props.currentUser ? this.renderButton() : this.renderForm()}
           <a onClick={this.dismissBanner} className="newsletter-close"><Components.Icon name="close"/></a>
->>>>>>> 3c41de5617043c14c6658e18c9b39171307e55b6:packages/example-customization/lib/components/CustomNewsletter.jsx
+
         </div>
       ) : null;
   }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Components, replaceComponent } from 'meteor/vulcan:core';
 
-const Footer = props => {
+const CustomFooter = props => {
   return (
     <div className="footer">
     	<p className="text-center">
@@ -20,6 +21,8 @@ const Footer = props => {
   )
 }
 
-Footer.displayName = "Footer";
+CustomFooter.displayName = "Footer";
 
-module.exports = Footer;
+//module.exports = Footer;
+replaceComponent('Footer', CustomFooter);
+//registerComponent('Footer', Footer);
