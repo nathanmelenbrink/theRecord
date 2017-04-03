@@ -10,7 +10,9 @@ import { Link } from 'react-router';
 
 const CustomUsersProfile = (props) => {
 
-  const twitterName = Users.getTwitterName(user);
+  console.log(props);
+  //const twitterName = Users.getTwitterName(user);
+
 
   const terms = {view:"userPosts", userId: user._id};
   const {selector, options} = Posts.parameters.get(terms);
@@ -64,8 +66,8 @@ const CustomUsersProfile = (props) => {
   
   } else {
 
-    const user = props.document;
-
+    
+      const user = props.document;
     const terms = {view: "userPosts", userId: user._id};
 
   return (
@@ -100,4 +102,4 @@ const options = {
   fragmentName: 'UsersProfile',
 };
 
-replaceComponent('UsersProfile', CustomUsersProfile, withCurrentUser, [withDocument, options]);
+//replaceComponent('UsersProfile', CustomUsersProfile, withCurrentUser, [withDocument, options]);

@@ -10,7 +10,9 @@
 
 //import Telescope from 'meteor/nova:lib';
 import moment from 'moment';
-import { addCallback } from 'meteor/vulcan:core';
+import { addCallback, Utils } from 'meteor/vulcan:core';
+import { operateOnItem, getVotePower } from 'meteor/vulcan:voting';
+import Users from 'meteor/vulcan:users';
 // ------------------------------------- posts.new.async -------------------------------- //
 
 /**
@@ -41,9 +43,9 @@ function PostsNewRateLimit (post, user) {
 
   // set the post URL field to link1
   post.url = post.link1; 
-  post.link1 = Telescope.utils.addHttp(post.link1);
-  post.link2 = Telescope.utils.addHttp(post.link2);
-  post.link3 = Telescope.utils.addHttp(post.link3);
+  post.link1 = Utils.addHttp(post.link1);
+  post.link2 = Utils.addHttp(post.link2);
+  post.link3 = Utils.addHttp(post.link3);
 
   return post;
 }
@@ -59,7 +61,7 @@ function DeletePostUpdateUser (post, user) {
 
   return post;
 }
-addCallback("posts.remove.sync", DeletePostUpdateUser);
+//addCallback("posts.remove.sync", DeletePostUpdateUser);
 
 
 
@@ -69,25 +71,25 @@ addCallback("posts.remove.sync", DeletePostUpdateUser);
 function upvoteUpdateUser (post, user) {
 
     var update = {};
-    var votePower = Telescope.getVotePower(user);
+    //var votePower = getVotePower(user);
     var vote = {
       itemId: post._id,
       votedAt: new Date(),
-      power: votePower
+      power: 1
     };
 
     // update user's upvoted posts list
-    update.$addToSet = {'telescope.upvotedPosts': vote};
+    update.$addToSet = {'upvotedPosts': vote};
     Users.update({_id: user._id}, update);
 
     // update user's karma
     if (post.userId !== user._id) {
-      Users.update({_id: post.userId}, {$inc: {"telescope.karma": 1}});
+      Users.update({_id: post.userId}, {$inc: {"karma": 1}});
     }
 
   return post;
 }
-addCallback("upvote", upvoteUpdateUser);
+//addCallback("upvote", upvoteUpdateUser);
 
 
 
@@ -98,11 +100,10 @@ addCallback("upvote", upvoteUpdateUser);
 function downvoteUpdateUser (post, user) {
   
     var update = {};
-    var votePower = Telescope.getVotePower(user);
     var vote = {
       itemId: post._id,
       votedAt: new Date(),
-      power: votePower
+      power: 1
     };
 
     // update user's downvoted posts list
@@ -116,7 +117,7 @@ function downvoteUpdateUser (post, user) {
 
   return post;
 }
-addCallback("downvote", downvoteUpdateUser);
+//addCallback("downvote", downvoteUpdateUser);
 
 
 /**
@@ -125,11 +126,10 @@ addCallback("downvote", downvoteUpdateUser);
 function cancelUpvoteUpdateUser (post, user) {
 
   var update = {};
-  var votePower = Telescope.getVotePower(user);
   var vote = {
     itemId: post._id,
     votedAt: new Date(),
-    power: votePower
+    power: 1
   };
 
   // update user's upvoted posts list
@@ -145,7 +145,7 @@ function cancelUpvoteUpdateUser (post, user) {
 
 }
 
-addCallback("cancelUpvote", cancelUpvoteUpdateUser);
+//addCallback("cancelUpvote", cancelUpvoteUpdateUser);
 
 
 /**
@@ -154,11 +154,10 @@ addCallback("cancelUpvote", cancelUpvoteUpdateUser);
 function cancelDownvoteUpdateUser (post, user) {
 
   var update = {};
-  var votePower = Telescope.getVotePower(user);
   var vote = {
     itemId: post._id,
     votedAt: new Date(),
-    power: votePower
+    power: 1
   };
 
   // update user's downvoted posts list
@@ -175,7 +174,7 @@ function cancelDownvoteUpdateUser (post, user) {
 
 }
 
-addCallback("cancelDownvote", cancelDownvoteUpdateUser);
+//addCallback("cancelDownvote", cancelDownvoteUpdateUser);
 
 // Telescope.callbacks.remove("upvote.async", updateUser);
 // Telescope.callbacks.remove("downvote.async", updateUser);

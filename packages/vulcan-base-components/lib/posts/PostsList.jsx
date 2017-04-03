@@ -3,6 +3,7 @@ import React from 'react';
 import Posts from 'meteor/vulcan:posts';
 import { Alert } from 'react-bootstrap';
 
+
 const Error = ({error}) => <Alert className="flash-message" bsStyle="danger">{error.message}</Alert>
 
 const PostsList = (props) => {

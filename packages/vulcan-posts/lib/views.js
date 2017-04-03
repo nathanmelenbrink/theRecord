@@ -1,6 +1,8 @@
 import Users from 'meteor/vulcan:users';
 import Posts from './collection.js'
 
+
+
 /**
  * @summary Base parameters that will be common to all other view unless specific properties are overwritten
  */

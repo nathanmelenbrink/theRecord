@@ -3,6 +3,7 @@ import React, { PropTypes, Component } from 'react';
 import { FormattedMessage, FormattedRelative } from 'react-intl';
 import { Link } from 'react-router';
 import Posts from "meteor/vulcan:posts";
+import gql from 'graphql-tag';
 
 class CustomPostsItem extends getRawComponent('PostsItem') {
 
@@ -11,7 +12,7 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
     const post = this.props.post;
     let postClass = "posts-item";
     if (post.sticky) postClass += " posts-sticky";
-
+    
 
     return (
       <div className={postClass}>
@@ -66,6 +67,21 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
   }
 }
 
+CustomPostsItem.propTypes = {
+  currentUser: React.PropTypes.object,
+  post: React.PropTypes.object.isRequired
+};
+
+CustomPostsItem.fragment = gql`
+  fragment PostsItemFragment on Post {
+    _id
+    title
+    url
+    link1
+    link2
+    link3
+  }
+`;
 
 replaceComponent('PostsItem', CustomPostsItem);
 

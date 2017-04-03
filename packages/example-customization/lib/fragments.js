@@ -1,17 +1,15 @@
 import { extendFragment, registerFragment } from 'meteor/vulcan:core';
 
 extendFragment('PostsList', `
-  color # new custom property!
+  _id
+  link1
+  link2
+  link3
 `);
 
 extendFragment('PostsPage', `
-  color # new custom property!
-`);
-
-registerFragment(`
-  fragment UsersItemFragment on User {
-    _id
-    createdAt
-    karma
-  }
+	_id
+  link1
+  link2
+  link3
 `);

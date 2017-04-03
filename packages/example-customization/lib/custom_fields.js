@@ -1,32 +1,166 @@
 import Posts from "meteor/vulcan:posts";
+import Users from 'meteor/vulcan:users';
 
-/*
-Let's assign a color to each post (why? cause we want to, that's why).
-We'll do that by adding a custom field to the Posts collection.
-Note that this requires our custom package to depend on vulcan:posts and vulcan:users.
-*/
-
-Posts.addField(
+Posts.addField([
+   /**
+    Title
+  */
   {
-    fieldName: 'color',
+    fieldName: 'title',
     fieldSchema: {
+      label: "Content",
       type: String,
-      control: "select", // use a select form control
-      optional: true, // this field is not required
+      optional: false,
+      max: 400,
+      insertableBy: ['members'],
+      editableBy: ['members'],
+      viewableBy: ['members'],
+      control: "textarea",
+      order: 2
+    }
+  },
+    /**
+    URL
+  */
+  {
+    fieldName: 'url',
+    fieldSchema: {
+      hidden: true,
+      type: String,
+      optional: true,
+      max: 500,
+      insertableBy: ['members'],
+      editableBy: ['members'],
+      viewableBy: ['members'],
+      control: "text",
+      order: 10
+    }
+  },
+      /**
+    URL
+  */
+  {
+    fieldName: 'thumbnailUrl',
+    fieldSchema: {
+      hidden: true,
+      type: String,
+      optional: true,
+      max: 500,
+      insertableBy: ['members'],
+      editableBy: ['members'],
+      viewableBy: ['members'],
+      control: "text",
+      order: 10
+    }
+  },
+  /**
+    URL
+  */
+  {
+    fieldName: 'link1',
+    fieldSchema: {
+      label: "Link 1 (required)",
+      type: String,
+      optional: false,
+      max: 500,
+      insertableBy: ['members'],
+      editableBy: ['members'],
+      viewableBy: ['members'],
+      control: "text",
+      order: 10
+    }
+  },
+  /**
+    URL
+  */
+  {
+    fieldName: 'link2',
+    fieldSchema: {
+      label: "Link 2 (optional)",
+      type: String,
+      optional: true,
+      max: 500,
+      insertableBy: ['members'],
+      editableBy: ['members'],
+      viewableBy: ['members'],
+      control: "text",
+      order: 11
+    }
+  },
+  /**
+    URL
+  */
+  {
+    fieldName: 'link3',
+    fieldSchema: {
+      label: "Link 2 (optional)",
+      type: String,
+      optional: true,
+      max: 500,
+      insertableBy: ['members'],
+      editableBy: ['members'],
+      viewableBy: ['members'],
+      control: "text",
+      order: 12
+    }
+  },
+  /**
+    Body
+  */
+  {
+    fieldName: 'body',
+    fieldSchema: {
+      hidden: true,
+      type: String,
+      optional: true,
+      max: 500,
+      insertableBy: ['members'],
+      editableBy: ['members'],
+      viewableBy: ['members'],
+      control: "text",
+      order: 20
+    }
+  },
+  /**
+    Location the post refers to (defaults to current)
+  */
+  {
+    fieldName: 'location',
+    fieldSchema: {
+      label: 'Location',
+      type: String,
+      optional: true,
       insertableBy: ['members'],
       editableBy: ['members'],
       viewableBy: ['members'],
       form: {
-        options: function () { // options for the select form control
-          return [
-            {value: "white", label: "White"},
-            {value: "yellow", label: "Yellow"},
-            {value: "blue", label: "Blue"},
-            {value: "red", label: "Red"},
-            {value: "green", label: "Green"}
-          ];
-        }
+        //defaultMessage: 'latLng' 
+        //defaultValue: 'latLng' 
       },
     }
+  },
+  /**
+    Time the post refers to (defaults to current)
+  */
+  {
+    fieldName: 'eventDate',
+    fieldSchema: {
+      label: 'Event Date',
+      type: Date,
+      insertableBy: ['members'],
+      editableBy: ['members'],
+      viewableBy: ['members'],
+      optional: false,
+      control: "datetime"
+      //group: Posts.formGroups.admin
+    }
   }
-);
+
+  ]);
+
+
+/*
+The main post list view uses a special object to determine which fields to publish,
+so we also add our new field to that object:
+*/
+
