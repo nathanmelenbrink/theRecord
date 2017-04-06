@@ -10,32 +10,12 @@ import { Link } from 'react-router';
 
 const CustomUsersProfile = (props) => {
 
-  console.log(props);
-  //const twitterName = Users.getTwitterName(user);
-
-
-  const terms = {view:"userPosts", userId: user._id};
-  const {selector, options} = Posts.parameters.get(terms);
-
-  const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts);
-  const numberOfVotesInPast24Hours = numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
-  const numberOfFlagsInPast24Hours = numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
-
-  const postsPerDay = Math.round(user.telescope.karma * 0.05) + 1;
-  const votesPerDay = Math.ceil(user.telescope.karma * 0.05) + 5;
-  const flagsPerDay = Math.ceil(user.telescope.karma * 0.01);
-  
-  const remainingPosts = postsPerDay - numberOfPostsInPast24Hours;
-  const remainingVotes = votesPerDay - numberOfVotesInPast24Hours;
-  const remainingFlags = flagsPerDay - numberOfFlagsInPast24Hours;
-
-  //const mNow = moment();
   // these should be helper functions in the User object, but how do you do that?
   function numberOfUpvotesInPast24Hours (user){
     
     var items = 0;
 
-    user.telescope.upvotedPosts.forEach(function (entry){ 
+    user.upvotedPosts.forEach(function (entry){ 
       var mNow = moment();
       if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
     });
@@ -47,7 +27,7 @@ const CustomUsersProfile = (props) => {
       
       var items = 0;
 
-      user.telescope.downvotedPosts.forEach(function (entry){ 
+      user.downvotedPosts.forEach(function (entry){ 
         var mNow = moment();
         if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
       });
@@ -67,29 +47,56 @@ const CustomUsersProfile = (props) => {
   } else {
 
     
-      const user = props.document;
+    const user = props.document;
     const terms = {view: "userPosts", userId: user._id};
+// const terms = {view:"userPosts", userId: user._id};
+ // const {selector, options} = Posts.parameters.get(terms);
+
+
+  const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts);
+  const numberOfVotesInPast24Hours = numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
+  const numberOfFlagsInPast24Hours = numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
+
+  const postsPerDay = Math.round(user.karma * 0.05) + 1;
+  const votesPerDay = Math.ceil(user.karma * 0.05) + 5;
+  const flagsPerDay = Math.ceil(user.karma * 0.01);
+  
+  const remainingPosts = postsPerDay - numberOfPostsInPast24Hours;
+  const remainingVotes = votesPerDay - numberOfVotesInPast24Hours;
+  const remainingFlags = flagsPerDay - numberOfFlagsInPast24Hours;
 
   return (
     <div className="page users-profile">
-        <Components.HeadTags url={Users.getProfileUrl(user, true)} title={Users.getDisplayName(user)} />
-        <h2 className="page-title">{Users.getDisplayName(user)}</h2>
-        {user.htmlBio ? <div dangerouslySetInnerHTML={{__html: user.htmlBio}}></div> : null }
-        <ul>
-          {user.twitterUsername ? <li><a href={"http://twitter.com/" + user.twitterUsername}>@{user.twitterUsername}</a></li> : null }
-          {user.website ? <li><a href={user.website}>{user.website}</a></li> : null }
-          <Components.ShowIf check={Users.options.mutations.edit.check} document={user}>
-            <li><Link to={Users.getEditUrl(user)}><FormattedMessage id="users.edit_account"/></Link></li>
-          </Components.ShowIf>
+    <Components.HeadTags url={Users.getProfileUrl(user, true)} title={Users.getDisplayName(user)}  />
+      <h2 className="page-title">{Users.getDisplayName(user)}</h2>
+      <p className="page-title">
+      Reputation = {user.karma} &nbsp;
+      Post Count = {user.postCount} &nbsp;
+      Posts per day = {postsPerDay} &nbsp;
+      Upvotes per day = {votesPerDay} &nbsp;
+      Flags per day = {flagsPerDay} </p>
+
+       <p className="page-title">
+       Remaining Posts: {remainingPosts}  &nbsp;
+       Remaining Votes: {remainingVotes}  &nbsp;
+       Remaining Flags: {remainingFlags}  &nbsp;
+       </p>
+
+       <ul>
+      <Components.ShowIf check={Users.options.mutations.edit.check} document={user}>
+         <li><Link to={Users.getEditUrl(user)}><FormattedMessage id="users.edit_account"/></Link></li>
+      </Components.ShowIf>
         </ul>
         <h3><FormattedMessage id="users.posts"/></h3>
         <Components.PostsList terms={terms} />
-      </div>  )
+      </div>  
+
+      )
 }
 }
 
 CustomUsersProfile.propTypes = {
-  //user: React.PropTypes.object.isRequired,
+  //document: React.PropTypes.object.isRequired,
 }
 
 
@@ -102,4 +109,4 @@ const options = {
   fragmentName: 'UsersProfile',
 };
 
-//replaceComponent('UsersProfile', CustomUsersProfile, withCurrentUser, [withDocument, options]);
+replaceComponent('UsersProfile', CustomUsersProfile, withCurrentUser, [withDocument, options]);

@@ -1,18 +1,18 @@
 
-// Had to remove the updateUser callbacks from the core/lib, it won't remove them from this file
-
-
 // TODO: 
 // *Replace nova-voting package
 // *Add functionality for flagging users 
 // *Forgot password emails not sending
 // *Edit Account - hide all fields except username / password, leave subscribe button (Nathan) 
+// *Fix all custom callbacks 
+// *Usersprofile link
 
 //import Telescope from 'meteor/nova:lib';
 import moment from 'moment';
 import { addCallback, Utils } from 'meteor/vulcan:core';
 import { operateOnItem, getVotePower } from 'meteor/vulcan:voting';
 import Users from 'meteor/vulcan:users';
+import Posts from 'meteor/vulcan:posts';
 // ------------------------------------- posts.new.async -------------------------------- //
 
 /**
@@ -24,8 +24,8 @@ function PostsNewRateLimit (post, user) {
 
     var timeSinceLastPost = Users.timeSinceLast(user, Posts),
       numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts),
-      postInterval = Math.abs(parseInt(Telescope.settings.get('postInterval', 30))),
-      maxPostsPer24Hours = Math.round(user.telescope.karma * 0.05) + 1;
+      postInterval = 30,
+      maxPostsPer24Hours = Math.round(user.karma * 0.05) + 1;
 
     // check that user waits more than X seconds between posts
     if(timeSinceLastPost < postInterval)
@@ -41,15 +41,16 @@ function PostsNewRateLimit (post, user) {
   var userId = post.userId;
   Users.update({_id: userId}, {$inc: {"telescope.karma": 10}});
 
+
   // set the post URL field to link1
-  post.url = post.link1; 
-  post.link1 = Utils.addHttp(post.link1);
+  //post.url = post.link1; 
+  post.link1 = Utils.addHttp(post.link1); // I had to change the addHttp function get this to work 
   post.link2 = Utils.addHttp(post.link2);
   post.link3 = Utils.addHttp(post.link3);
 
   return post;
 }
-addCallback("posts.new.method", PostsNewRateLimit);
+addCallback("posts.new.sync", PostsNewRateLimit);
 
 
 /**

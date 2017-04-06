@@ -5,6 +5,8 @@ import Users from 'meteor/vulcan:users';
 import { Link } from 'react-router';
 
 const UsersProfile = (props) => {
+  console.log(props);
+
   if (props.loading) {
 
     return <div className="page users-profile"><Components.Loading/></div>

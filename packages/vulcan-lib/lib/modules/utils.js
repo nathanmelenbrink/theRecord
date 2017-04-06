@@ -183,11 +183,11 @@ Utils.invitesEnabled = function() {
 Utils.addHttp = function (url) {
   try {
     if (url.substring(0, 5) !== "http:" && url.substring(0, 6) !== "https:") {
-      url = "http:"+url;
+      url = "http://"+url;
     }
     return url;
   } catch (error) {
-    return null;
+    return url;
   }
 };
 
