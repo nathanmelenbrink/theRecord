@@ -138,7 +138,7 @@ function updateKarma(item, user, collection, operation, context) {
 
   const votePower = 1;  //getVotePower(user);
   var karmaAmount = (operation === "upvote" || operation === "cancelDownvote") ? votePower : -votePower;
-
+  //test comment 
   if (operation === "downvote" || operation === "cancelDownvote") {
     karmaAmount *= 10;
   }
