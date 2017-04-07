@@ -136,8 +136,12 @@ addCallback("cancelDownvote.async", updateUser);
  */
 function updateKarma(item, user, collection, operation, context) {
 
-  const votePower = getVotePower(user);
-  const karmaAmount = (operation === "upvote" || operation === "cancelDownvote") ? votePower : -votePower;
+  const votePower = 1;  //getVotePower(user);
+  var karmaAmount = (operation === "upvote" || operation === "cancelDownvote") ? votePower : -votePower;
+
+  if (operation === "downvote" || operation === "cancelDownvote") {
+    karmaAmount *= 10;
+  }
 
   // only update karma is the operation isn't done by the item's author
   if (item.userId !== user._id) {

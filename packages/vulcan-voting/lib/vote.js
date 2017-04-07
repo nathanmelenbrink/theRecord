@@ -28,7 +28,7 @@ export const operateOnItem = function (collection, originalItem, user, operation
     ...originalItem,
   }; // we do not want to affect the original item directly
 
-  const votePower = getVotePower(user);
+  const votePower = 1; //getVotePower(user);
   const hasUpvotedItem = hasUpvoted(user, item);
   const hasDownvotedItem = hasDownvoted(user, item);
   const collectionName = collection._name;
@@ -96,7 +96,7 @@ export const operateOnItem = function (collection, originalItem, user, operation
       item = update(item, {
         downvoters: {$push: [voter]},
         downvotes: {$set: item.downvotes + 1},
-        baseScore: {$set: item.baseScore - votePower},
+        baseScore: {$set: item.baseScore - votePower*2},
       });
 
       break;
@@ -114,7 +114,7 @@ export const operateOnItem = function (collection, originalItem, user, operation
       item = update(item, {
         downvoters: {$set: item.downvoters.filter(filterFunction)},
         downvotes: {$set: item.downvotes - 1},
-        baseScore: {$set: item.baseScore + votePower},
+        baseScore: {$set: item.baseScore + votePower*2},
       });
 
       break;
