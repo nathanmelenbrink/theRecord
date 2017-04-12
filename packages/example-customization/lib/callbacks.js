@@ -4,8 +4,8 @@
 // *Add functionality for flagging users 
 // *Forgot password emails not sending
 // *Edit Account - hide all fields except username / password, leave subscribe button (Nathan) 
-// *Fix all custom callbacks 
-// *Usersprofile link
+// http://therecord-94654.onmodulus.net/
+
 
 //import Telescope from 'meteor/nova:lib';
 import moment from 'moment';

@@ -2,7 +2,6 @@
   "name": "Nova",
   "version": "1.2.0",
   "engines": {
-    "node": "7.2.1",
     "npm": "^3.0"
   },
   "scripts": {
@@ -12,12 +11,13 @@
   },
   "dependencies": {
     "analytics-node": "^2.1.1",
-    "apollo-client": "^1.0.0-rc.6",
+    "apollo-client": "^1.0.1",
     "babel-runtime": "^6.18.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "classnames": "^2.2.3",
     "cookie-parser": "^1.4.3",
+    "crypto-js": "^3.1.9-1",
     "deepmerge": "^1.2.0",
     "escape-string-regexp": "^1.0.5",
     "express": "^4.14.0",
