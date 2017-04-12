@@ -39,7 +39,7 @@ function PostsNewRateLimit (post, user) {
   
   // give the user karma points
   var userId = post.userId;
-  Users.update({_id: userId}, {$inc: {"telescope.karma": 10}});
+  Users.update({_id: userId}, {$inc: {"karma": 10}});
 
 
   // set the post URL field to link1
