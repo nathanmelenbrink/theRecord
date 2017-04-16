@@ -7,7 +7,7 @@ Package.onUse( function(api) {
 
   api.use([
     'fourseven:scss',
-    'xavcz:vulcan-social-share',
+    //'xavcz:vulcan-social-share',
     'vulcan:core',
     'vulcan:forms',
     'vulcan:accounts',
