@@ -21,7 +21,7 @@ import "./components/CustomUsersMenu.jsx";
 import "./components/CustomUsersProfile.jsx";
 import "./components/CustomVote.jsx";
 import "./components/Flag.jsx";
-// import "./components/Leaderboard.jsx";
+import "./components/SocialButton.jsx";
 import "./components/MyCustomPage.jsx";
 import "./components/UsersItem.jsx";
 import "./components/UsersList.jsx";
