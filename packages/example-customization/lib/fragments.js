@@ -13,3 +13,4 @@ extendFragment('PostsPage', `
   link2
   link3
 `);
+

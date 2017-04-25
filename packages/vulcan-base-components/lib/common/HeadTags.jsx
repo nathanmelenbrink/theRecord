@@ -13,12 +13,15 @@ class HeadTags extends Component {
 
 		const url = !!this.props.url ? this.props.url : Utils.getSiteUrl();
 		const title = !!this.props.title ? this.props.title : getSetting("title", "My App");
-		const description = !!this.props.description ? this.props.description : getSetting("tagline");
+		let description = !!this.props.description ? this.props.description : getSetting("tagline");
 
+		description = title;
 
 		// default image meta: logo url, else site image defined in settings
 		let image = !!getSetting("siteImage") ? getSetting("siteImage"): getSetting("logoUrl");
 		
+		image = '/favicon.png';
+
 		// overwrite default image if one is passed as props 
 		if (!!this.props.image) {
 			image = this.props.image; 
@@ -40,7 +43,7 @@ class HeadTags extends Component {
 			{ property: "og:url", content: url },
 			//{ property: "og:url", content: metaUrl },
 			{ property: "og:image", content: image },
-			{ property: "og:title", content: title },
+			{ property: "og:title", content: 'The Record' },
 			{ property: "og:description", content: description },
 			//twitter
 			{ name: "twitter:card", content: "summary" },
@@ -58,7 +61,7 @@ class HeadTags extends Component {
 
 		]);
 
-		//console.log(meta);
+		console.log(meta);
 
 		return (
 			<div>
