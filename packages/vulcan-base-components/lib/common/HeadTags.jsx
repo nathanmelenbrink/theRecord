@@ -6,13 +6,13 @@ class HeadTags extends Component {
 	render() {
 
 
-		//console.log(this.props);
+		console.log(this.props);
 		//const url = !!this.props.url ? this.props.url : Telescope.utils.getSiteUrl();
 		//const title = !!this.props.title ? this.props.title : Telescope.settings.get("title", "Nova");
 		//const description = !!this.props.description ? this.props.description : 'A community dedicated to promoting neutral and verifiable news on the web';
 
 		const url = !!this.props.url ? this.props.url : Utils.getSiteUrl();
-		const title = !!this.props.title ? this.props.title : getSetting("title", "My App");
+		const title = this.props.title ;
 		let description = !!this.props.description ? this.props.description : getSetting("tagline");
 
 		description = title;
@@ -23,9 +23,9 @@ class HeadTags extends Component {
 		image = '/favicon.png';
 
 		// overwrite default image if one is passed as props 
-		if (!!this.props.image) {
-			image = this.props.image; 
-		}
+		//if (!!this.props.image) {
+		//	image = this.props.image; 
+		//}
 
 		// add site url base if the image is stored locally
 		if (!!image && image.indexOf('//') === -1) {
