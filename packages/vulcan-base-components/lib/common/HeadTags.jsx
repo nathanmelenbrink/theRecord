@@ -13,10 +13,11 @@ class HeadTags extends Component {
 
 		const url = !!this.props.url ? this.props.url : Utils.getSiteUrl();
 		const title = this.props.title ;
-		let description = !!this.props.description ? this.props.description : getSetting("tagline");
+		//let description = !!this.props.description ? this.props.description : getSetting("tagline");
 
-		description = title;
+		const description = this.props.title;
 
+		console.log(description);
 		// default image meta: logo url, else site image defined in settings
 		let image = !!getSetting("siteImage") ? getSetting("siteImage"): getSetting("logoUrl");
 		
