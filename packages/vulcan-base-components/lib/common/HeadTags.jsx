@@ -2,20 +2,23 @@ import React, { PropTypes, Component } from 'react';
 import Helmet from 'react-helmet';
 import { registerComponent, Utils, getSetting, Headtags } from 'meteor/vulcan:core';
 
-class HeadTags extends Component {
-	render() {
+//class HeadTags extends Component {
+//	render() {
 
+const HeadTags = props => {
 
-		console.log(this.props);
+		console.log(props);
 		//const url = !!this.props.url ? this.props.url : Telescope.utils.getSiteUrl();
 		//const title = !!this.props.title ? this.props.title : Telescope.settings.get("title", "Nova");
-		//const description = !!this.props.description ? this.props.description : 'A community dedicated to promoting neutral and verifiable news on the web';
+		
+		// i guess since props arent rendered to the server, the second choice is taken
+		const description = !!props.title ? props.title : 'A community dedicated to promoting neutral and verifiable news on the web';
 
-		const url = !!this.props.url ? this.props.url : Utils.getSiteUrl();
-		const title = this.props.title ;
+		const url = !!props.url ? props.url : Utils.getSiteUrl();
+		const title = props.title ;
 		//let description = !!this.props.description ? this.props.description : getSetting("tagline");
 
-		const description = this.props.title;
+		//const description = this.props.title;
 
 		console.log(description);
 		// default image meta: logo url, else site image defined in settings
@@ -64,19 +67,20 @@ class HeadTags extends Component {
 
 		console.log(meta);
 
-		return (
-			<div>
-				<Helmet title={title} meta={meta} link={link} script={Headtags.script} />
-			</div>
-		);
+		//return //(
+			//<div>
+		return	<Helmet title={title} meta={meta} link={link} script={Headtags.script} />
+			//</div>
+		//);
 	}
-}
+//}
 
 HeadTags.propTypes = {
 	url: React.PropTypes.string,
 	title: React.PropTypes.string,
 	description: React.PropTypes.string,
 	image: React.PropTypes.string,
+	body: React.PropTypes.string,
 };
 
 
