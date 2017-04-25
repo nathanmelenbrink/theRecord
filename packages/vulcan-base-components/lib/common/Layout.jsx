@@ -7,7 +7,7 @@ class Layout extends Component {
     return (
       <div className="wrapper" id="wrapper">
 
-        <Components.HeadTags />
+        <Components.HeadTags {...this.props} />
 
         <Components.UsersProfileCheck {...this.props} />
 
