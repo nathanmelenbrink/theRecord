@@ -14,7 +14,7 @@ Posts.addField([
       max: 400,
       insertableBy: ['members'],
       editableBy: ['members'],
-      viewableBy: ['members'],
+      viewableBy: ['guests'],
       control: "textarea",
       order: 2
     }
@@ -31,7 +31,7 @@ Posts.addField([
       max: 500,
       insertableBy: ['members'],
       editableBy: ['members'],
-      viewableBy: ['members'],
+      viewableBy: ['guests'],
       control: "text",
       order: 10
     }
@@ -65,7 +65,7 @@ Posts.addField([
       max: 500,
       insertableBy: ['members'],
       editableBy: ['members'],
-      viewableBy: ['members'],
+      viewableBy: ['guests'],
       control: "text",
       order: 10
     }
@@ -82,7 +82,7 @@ Posts.addField([
       max: 500,
       insertableBy: ['members'],
       editableBy: ['members'],
-      viewableBy: ['members'],
+      viewableBy: ['guests'],
       control: "text",
       order: 11
     }
@@ -99,7 +99,7 @@ Posts.addField([
       max: 500,
       insertableBy: ['members'],
       editableBy: ['members'],
-      viewableBy: ['members'],
+      viewableBy: ['guests'],
       control: "text",
       order: 12
     }
@@ -116,7 +116,7 @@ Posts.addField([
       max: 500,
       insertableBy: ['members'],
       editableBy: ['members'],
-      viewableBy: ['members'],
+      viewableBy: ['guests'],
       control: "text",
       order: 20
     }
@@ -132,7 +132,7 @@ Posts.addField([
       optional: true,
       insertableBy: ['members'],
       editableBy: ['members'],
-      viewableBy: ['members'],
+      viewableBy: ['guests'],
       form: {
         //defaultMessage: 'latLng' 
         //defaultValue: 'latLng' 
@@ -149,7 +149,7 @@ Posts.addField([
       type: Date,
       insertableBy: ['members'],
       editableBy: ['members'],
-      viewableBy: ['members'],
+      viewableBy: ['guests'],
       optional: false,
       control: "datetime"
       //group: Posts.formGroups.admin
