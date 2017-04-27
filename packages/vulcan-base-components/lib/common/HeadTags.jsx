@@ -7,11 +7,6 @@ import { registerComponent, Utils, getSetting, Headtags } from 'meteor/vulcan:co
 
 const HeadTags = props => {
 
-		console.log(props);
-		//const url = !!this.props.url ? this.props.url : Telescope.utils.getSiteUrl();
-		//const title = !!this.props.title ? this.props.title : Telescope.settings.get("title", "Nova");
-		
-		// i guess since props arent rendered to the server, the second choice is taken
 		const description = !!props.title ? props.title : 'A community dedicated to promoting neutral and verifiable news on the web';
 
 		const url = !!props.url ? props.url : Utils.getSiteUrl();

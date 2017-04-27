@@ -13,8 +13,6 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
     let postClass = "posts-item";
     if (post.sticky) postClass += " posts-sticky";
     
-    //console.log(post);
-
     return (
       <div className={postClass}>
 
