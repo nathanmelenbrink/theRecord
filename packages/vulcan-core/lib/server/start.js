@@ -7,6 +7,7 @@ if (getSetting('mailUrl')) {
 }
 
 Meteor.startup(function() {
+  Meteor.absoluteUrl.defaultOptions.rootUrl = "https://therecord.org";
   if (typeof SyncedCron !== 'undefined') {
     SyncedCron.start();
   }
