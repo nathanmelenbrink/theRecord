@@ -188,14 +188,36 @@ Users.timeSinceLast = function (user, collection){
 
 Users.numberOfItemsInPast24Hours = function (user, collection) {
   var mNow = moment();
+
+  console.log(user);
+  console.log(collection);
+
   var items = collection.find({
     userId: user._id,
     createdAt: {
       $gte: mNow.subtract(24, 'hours').toDate()
     }
   });
+  console.log(items.count());
   return items.count();
 };
+
+Users.numberOfUpvotesInPast24Hours = function  (user){
+    
+     var items = 0;
+      var mNow = moment();
+      mNow.subtract(24, 'hours').toDate();
+
+      user.upvotedPosts.forEach(function (entry){ 
+        if(mNow.isSameOrBefore(entry.votedAt)){ 
+          console.log(entry.votedAt); 
+          console.log(mNow._d); 
+          items++; 
+        }
+      });
+      console.log(items);
+      return items;
+  }
 
 Users.getProperty = function (object, property) {
   // recursive function to get nested properties

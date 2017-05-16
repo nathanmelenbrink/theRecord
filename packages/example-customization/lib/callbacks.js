@@ -1,6 +1,8 @@
 
 // TODO: 
 // *Replace nova-voting package
+    // - possibly remove adding 10 points for creating a new post, you only get points from being upvoted
+    // - removes the need to remove 10 points when posts are deleted
 // *Add functionality for flagging users 
 // *Forgot password emails not sending
 // *Edit Account - hide all fields except username / password, leave subscribe button (Nathan) 
@@ -31,6 +33,7 @@ function PostsNewRateLimit (post, user) {
     if(timeSinceLastPost < postInterval)
       throw new Meteor.Error(604, 'please_wait'+(postInterval-timeSinceLastPost)+'seconds_before_posting_again');
 
+    console.log(numberOfPostsInPast24Hours);
     // check that the user doesn't post more than Y posts per day
     if(numberOfPostsInPast24Hours >= maxPostsPer24Hours)
       throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxPostsPer24Hours+' posts per 24 hours. You will be allowed more posts as your Reputation increases.');
@@ -52,6 +55,34 @@ function PostsNewRateLimit (post, user) {
 }
 addCallback("posts.new.sync", PostsNewRateLimit);
 
+/**
+ * @summary Posts Rate limiting, and add karma
+ */
+function UpvotesNewRateLimit (post, user) {
+
+  //if(!Users.isAdmin(user)){
+
+    var numberOfUpvotesInPast24Hours = Users.numberOfUpvotesInPast24Hours(user),
+      maxUpvotesPer24Hours = Math.round(user.karma * 0.05) + 5;
+
+    console.log(numberOfUpvotesInPast24Hours);
+    // check that the user doesn't post more than Y posts per day
+    if(numberOfPostsInPast24Hours >= maxUpvotesPer24Hours)
+      throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxUpvotesPer24Hours+' posts per 24 hours. You will be allowed more posts as your Reputation increases.');
+
+  //}
+
+  // NEED TO UPDATE USER COUNT HERE IN SYNC
+  
+  // give the user karma points
+  //var userId = post.userId;
+  //Users.update({_id: userId}, {$inc: {"karma": 10}});
+
+
+  return post;
+}
+addCallback("upvote.sync", UpvotesNewRateLimit);
+
 
 /**
  * @summary Posts Rate limiting, and add karma
@@ -62,7 +93,7 @@ function DeletePostUpdateUser (post, user) {
 
   return post;
 }
-//addCallback("posts.remove.sync", DeletePostUpdateUser);
+addCallback("posts.edit.sync", DeletePostUpdateUser);
 
 
 

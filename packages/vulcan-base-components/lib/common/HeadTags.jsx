@@ -15,7 +15,7 @@ const HeadTags = props => {
 
 		//const description = this.props.title;
 
-		console.log(description);
+		//console.log(description);
 		// default image meta: logo url, else site image defined in settings
 		let image = !!getSetting("siteImage") ? getSetting("siteImage"): getSetting("logoUrl");
 		
@@ -60,7 +60,7 @@ const HeadTags = props => {
 
 		]);
 
-		console.log(meta);
+		//console.log(meta);
 
 		//return //(
 			//<div>

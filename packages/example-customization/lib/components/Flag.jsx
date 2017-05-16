@@ -11,32 +11,10 @@ class Flag extends Component {
   constructor() {
     super();
     this.downvote = this.downvote.bind(this);
-    this.getActionClass = this.getActionClass.bind(this);
-    // this.startLoading = this.startLoading.bind(this);
-    // this.stopLoading = this.stopLoading.bind(this);
-    this.state = {
-      loading: false
-    }
   }
-
-  /*
-  note: with optimisitc UI, loading functions are not needed
-  also, setState triggers issues when the component is unmounted
-  before the vote mutation returns. 
-  */
-
-  // startLoading() {
-  //   this.setState({ loading: true });
-  // }
-
-  // stopLoading() {
-  //   this.setState({ loading: false });
-  // }
 
   downvote(e) {
     e.preventDefault();
-
-    // this.startLoading();
 
     const document = this.props.document;
     const collection = this.props.collection;
@@ -76,7 +54,7 @@ class Flag extends Component {
 
 
         <a  onClick={this.flag}>
-          {this.state.loading ? <Components.Icon name="spinner" /> : <Components.Icon name="flag" /> }
+          <Components.Icon name="flag" /> 
         </a>
       </div>
     )

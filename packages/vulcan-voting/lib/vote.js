@@ -96,7 +96,7 @@ export const operateOnItem = function (collection, originalItem, user, operation
       item = update(item, {
         downvoters: {$push: [voter]},
         downvotes: {$set: item.downvotes + 1},
-        baseScore: {$set: item.baseScore - votePower*2},
+        baseScore: {$set: item.baseScore - votePower*1},
       });
 
       break;
@@ -114,7 +114,7 @@ export const operateOnItem = function (collection, originalItem, user, operation
       item = update(item, {
         downvoters: {$set: item.downvoters.filter(filterFunction)},
         downvotes: {$set: item.downvotes - 1},
-        baseScore: {$set: item.baseScore + votePower*2},
+        baseScore: {$set: item.baseScore + votePower*1},
       });
 
       break;

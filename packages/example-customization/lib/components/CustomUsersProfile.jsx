@@ -11,28 +11,39 @@ import { Link } from 'react-router';
 const CustomUsersProfile = (props) => {
 
   // these should be helper functions in the User object, but how do you do that?
-  function numberOfUpvotesInPast24Hours (user){
+  // function numberOfUpvotesInPast24Hours (user){
     
-    var items = 0;
+  //    var items = 0;
+  //     var mNow = moment();
+  //     mNow.subtract(24, 'hours').toDate();
 
-    user.upvotedPosts.forEach(function (entry){ 
-      var mNow = moment();
-      if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
-    });
+  //     user.upvotedPosts.forEach(function (entry){ 
+  //       if(mNow.isSameOrBefore(entry.votedAt)){ 
+  //         console.log(entry.votedAt); 
+  //         console.log(mNow._d); 
+  //         items++; 
+  //       }
+  //     });
+  //     console.log(items);
+  //     return items;
 
-  return items;
-  }
+  // }
 
   function numberOfDownvotesInPast24Hours (user){
       
       var items = 0;
+      var mNow = moment();
+      mNow.subtract(24, 'hours').toDate();
 
       user.downvotedPosts.forEach(function (entry){ 
-        var mNow = moment();
-        if(entry.votedAt > mNow.subtract(24, 'hours').toDate()){ items++; }
+        if(mNow.isSameOrBefore(entry.votedAt)){ 
+          console.log(entry.votedAt); 
+          console.log(mNow._d); 
+          items++; 
+        }
       });
-
-    return items;
+      console.log(items);
+      return items;
   }
   
   if (props.loading) {
@@ -49,12 +60,10 @@ const CustomUsersProfile = (props) => {
     
     const user = props.document;
     const terms = {view: "userPosts", userId: user._id};
-// const terms = {view:"userPosts", userId: user._id};
- // const {selector, options} = Posts.parameters.get(terms);
 
 
   const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts);
-  const numberOfVotesInPast24Hours = numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
+  const numberOfVotesInPast24Hours = Users.numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
   const numberOfFlagsInPast24Hours = numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
 
   const postsPerDay = Math.round(user.karma * 0.05) + 1;
