@@ -64,7 +64,7 @@ const CustomUsersProfile = (props) => {
 
   const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts);
   const numberOfVotesInPast24Hours = Users.numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
-  const numberOfFlagsInPast24Hours = numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
+  const numberOfFlagsInPast24Hours = Users.numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
 
   const postsPerDay = Math.round(user.karma * 0.05) + 1;
   const votesPerDay = Math.ceil(user.karma * 0.05) + 5;

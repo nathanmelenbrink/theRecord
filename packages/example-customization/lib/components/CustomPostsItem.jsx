@@ -48,7 +48,6 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
             {post.URL? <div className="posts-item-user"><Components.UsersName user={post.URL}/></div> : null}
             <div className="posts-page-social-buttons">
             <Components.SocialButton type="facebook" post={post}  /> 
-            <Components.SocialButton type="twitter" post={post} /> 
             </div>
             <Components.Flag collection={Posts} document={post} currentUser={this.props.currentUser}/>
 

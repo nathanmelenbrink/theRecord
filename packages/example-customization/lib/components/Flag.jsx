@@ -11,6 +11,12 @@ class Flag extends Component {
   constructor() {
     super();
     this.downvote = this.downvote.bind(this);
+    this.getActionClass = this.getActionClass.bind(this);
+    // this.startLoading = this.startLoading.bind(this);
+    // this.stopLoading = this.stopLoading.bind(this);
+    this.state = {
+      loading: false
+    }
   }
 
   downvote(e) {
@@ -21,14 +27,25 @@ class Flag extends Component {
     const user = this.props.currentUser;
 
     if(!user){
+      //this.context.messages.flash("Please log in first");
       this.props.flash(this.context.intl.formatMessage({id: 'users.please_log_in'}));
       // this.stopLoading();
     } else {
+
+      var maxDownvotesPer24Hours = Math.ceil(user.karma * 0.01);
       const voteType = hasUpvoted(user, document) ? "cancelUpvote" : "upvote";
-      this.props.vote({document, voteType, collection, currentUser: this.props.currentUser}).then(result => {
-        // this.stopLoading();
-      });
-    } 
+
+      //console.log(Users.numberOfDownvotesInPast24Hours(user));
+      
+      if (voteType == "downvote" && Users.numberOfDownvotesInPast24Hours(user) >= maxDownvotesPer24Hours){
+        console.log(Users.numberOfDownvotesInPast24Hours(user));
+        this.props.flash("Sorry, you cannot flag more than " +maxDownvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation.");
+      } else {
+        this.props.vote({document, voteType, collection, currentUser: this.props.currentUser}).then(result => {
+          // this.stopLoading();
+        });
+      } 
+    }  
   }
 
   getActionClass() {
@@ -53,7 +70,7 @@ class Flag extends Component {
       <div className={this.getActionClass()}>
 
 
-        <a  onClick={this.flag}>
+        <a  onClick={this.downvote}>
           <Components.Icon name="flag" /> 
         </a>
       </div>

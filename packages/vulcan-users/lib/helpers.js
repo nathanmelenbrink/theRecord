@@ -217,6 +217,23 @@ Users.numberOfUpvotesInPast24Hours = function  (user){
       });
       console.log(items);
       return items;
+}
+
+Users.numberOfDownvotesInPast24Hours = function  (user){
+    
+     var items = 0;
+      var mNow = moment();
+      mNow.subtract(24, 'hours').toDate();
+
+      user.downvotedPosts.forEach(function (entry){ 
+        if(mNow.isSameOrBefore(entry.votedAt)){ 
+          console.log(entry.votedAt); 
+          console.log(mNow._d); 
+          items++; 
+        }
+      });
+      console.log(items);
+      return items;
   }
 
 Users.getProperty = function (object, property) {
