@@ -1,9 +1,11 @@
-import { GraphQLSchema } from 'meteor/vulcan:core';
+import { addGraphQLResolvers, Utils } from 'meteor/vulcan:core';
 
 const specificResolvers = {
   Post: {
-    user(post, args, context) {
-      return context.Users.findOne({ _id: post.userId }, { fields: context.getViewableFields(context.currentUser, context.Users) });
+    async user(post, args, context) {
+      if (!post.userId) return null;
+      const user = await context.Users.loader.load(post.userId);
+      return context.Users.restrictViewableFields(context.currentUser, context.Users, user);
     },
   },
   Mutation: {
@@ -13,7 +15,7 @@ const specificResolvers = {
   }
 };
 
-GraphQLSchema.addResolvers(specificResolvers);
+addGraphQLResolvers(specificResolvers);
 
 const resolvers = {
 
@@ -21,12 +23,22 @@ const resolvers = {
 
     name: 'postsList',
 
-    resolver(root, {terms}, context, info) {
-      let {selector, options} = context.Posts.getParameters(terms);
+    resolver(root, {terms}, {currentUser, Users, Posts}, info) {
+
+      // get selector and options from terms and perform Mongo query
+      let {selector, options} = Posts.getParameters(terms);
       options.limit = (terms.limit < 1 || terms.limit > 100) ? 100 : terms.limit;
       options.skip = terms.offset;
-      options.fields = context.getViewableFields(context.currentUser, context.Posts);
-      return context.Posts.find(selector, options).fetch();
+      const posts = Posts.find(selector, options).fetch();
+
+      // restrict documents fields
+      const viewablePosts = _.filter(posts, post => Posts.checkAccess(currentUser, post));
+      const restrictedPosts = Users.restrictViewableFields(currentUser, Posts, viewablePosts);
+
+      // prime the cache
+      restrictedPosts.forEach(post => Posts.loader.prime(post._id, post));
+
+      return restrictedPosts;
     },
 
   },
@@ -35,10 +47,14 @@ const resolvers = {
     
     name: 'postsSingle',
 
-    resolver(root, {documentId, slug}, context) {
-      const selector = documentId ? {_id: documentId} : {'slug': slug};
-      const post = context.Posts.findOne(selector);
-      return context.Users.keepViewableFields(context.currentUser, context.Posts, post);
+    async resolver(root, {documentId, slug}, {currentUser, Users, Posts}) {
+
+      // don't use Dataloader if post is selected by slug
+      const post = documentId ? await Posts.loader.load(documentId) : Posts.findOne({slug});
+
+      Utils.performCheck(Posts.checkAccess, currentUser, post, Posts, documentId);
+
+      return Users.restrictViewableFields(currentUser, Posts, post);
     },
   
   },
@@ -47,9 +63,9 @@ const resolvers = {
     
     name: 'postsTotal',
     
-    resolver(root, {terms}, context) {
-      const {selector} = context.Posts.getParameters(terms);
-      return context.Posts.find(selector).count();
+    resolver(root, {terms}, {Posts}) {
+      const {selector} = Posts.getParameters(terms);
+      return Posts.find(selector).count();
     },
   
   }

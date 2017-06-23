@@ -22,11 +22,12 @@ This component expects:
 
 */
 
-import { Components, Utils } from 'meteor/vulcan:core';
-import React, { PropTypes, Component } from 'react';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { Components, Utils, runCallbacks } from 'meteor/vulcan:core';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage, intlShape } from 'meteor/vulcan:i18n';
 import Formsy from 'formsy-react';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/lib/Button';
 import Flash from "./Flash.jsx";
 import FormGroup from "./FormGroup.jsx";
 import { flatten, deepValue, getEditableFields, getInsertableFields } from './utils.js';
@@ -58,6 +59,8 @@ class Form extends Component {
     this.mutationSuccessCallback = this.mutationSuccessCallback.bind(this);
     this.mutationErrorCallback = this.mutationErrorCallback.bind(this);
     this.addToAutofilledValues = this.addToAutofilledValues.bind(this);
+    this.addToDeletedValues = this.addToDeletedValues.bind(this);
+    this.addToSubmitForm = this.addToSubmitForm.bind(this);
     this.throwError = this.throwError.bind(this);
     this.clearForm = this.clearForm.bind(this);
     this.updateCurrentValues = this.updateCurrentValues.bind(this);
@@ -65,13 +68,17 @@ class Form extends Component {
     this.deleteDocument = this.deleteDocument.bind(this);
     // a debounced version of seState that only updates state every 500 ms (not used)
     this.debouncedSetState = _.debounce(this.setState, 500);
+    this.setFormState = this.setFormState.bind(this);
 
     this.state = {
       disabled: false,
       errors: [],
-      autofilledValues: (props.formType === 'new' && props.prefilledProps) || {},
+      autofilledValues: props.prefilledProps || {},
+      deletedValues: [],
       currentValues: {}
     };
+
+    this.submitFormCallbacks = [];
   }
 
   // --------------------------------------------------------------------- //
@@ -109,11 +116,14 @@ class Form extends Component {
 
       // add label or internationalized field name if necessary (field not hidden)
       if (!field.hidden) {
-        field.label = fieldSchema.label ? fieldSchema.label : this.context.intl.formatMessage({id: this.props.collection._name+"."+fieldName});
+        field.label = this.context.intl.formatMessage({id: this.props.collection._name+"."+fieldName, defaultMessage: fieldSchema.label});
       }
 
       // add value
       field.value = this.getDocument() && deepValue(this.getDocument(), fieldName) ? deepValue(this.getDocument(), fieldName) : "";
+
+      // convert value type if needed
+      if (fieldSchema.type.definitions[0].type === Number) field.value = Number(field.value);
 
       // if value is an array of objects ({_id: '123'}, {_id: 'abc'}), flatten it into an array of strings (['123', 'abc'])
       // fallback to item itself if item._id is not defined (ex: item is not an object or item is just {slug: 'xxx'})
@@ -154,6 +164,11 @@ class Form extends Component {
         field.help = typeof fieldSchema.form.help === "function" ? fieldSchema.form.help.call(fieldSchema) : fieldSchema.form.help;
       }
 
+      // add limit
+      if (fieldSchema.limit) {
+       field.limit = fieldSchema.limit;
+      }
+      
       // add placeholder
       if (fieldSchema.placeholder) {
        field.placeholder = fieldSchema.placeholder;
@@ -226,11 +241,11 @@ class Form extends Component {
 
   // for each field, we apply the following logic:
   // - if its value is currently being inputted, use that
+  // - else if its value is provided by the autofilledValues object, use that
   // - else if its value was provided by the db, use that (i.e. props.document)
-  // - else if its value is provded by the autofilledValues object, use that
   getDocument() {
     const currentDocument = _.clone(this.props.document) || {};
-    const document = Object.assign(_.clone(this.state.autofilledValues), currentDocument,  _.clone(this.state.currentValues));
+    const document = Object.assign(currentDocument, _.clone(this.state.autofilledValues), _.clone(this.state.currentValues));
     return document;
   }
 
@@ -334,7 +349,7 @@ class Form extends Component {
     }));
   }
 
-  // add something to prefilled values
+  // add something to autofilled values
   addToAutofilledValues(property) {
     this.setState(prevState => ({
       autofilledValues: {
@@ -344,6 +359,22 @@ class Form extends Component {
     }));
   }
 
+  // add something to deleted values
+  addToDeletedValues(name) {
+    this.setState(prevState => ({
+      deletedValues: [...prevState.deletedValues, name]
+    }));
+  }
+
+  // add a callback to the form submission
+  addToSubmitForm(callback) {
+    this.submitFormCallbacks.push(callback);
+  }
+
+  setFormState(fn) {
+    this.setState(fn);
+  }
+
   // pass on context to all child components
   getChildContext() {
     return {
@@ -351,8 +382,11 @@ class Form extends Component {
       clearForm: this.clearForm,
       autofilledValues: this.state.autofilledValues,
       addToAutofilledValues: this.addToAutofilledValues,
+      addToDeletedValues: this.addToDeletedValues,
       updateCurrentValues: this.updateCurrentValues,
       getDocument: this.getDocument,
+      setFormState: this.setFormState,
+      addToSubmitForm: this.addToSubmitForm,
     };
   }
 
@@ -421,6 +455,9 @@ class Form extends Component {
       ...this.state.currentValues, // ex: can be values from DateTime component
     };
 
+    // run data object through submitForm callbacks
+    data = runCallbacks(this.submitFormCallbacks, data);
+    
     const fields = this.getFieldNames();
 
     // if there's a submit callback, run it
@@ -444,15 +481,19 @@ class Form extends Component {
       const set = _.compactObject(flatten(data));
 
       // put all keys without data on $unset
-      const unsetKeys = _.difference(fields, _.keys(set));
-      const unset = _.object(unsetKeys, unsetKeys.map(()=>true));
+      const setKeys = _.keys(set);
+      let unsetKeys = _.difference(fields, setKeys);
 
-      // build modifier
-      const modifier = {$set: set};
-      if (!_.isEmpty(unset)) modifier.$unset = unset;
+      // add all keys to delete (minus those that have data associated)
+      unsetKeys = _.unique(unsetKeys.concat(_.difference(this.state.deletedValues, setKeys)));
+
+      // build mutation arguments object
+      const args = {documentId: document._id, set: set, unset: {}};
+      if (unsetKeys.length > 0) {
+        args.unset = _.object(unsetKeys, unsetKeys.map(() => true));
+      }
       // call method with _id of document being edited and modifier
-      // Meteor.call(this.props.methodName, document._id, modifier, this.methodCallback);
-      this.props.editMutation({documentId: document._id, set: set, unset: unset}).then(this.editMutationSuccessCallback).catch(this.mutationErrorCallback);
+      this.props.editMutation(args).then(this.editMutationSuccessCallback).catch(this.mutationErrorCallback);
     }
 
   }
@@ -495,8 +536,12 @@ class Form extends Component {
         >
           {this.renderErrors()}
           {fieldGroups.map(group => <FormGroup key={group.name} {...group} updateCurrentValues={this.updateCurrentValues} />)}
-          <Button type="submit" bsStyle="primary"><FormattedMessage id="forms.submit"/></Button>
-          {this.props.cancelCallback ? <a className="form-cancel" onClick={this.props.cancelCallback}><FormattedMessage id="forms.cancel"/></a> : null}
+          
+          <div className="form-submit">
+            <Button type="submit" bsStyle="primary">{this.props.submitLabel ? this.props.submitLabel : <FormattedMessage id="forms.submit"/>}</Button>
+            {this.props.cancelCallback ? <a className="form-cancel" onClick={this.props.cancelCallback}>{this.props.cancelLabel ? this.props.cancelLabel : <FormattedMessage id="forms.cancel"/>}</a> : null}
+          </div>
+
         </Formsy.Form>
 
         {
@@ -533,6 +578,8 @@ Form.propTypes = {
   layout: PropTypes.string,
   fields: PropTypes.arrayOf(PropTypes.string),
   showRemove: PropTypes.bool,
+  submitLabel: PropTypes.string,
+  cancelLabel: PropTypes.string,
 
   // callbacks
   submitCallback: PropTypes.func,
@@ -556,7 +603,10 @@ Form.contextTypes = {
 Form.childContextTypes = {
   autofilledValues: PropTypes.object,
   addToAutofilledValues: PropTypes.func,
+  addToDeletedValues: PropTypes.func,
+  addToSubmitForm: PropTypes.func,
   updateCurrentValues: PropTypes.func,
+  setFormState: PropTypes.func,
   throwError: PropTypes.func,
   clearForm: PropTypes.func,
   getDocument: PropTypes.func

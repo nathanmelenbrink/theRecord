@@ -205,7 +205,7 @@ Utils.sanitize = function(s) {
   if(Meteor.isServer){
     s = sanitizeHtml(s, {
       allowedTags: [
-        'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul',
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul',
         'ol', 'nl', 'li', 'b', 'i', 'strong', 'em', 'strike',
         'code', 'hr', 'br', 'div', 'table', 'thead', 'caption',
         'tbody', 'tr', 'th', 'td', 'pre', 'img'
@@ -308,7 +308,13 @@ Utils.findIndex = (array, predicate) => {
 }
 
 // adapted from http://stackoverflow.com/a/22072374/649299
-Utils.unflatten = function(array, idProperty, parentIdProperty, parent, level=0, tree){
+Utils.unflatten = function(array, options, parent, level=0, tree){
+
+  const { 
+    idProperty = '_id', 
+    parentIdProperty = 'parentId', 
+    childrenProperty = 'childrenResults'
+  } = options;
 
   level++;
 
@@ -334,13 +340,13 @@ Utils.unflatten = function(array, idProperty, parentIdProperty, parent, level=0,
       tree = children;
     } else {
       // else, we add the children to the parent as the "childrenResults" property
-      parent.childrenResults = children;
+      parent[childrenProperty] = children;
     }
 
     // we call the function on each child
     children.forEach(child => {
       child.level = level;
-      Utils.unflatten(array, idProperty, parentIdProperty, child, level);
+      Utils.unflatten(array, options, child, level);
     });
   }
 
@@ -447,6 +453,14 @@ Utils.defineName = (o, name) => {
   return o;
 };
 
-Utils.performCheck = (mutation, user, document) => {
-  if (!mutation.check(user, document)) throw new Error(Utils.encodeIntlError({id: `app.mutation_not_allowed`, value: `"${mutation.name}" on _id "${document._id}"`}));
+Utils.performCheck = (operation, user, checkedObject, context, documentId) => {
+
+  if (!checkedObject) {
+    throw new Error(Utils.encodeIntlError({id: `app.document_not_found`, value: documentId}))
+  }
+
+  if (!operation(user, checkedObject, context)) {
+    throw new Error(Utils.encodeIntlError({id: `app.operation_not_allowed`, value: operation.name}));
+  }
+
 }

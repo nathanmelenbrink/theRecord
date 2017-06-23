@@ -5,7 +5,8 @@ import { getFragment, getFragmentName } from 'meteor/vulcan:core';
 
 export default function withDocument (options) {
   
-  const { queryName, collection, pollInterval = 20000 } = options,
+  const { collection, pollInterval = 20000 } = options,
+        queryName = options.queryName || `${collection.options.collectionName}SingleQuery`,
         fragment = options.fragment || getFragment(options.fragmentName),
         fragmentName = getFragmentName(fragment),
         singleResolverName = collection.options.resolvers.single && collection.options.resolvers.single.name;
@@ -13,6 +14,7 @@ export default function withDocument (options) {
   return graphql(gql`
     query ${queryName}($documentId: String, $slug: String) {
       ${singleResolverName}(documentId: $documentId, slug: $slug) {
+        __typename
         ...${fragmentName}
       }
     }
@@ -29,7 +31,7 @@ export default function withDocument (options) {
     props: returnedProps => {
       const { ownProps, data } = returnedProps;
       return {
-        loading: data.networkStatus === 1,
+        loading: data.loading,
         // document: Utils.convertDates(collection, data[singleResolverName]),
         document: data[singleResolverName],
         fragmentName,

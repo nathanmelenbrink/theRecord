@@ -1,6 +1,8 @@
-import { Components, getRawComponent, replaceComponent, Utils } from 'meteor/vulcan:core';
-import React, { PropTypes, Component } from 'react';
-import { FormattedMessage, FormattedRelative } from 'react-intl';
+
+import { Components, getRawComponent, replaceComponent } from 'meteor/vulcan:core';
+import React from 'react';
+import { FormattedMessage, FormattedRelative } from 'meteor/vulcan:i18n';
+
 import { Link } from 'react-router';
 import Posts from "meteor/vulcan:posts";
 import gql from 'graphql-tag';
@@ -33,6 +35,7 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
             {post.user? <div className="posts-item-user"><Components.UsersName user={post.user}/></div> : null}
             <div className="posts-item-date"><FormattedRelative value={post.postedAt}/></div>
 
+
             <div className="posts-item-date"> <Link to={post.link1} className="posts-item-date" target={Posts.getLinkTarget(post)}>
              {Utils.getDomain(post.link1)} 
             </Link> </div>
@@ -48,6 +51,7 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
             {post.URL? <div className="posts-item-user"><Components.UsersName user={post.URL}/></div> : null}
             <div className="posts-page-social-buttons">
             <Components.SocialButton type="facebook" post={post}  /> 
+
             </div>
             <Components.Flag collection={Posts} document={post} currentUser={this.props.currentUser}/>
 

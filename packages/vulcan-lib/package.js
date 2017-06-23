@@ -1,7 +1,7 @@
 Package.describe({
   name: 'vulcan:lib',
   summary: 'Telescope libraries.',
-  version: '1.3.0',
+  version: '1.5.0',
   git: "https://github.com/TelescopeJS/Telescope.git"
 });
 
@@ -10,6 +10,8 @@ Package.onUse(function (api) {
   api.versionsFrom(['METEOR@1.0']);
 
   var packages = [
+
+    'buffer', // see https://github.com/meteor/meteor/issues/8645
 
     // Meteor packages
 
@@ -29,10 +31,9 @@ Package.onUse(function (api) {
 
     // Third-party packages
 
-    'aldeed:collection2-core@2.0.0',
+    // 'aldeed:collection2-core@2.0.0',
     'meteorhacks:picker@1.0.3',
     'percolatestudio:synced-cron@1.1.0',
-    'jparker:gravatar@0.4.1',
     'meteorhacks:inject-initial@1.0.4',
   ];
 
@@ -40,9 +41,9 @@ Package.onUse(function (api) {
 
   api.imply(packages);
 
-  // api.export([
-  //   'Telescope'
-  // ]);
+  api.export([
+    'Vulcan'
+  ]);
 
   api.mainModule('lib/server/main.js', 'server');
   api.mainModule('lib/client/main.js', 'client');

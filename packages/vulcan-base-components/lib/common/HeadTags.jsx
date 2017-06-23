@@ -80,4 +80,3 @@ HeadTags.propTypes = {
 
 
 registerComponent('HeadTags', HeadTags);
-

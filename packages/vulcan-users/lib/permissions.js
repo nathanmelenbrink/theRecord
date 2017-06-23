@@ -74,8 +74,12 @@ Users.getGroups = user => {
  * @param {Object} user
  */
 Users.getActions = user => {
-  const userGroups = Users.getGroups(user);
-  const groupActions = userGroups.map(groupName => {
+  let userGroups = Users.getGroups(user);
+  if (!userGroups.includes('guests')) {
+    // always give everybody permission for guests actions, too
+    userGroups.push('guests');
+  }
+  let groupActions = userGroups.map(groupName => {
     // note: make sure groupName corresponds to an actual group
     const group = Users.groups[groupName];
     return group && group.actions;
@@ -211,13 +215,34 @@ Users.helpers({
 });
 
 /**
- * @summary For a given document, keep only fields viewable by current user
+ * @summary For a given document or list of documents, keep only fields viewable by current user
  * @param {Object} user - The user performing the action
  * @param {Object} collection - The collection
  * @param {Object} document - The document being returned by the resolver
  */
-Users.keepViewableFields = function (user, collection, document) {
-  return document && document._id && _.pick(document, _.keys(Users.getViewableFields(user, collection, document)));
+Users.restrictViewableFields = function (user, collection, docOrDocs) {
+
+  if (!docOrDocs) return {};
+
+  const restrictDoc = document => {
+
+    // get array of all keys viewable by user
+    const viewableKeys = _.keys(Users.getViewableFields(user, collection, document));
+    const restrictedDocument = _.clone(document);
+    
+    // loop over each property in the document and delete it if it's not viewable
+    _.forEach(restrictedDocument, (value, key) => {
+      if (!viewableKeys.includes(key)) {
+        delete restrictedDocument[key];
+      }
+    });
+  
+    return restrictedDocument;
+  
+  };
+  
+  return Array.isArray(docOrDocs) ? docOrDocs.map(restrictDoc) : restrictDoc(docOrDocs);
+
 }
 
 /**

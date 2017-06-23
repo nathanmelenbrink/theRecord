@@ -1,6 +1,6 @@
 import { SyncedCron } from 'meteor/percolatestudio:synced-cron';
 import moment from 'moment';
-import Newsletter from '../namespace.js';
+import Newsletters from '../modules/collection.js';
 import { getSetting } from 'meteor/vulcan:core';
 
 const defaultFrequency = [1]; // every monday
@@ -63,14 +63,14 @@ var addJob = function () {
       if (process.env.NODE_ENV === "production" || getSetting("enableNewsletterInDev", false)) {
         console.log("// Scheduling newsletter…"); // eslint-disable-line
         console.log(new Date()); // eslint-disable-line
-        Newsletter.scheduleNextWithMailChimp();
+        Newsletters.send();
       }
     }
   });
 };
 
 Meteor.startup(function () {
-  if (getSetting('enableNewsletter', true) && getSetting('mailChimpAPIKey') && getSetting('mailChimpListId')) {
+  if (getSetting('enableNewsletter', true)) {
     addJob();
   }
 });

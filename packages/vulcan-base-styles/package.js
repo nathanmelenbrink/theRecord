@@ -1,7 +1,7 @@
 Package.describe({
   name: "vulcan:base-styles",
   summary: "Vulcan basic styles package",
-  version: '1.3.0',
+  version: '1.5.0',
   git: "https://github.com/TelescopeJS/Telescope.git"
 });
 
@@ -10,8 +10,8 @@ Package.onUse(function (api) {
   api.versionsFrom(['METEOR@1.0']);
 
   api.use([
-    'vulcan:core@1.3.0',
-    'fourseven:scss@3.8.0',
+    'vulcan:core@1.5.0',
+    'fourseven:scss@4.5.0',
   ]);
 
   api.addFiles([

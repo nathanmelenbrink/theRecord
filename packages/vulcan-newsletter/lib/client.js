@@ -1,7 +1,3 @@
-import Newsletter from './namespace.js';
+import Newsletters from './modules/index.js';
 
-import './emails.js';
-import './custom_fields.js';
-import './fragments.js';
-
-export default Newsletter;
+export default Newsletters;

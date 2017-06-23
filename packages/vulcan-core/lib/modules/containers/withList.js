@@ -12,7 +12,8 @@ Options:
   - fragmentName: the name of the fragment, passed to getFragment
   - limit: the number of documents to show initially
   - pollInterval: how often the data should be updated, in ms (set to 0 to disable polling)
-  
+  - terms: an object that defines which documents to fetch
+
 Props Received: 
 
   - terms: an object that defines which documents to fetch
@@ -34,22 +35,34 @@ Terms object can have the following properties:
 */
      
 import React, { PropTypes, Component } from 'react';
-import { graphql } from 'react-apollo';
+import { withApollo, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import update from 'immutability-helper';
 import { getFragment, getFragmentName } from 'meteor/vulcan:core';
 import Mingo from 'mingo';
-import { compose, withState } from 'recompose';
-import { withApollo } from 'react-apollo';
+import compose from 'recompose/compose';
+import withState from 'recompose/withState';
 
 const withList = (options) => {
 
   const { collection, limit = 10, pollInterval = 20000 } = options,
-        queryName = options.queryName || `${collection._name}ListQuery`,
+        queryName = options.queryName || `${collection.options.collectionName}ListQuery`,
         fragment = options.fragment || getFragment(options.fragmentName),
         fragmentName = getFragmentName(fragment),
         listResolverName = collection.options.resolvers.list && collection.options.resolvers.list.name,
         totalResolverName = collection.options.resolvers.total && collection.options.resolvers.total.name;
+
+  // build graphql query from options
+  const query = gql`
+    query ${queryName}($terms: JSON) {
+      ${totalResolverName}(terms: $terms)
+      ${listResolverName}(terms: $terms) {
+        __typename
+        ...${fragmentName}
+      }
+    }
+    ${fragment}
+  `;
 
   return compose(
 
@@ -59,35 +72,28 @@ const withList = (options) => {
     // wrap component with HoC that manages the terms object via its state
     withState('paginationTerms', 'setPaginationTerms', props => {
 
-      // either get initial limit from options, or default to settings
+      // get initial limit from props, or else options
+      const paginationLimit = props.terms && props.terms.limit || limit;
       const paginationTerms = {
-        limit, 
-        itemsPerPage: limit, 
+        limit: paginationLimit, 
+        itemsPerPage: paginationLimit, 
       };
-    
+      
       return paginationTerms;
     }),
 
     // wrap component with graphql HoC
     graphql(
 
-      // build graphql query from options
-      gql`
-        query ${queryName}($terms: JSON) {
-          ${totalResolverName}(terms: $terms)
-          ${listResolverName}(terms: $terms) {
-            ...${fragmentName}
-          }
-        }
-        ${fragment}
-      `,
+      query,
 
       {
         alias: 'withList',
         
         // graphql query options
         options({terms, paginationTerms, client: apolloClient}) {
-          const mergedTerms = {...terms, ...paginationTerms};
+          // get terms from options, then props, then pagination
+          const mergedTerms = {...options.terms, ...terms, ...paginationTerms};
           return {
             variables: {
               terms: mergedTerms,
@@ -111,6 +117,7 @@ const withList = (options) => {
                 results = props.data[listResolverName],
                 totalCount = props.data[totalResolverName],
                 networkStatus = props.data.networkStatus,
+                loading = props.data.loading,
                 error = props.data.error;
 
           if (error) {
@@ -120,7 +127,7 @@ const withList = (options) => {
           return {
             // see https://github.com/apollostack/apollo-client/blob/master/src/queries/store.ts#L28-L36
             // note: loading will propably change soon https://github.com/apollostack/apollo-client/issues/831
-            loading: networkStatus === 1, // networkStatus = 1 <=> the graphql container is loading
+            loading: networkStatus === 1,
             results,
             totalCount,
             refetch,
@@ -172,9 +179,14 @@ const withList = (options) => {
 // define query reducer separately
 const queryReducer = (previousResults, action, collection, mergedTerms, listResolverName, totalResolverName, queryName, apolloClient) => {
 
-  const newMutationName = collection.options.mutations.new.name;
-  const editMutationName = collection.options.mutations.edit.name;
-  const removeMutationName = collection.options.mutations.remove.name;
+  // if collection has no mutations defined, just return previous results
+  if (!collection.options.mutations) {
+    return previousResults;
+  }
+
+  const newMutationName = collection.options.mutations.new && collection.options.mutations.new.name;
+  const editMutationName = collection.options.mutations.edit && collection.options.mutations.edit.name;
+  const removeMutationName = collection.options.mutations.remove && collection.options.mutations.remove.name;
 
   let newResults = previousResults;
 

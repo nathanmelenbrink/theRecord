@@ -2,33 +2,6 @@ import Users from 'meteor/vulcan:users';
 import Posts from './collection.js';
 
 /**
- * @summary Posts statuses
- * @type {Object}
- */
-Posts.statuses = [
-  {
-    value: 1,
-    label: 'pending'
-  },
-  {
-    value: 2,
-    label: 'approved'
-  },
-  {
-    value: 3,
-    label: 'rejected'
-  },
-  {
-    value: 4,
-    label: 'spam'
-  },
-  {
-    value: 5,
-    label: 'deleted'
-  }
-];
-
-/**
  * @summary Posts config namespace
  * @type {Object}
  */
@@ -59,8 +32,8 @@ const schema = {
     type: Date,
     optional: true,
     viewableBy: ['admins'],
-    autoValue: (documentOrModifier) => {
-      if (documentOrModifier && !documentOrModifier.$set) return new Date() // if this is an insert, set createdAt to current timestamp
+    onInsert: (document, currentUser) => {
+      return new Date();
     }
   },
   /**
@@ -174,16 +147,15 @@ const schema = {
     insertableBy: ['admins'],
     editableBy: ['admins'],
     control: "select",
-    autoValue(documentOrModifier) {
-      // provide a default value if this is an insert operation and status field is not set in the document
-      if (documentOrModifier && !documentOrModifier.$set && documentOrModifier.userId && !documentOrModifier.status) {
-        const user = Users.findOne(documentOrModifier.userId);
+    onInsert: document => {
+      if (document.userId && !document.status) {
+        const user = Users.findOne(document.userId);
         return Posts.getDefaultStatus(user);
       }
     },
     form: {
       noselect: true,
-      options: Posts.statuses,
+      options: () => Posts.statuses,
       group: 'admin'
     },
     group: formGroups.admin
@@ -242,10 +214,11 @@ const schema = {
     type: String,
     optional: true,
     viewableBy: ['guests'],
-    autoValue: (documentOrModifier) => {
+    onEdit: (modifier, document, currentUser) => {
       // if userId is changing, change the author name too
-      const userId = documentOrModifier.userId || documentOrModifier.$set && documentOrModifier.$set.userId
-      if (userId) return Users.getDisplayNameById(userId)
+      if (modifier.$set && modifier.$set.userId) {
+        return Users.getDisplayNameById(modifier.$set.userId)
+      }
     }
   },
   /**

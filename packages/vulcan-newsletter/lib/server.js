@@ -1,14 +1,15 @@
-import Newsletter from "./namespace.js";
+import Vulcan from 'meteor/vulcan:core';
+import Newsletters from './modules/index.js';
 
-import './emails.js';
-import './custom_fields.js';
-import './fragments.js';
-
-import './server/newsletter.js';
-import './server/mailchimp/mailchimp_newsletter.js';
+import './server/newsletters.js';
 import './server/cron.js';
 import './server/emails.js';
 import './server/mutations.js';
 import './server/callbacks.js';
 
-export default Newsletter;
+import './server/integrations/sendy.js';
+import './server/integrations/mailchimp.js';
+
+Vulcan.Newsletters = Newsletters;
+
+export default Newsletters;

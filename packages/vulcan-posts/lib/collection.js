@@ -3,6 +3,7 @@ import mutations from './mutations.js';
 import resolvers from './resolvers.js';
 // import views from './views.js';
 import { createCollection } from 'meteor/vulcan:core';
+import Users from 'meteor/vulcan:users';
 
 /**
  * @summary The global namespace for Posts.
@@ -10,7 +11,7 @@ import { createCollection } from 'meteor/vulcan:core';
  */
 const Posts = createCollection({
 
-  collectionName: 'posts',
+  collectionName: 'Posts',
 
   typeName: 'Post',
 
@@ -22,7 +23,7 @@ const Posts = createCollection({
 
 });
 
-// refacto: moved here from schema.js
+// refactor: moved here from schema.js
 Posts.config = {};
 
 Posts.config.STATUS_PENDING = 1;
@@ -31,12 +32,43 @@ Posts.config.STATUS_REJECTED = 3;
 Posts.config.STATUS_SPAM = 4;
 Posts.config.STATUS_DELETED = 5;
 
+
+/**
+ * @summary Posts statuses
+ * @type {Object}
+ */
+Posts.statuses = [
+  {
+    value: 1,
+    label: 'pending'
+  },
+  {
+    value: 2,
+    label: 'approved'
+  },
+  {
+    value: 3,
+    label: 'rejected'
+  },
+  {
+    value: 4,
+    label: 'spam'
+  },
+  {
+    value: 5,
+    label: 'deleted'
+  }
+];
+
+Posts.checkAccess = (currentUser, post) => {
+  if (Users.isAdmin(currentUser) || Users.owns(currentUser, post)) { // admins can always see everything, users can always see their own posts
+    return true;
+  } else if (post.isFuture) {
+    return false;
+  } else { 
+    const status = _.findWhere(Posts.statuses, {value: post.status});
+    return Users.canDo(currentUser, `posts.view.${status.label}`);
+  }
+}
+
 export default Posts;
-
-// const PostsStub = {
-//   helpers: x => x
-// }
-
-//  we need to handle two scenarios: when the package is called as a Meteor package, 
-// and when it's called as a NPM package 
-// const Posts = typeof Mongo !== 'undefined' ? new Mongo.Collection('posts') : PostsStub;
