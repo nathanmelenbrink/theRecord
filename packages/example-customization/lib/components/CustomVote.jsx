@@ -29,22 +29,22 @@ class CustomVote extends Component {
     const collection = this.props.collection;
     const user = this.props.currentUser;
 
-    // function numberOfUpvotesInPast24Hours (user){
-    //   var items = 0;
-    //   var mNow = moment();
-    //   mNow.subtract(24, 'hours').toDate();
+     function numberOfUpvotesInPast24Hours (user){
+       var items = 0;
+       var mNow = moment();
+       mNow.subtract(24, 'hours').toDate();
 
-    //   user.upvotedPosts.forEach(function (entry){ 
-    //     if(mNow.isSameOrBefore(entry.votedAt)){ 
+       user.upvotedPosts.forEach(function (entry){ 
+         if(mNow.isSameOrBefore(entry.votedAt)){ 
     //       console.log(entry.votedAt); 
     //       console.log(mNow._d); 
-    //       items++; 
-    //     }
-    //   });
+           items++; 
+         }
+       });
 
-    //   //console.log(items);
-    //   return items;
-    // }
+       //console.log(items);
+       return items;
+     }
 
     //var maxUpvotesPer24Hours = Math.ceil(user.karma * 0.05) + 5;
 
@@ -58,12 +58,14 @@ class CustomVote extends Component {
       var maxUpvotesPer24Hours = Math.ceil(user.karma * 0.05) + 5;
       const voteType = hasUpvoted(user, document) ? "cancelUpvote" : "upvote";
 
-      //console.log(Users.numberOfUpvotesInPast24Hours(user));
-      
-      if (voteType == "upvote" && Users.numberOfUpvotesInPast24Hours(user) >= maxUpvotesPer24Hours){
-        console.log(Users.numberOfUpvotesInPast24Hours(user));
-        this.props.flash("Sorry, you cannot upvote more than " +maxUpvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation.");
+      console.log(numberOfUpvotesInPast24Hours(user));
+      //if (numberOfUpvotesInPast24Hours(user) >= maxUpvotesPer24Hours){
+       
+      if (voteType == "upvote" && numberOfUpvotesInPast24Hours(user) >= maxUpvotesPer24Hours){
+        console.log(numberOfUpvotesInPast24Hours(user));
+       //this.props.flash("Sorry, you cannot upvote more than " +maxUpvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation.");
       } else {
+        console.log("voting");
         this.props.vote({document, voteType, collection, currentUser: this.props.currentUser}).then(result => {
           // this.stopLoading();
         });
@@ -74,6 +76,7 @@ class CustomVote extends Component {
   getActionClass() {
     const document = this.props.document;
     const user = this.props.currentUser;
+    const post = this.props.post;
 
     const isUpvoted = hasUpvoted(user, document);
     const isDownvoted = hasDownvoted(user, document);

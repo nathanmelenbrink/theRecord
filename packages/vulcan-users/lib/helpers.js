@@ -209,6 +209,7 @@ Users.numberOfUpvotesInPast24Hours = function  (user){
       mNow.subtract(24, 'hours').toDate();
 
       user.upvotedPosts.forEach(function (entry){ 
+        console.log(entry.votedAt); 
         if(mNow.isSameOrBefore(entry.votedAt)){ 
           console.log(entry.votedAt); 
           console.log(mNow._d); 

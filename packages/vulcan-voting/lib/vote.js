@@ -79,7 +79,7 @@ export const operateOnItem = function (collection, originalItem, user, operation
       if (hasDownvotedItem) {
         item = operateOnItem(collection, item, user, "cancelDownvote", isClient);
       }
-
+      console.log(item);
       item = update(item, {
         upvoters: {$push: [voter]},
         upvotes: {$set: item.upvotes + 1},
@@ -92,7 +92,8 @@ export const operateOnItem = function (collection, originalItem, user, operation
       if (hasUpvotedItem) {
         item = operateOnItem(collection, item, user, "cancelUpvote", isClient);
       }
-
+      
+      console.log(item);
       item = update(item, {
         downvoters: {$push: [voter]},
         downvotes: {$set: item.downvotes + 1},

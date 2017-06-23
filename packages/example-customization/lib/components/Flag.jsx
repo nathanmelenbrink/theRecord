@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { withVote, hasUpvoted, hasDownvoted } from 'meteor/vulcan:voting';
 import { FormattedMessage, intlShape } from 'react-intl';
 import Users from 'meteor/vulcan:users';
+import moment from 'moment';
 
 
 class Flag extends Component {
@@ -26,6 +27,24 @@ class Flag extends Component {
     const collection = this.props.collection;
     const user = this.props.currentUser;
 
+    function numberOfDownvotesInPast24Hours (user){
+       var items = 0;
+       var mNow = moment();
+       mNow.subtract(24, 'hours').toDate();
+
+       user.downvotedPosts.forEach(function (entry){ 
+         if(mNow.isSameOrBefore(entry.votedAt)){ 
+    //       console.log(entry.votedAt); 
+    //       console.log(mNow._d); 
+           items++; 
+         }
+       });
+
+       //console.log(items);
+       return items;
+     }
+
+
     if(!user){
       //this.context.messages.flash("Please log in first");
       this.props.flash(this.context.intl.formatMessage({id: 'users.please_log_in'}));
@@ -33,12 +52,12 @@ class Flag extends Component {
     } else {
 
       var maxDownvotesPer24Hours = Math.ceil(user.karma * 0.01);
-      const voteType = hasUpvoted(user, document) ? "cancelUpvote" : "upvote";
+      const voteType = hasDownvoted(user, document) ? "cancelDownvote" : "downvote";
 
       //console.log(Users.numberOfDownvotesInPast24Hours(user));
       
-      if (voteType == "downvote" && Users.numberOfDownvotesInPast24Hours(user) >= maxDownvotesPer24Hours){
-        console.log(Users.numberOfDownvotesInPast24Hours(user));
+      if (voteType == "downvote" && numberOfDownvotesInPast24Hours(user) >= maxDownvotesPer24Hours){
+        console.log(numberOfDownvotesInPast24Hours(user));
         this.props.flash("Sorry, you cannot flag more than " +maxDownvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation.");
       } else {
         this.props.vote({document, voteType, collection, currentUser: this.props.currentUser}).then(result => {

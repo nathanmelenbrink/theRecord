@@ -1,12 +1,10 @@
 
 // TODO: 
+// Add error message when exceeding upvotes/flags per day
 // *Replace nova-voting package
-    // - possibly remove adding 10 points for creating a new post, you only get points from being upvoted
-    // - removes the need to remove 10 points when posts are deleted
 // *Add functionality for flagging users 
 // *Forgot password emails not sending
 // *Edit Account - hide all fields except username / password, leave subscribe button (Nathan) 
-// http://therecord-94654.onmodulus.net/
 
 
 //import Telescope from 'meteor/nova:lib';
@@ -41,8 +39,8 @@ function PostsNewRateLimit (post, user) {
   //}
   
   // give the user karma points
-  var userId = post.userId;
-  Users.update({_id: userId}, {$inc: {"karma": 10}});
+  //var userId = post.userId;
+  //Users.update({_id: userId}, {$inc: {"karma": 10}});
 
 
   // set the post URL field to link1
@@ -60,16 +58,32 @@ addCallback("posts.new.sync", PostsNewRateLimit);
  */
 function UpvotesNewRateLimit (post, user) {
 
-  //if(!Users.isAdmin(user)){
-
-    var numberOfUpvotesInPast24Hours = Users.numberOfUpvotesInPast24Hours(user),
-      maxUpvotesPer24Hours = Math.round(user.karma * 0.05) + 5;
+     var numberOfUpvotesInPast24Hours = 0;
+      var mNow = moment();
+      mNow.subtract(24, 'hours').toDate();
+      console.log(user);
+      user.upvotedPosts.forEach(function (entry){ 
+        console.log(entry.votedAt); 
+        if(mNow.isSameOrBefore(entry.votedAt)){ 
+          console.log(entry.votedAt); 
+          console.log(mNow._d); 
+          numberOfUpvotesInPast24Hours++; 
+        }
+      });
+     
+   // var numberOfUpvotesInPast24Hours = Users.numberOfUpvotesInPast24Hours(user),
+    var maxUpvotesPer24Hours = Math.round(user.karma * 0.05) + 5;
 
     console.log(numberOfUpvotesInPast24Hours);
     // check that the user doesn't post more than Y posts per day
-    if(numberOfPostsInPast24Hours >= maxUpvotesPer24Hours)
-      throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxUpvotesPer24Hours+' posts per 24 hours. You will be allowed more posts as your Reputation increases.');
+    if(numberOfUpvotesInPast24Hours >= maxUpvotesPer24Hours)
+      //throw new Error(Utils.encodeIntlError({id: `app.mutation_not_allowed`, value: numberOfUpvotesInPast24Hours on _id "${document._id}"`})
+      //throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxUpvotesPer24Hours+' upvotes per 24 hours. You will be allowed more posts as your Reputation increases.');
+      //this.context.messages.flash("Please log in first");
+       //post.props.flash("Sorry, you cannot upvote more than " +maxUpvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation.");
+        //  throw new Error({id: 'categories.invalid'});
 
+      // throw new Error("posts.max_per_day");
   //}
 
   // NEED TO UPDATE USER COUNT HERE IN SYNC
@@ -81,7 +95,7 @@ function UpvotesNewRateLimit (post, user) {
 
   return post;
 }
-addCallback("upvote.sync", UpvotesNewRateLimit);
+addCallback("upvote", UpvotesNewRateLimit);
 
 
 /**
@@ -95,121 +109,4 @@ function DeletePostUpdateUser (post, user) {
 }
 addCallback("posts.edit.sync", DeletePostUpdateUser);
 
-
-
-/**
- * @summary Update user after upvote (sync)
- */
-function upvoteUpdateUser (post, user) {
-
-    var update = {};
-    //var votePower = getVotePower(user);
-    var vote = {
-      itemId: post._id,
-      votedAt: new Date(),
-      power: 1
-    };
-
-    // update user's upvoted posts list
-    update.$addToSet = {'upvotedPosts': vote};
-    Users.update({_id: user._id}, update);
-
-    // update user's karma
-    if (post.userId !== user._id) {
-      Users.update({_id: post.userId}, {$inc: {"karma": 1}});
-    }
-
-  return post;
-}
-//addCallback("upvote", upvoteUpdateUser);
-
-
-
-
-/**
- * @summary Update user after downvote (sync)
- */
-function downvoteUpdateUser (post, user) {
-  
-    var update = {};
-    var vote = {
-      itemId: post._id,
-      votedAt: new Date(),
-      power: 1
-    };
-
-    // update user's downvoted posts list
-    update.$addToSet = {'telescope.downvotedPosts': vote};
-    Users.update({_id: user._id}, update);
-
-    // update user's karma
-    if (post.userId !== user._id) {
-      Users.update({_id: post.userId}, {$inc: {"telescope.karma": -10}});
-    }
-
-  return post;
-}
-//addCallback("downvote", downvoteUpdateUser);
-
-
-/**
- * @summary Update user after cancelled upvote (sync)
- */
-function cancelUpvoteUpdateUser (post, user) {
-
-  var update = {};
-  var vote = {
-    itemId: post._id,
-    votedAt: new Date(),
-    power: 1
-  };
-
-  // update user's upvoted posts list
-  update.$pull = {'telescope.upvotedPosts': {itemId: post._id}};
-  Users.update({_id: user._id}, update);
-
-  // update user's karma
-  if (post.userId !== user._id) {
-    Users.update({_id: post.userId}, {$inc: {"telescope.karma": -1}});
-  }
-
-  return post;
-
-}
-
-//addCallback("cancelUpvote", cancelUpvoteUpdateUser);
-
-
-/**
- * @summary Update user after cancelled downvote (sync)
- */
-function cancelDownvoteUpdateUser (post, user) {
-
-  var update = {};
-  var vote = {
-    itemId: post._id,
-    votedAt: new Date(),
-    power: 1
-  };
-
-  // update user's downvoted posts list
-  update.$pull = {'telescope.downvotedPosts': {itemId: post._id}};
-  Users.update({_id: user._id}, update);
-
-  // update post author's karma
-  if (post.userId !== user._id) {
-    Users.update({_id: post.userId}, {$inc: {"telescope.karma": 10}});
-  }
-
-
-  return post;
-
-}
-
-//addCallback("cancelDownvote", cancelDownvoteUpdateUser);
-
-// Telescope.callbacks.remove("upvote.async", updateUser);
-// Telescope.callbacks.remove("downvote.async", updateUser);
-// Telescope.callbacks.remove("cancelUpvote.async", updateUser);
-// Telescope.callbacks.remove("cancelDownvote.async", updateUser);
 
