@@ -2,12 +2,12 @@
   "name": "Nova",
   "version": "1.2.0",
   "engines": {
+    "node": "4.2.1",
     "npm": "^3.0"
   },
   "scripts": {
-    "prestart": "sh prestart_nova.sh",
-    "start": "meteor --settings settings.json",
-    "lint": "eslint --cache --ext .jsx,js packages"
+    "lint": "eslint --cache --ext .jsx,js packages",
+    "start-meteor-app" : "meteor --settings settings.json"
   },
   "dependencies": {
     "analytics-node": "^2.1.1",
