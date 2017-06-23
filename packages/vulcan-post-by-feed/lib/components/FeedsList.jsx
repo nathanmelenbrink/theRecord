@@ -1,12 +1,12 @@
 import React from 'react';
-import Telescope from 'meteor/nova:lib';
+import { Components } from 'meteor/vulcan:core';
 
 const FeedsList = ({results, currentUser, ready}) => {
   if (!!results.length) {
     return (
       <div className="posts-list">
         <div className="posts-list-content">
-          {results.map(feed => <Telescope.components.FeedsItem key={feed._id} feed={feed}/>)}
+          {results.map(feed => <Components.FeedsItem key={feed._id} feed={feed}/>)}
         </div>
       </div>
     )
@@ -14,7 +14,7 @@ const FeedsList = ({results, currentUser, ready}) => {
     return (
       <div className="posts-list">
         <div className="posts-list-content">
-          <Telescope.components.PostsLoading/>
+          <Components.PostsLoading/>
         </div>
       </div>
     )

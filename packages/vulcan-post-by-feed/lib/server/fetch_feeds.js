@@ -5,10 +5,10 @@ import { Readable } from 'stream';
 import iconv from 'iconv-lite';
 import moment from 'moment';
 
-import Telescope from 'meteor/nova:lib';
-import Users from 'meteor/nova:users';
-import Posts from 'meteor/nova:posts';
-import Categories from 'meteor/nova:categories';
+import { getSetting } from 'meteor/vulcan:core';
+import Users from 'meteor/vulcan:users';
+import Posts from 'meteor/vulcan:posts';
+import Categories from 'meteor/vulcan:categories';
 import Feeds from '../collection.js';
 
 export const getFirstAdminUser = function() {
@@ -144,8 +144,8 @@ const feedHandler = {
               post.url = get.headers.location;
             }
         
-        if (typeof Telescope.settings.get('postByFeedDefaultStatus') === 'number') {
-          post.status = Telescope.settings.get('postByFeedDefaultStatus');
+        if (typeof getSetting('postByFeedDefaultStatus') === 'number') {
+          post.status = getSetting('postByFeedDefaultStatus');
         }        
 
         // if RSS item has a date, use it

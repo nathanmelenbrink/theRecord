@@ -1,36 +1,30 @@
 import React, { PropTypes, Component } from 'react';
-import { ListContainer } from "meteor/utilities:react-list-container";
 import Feeds from '../collection.js';
-import Telescope from 'meteor/nova:lib';
+import { Components, registerComponent } from 'meteor/vulcan:core';
 
-class FeedsPage extends Component {
+//class FeedsPage extends Component {
 
-  render() {
-    return (
+ // render() {
+ //   return (
+ const FeedsPage = (props, context) => {
       <div className="feeds-edit-form">
-        <Telescope.components.CanDo action="feeds.new"> 
-          <Telescope.components.FeedsNewForm />
-        </Telescope.components.CanDo>
+        <Components.ShowIf action="feeds.new"> 
+          <Components.FeedsNewForm />
+        </Components.ShowIf>
         
-        <Telescope.components.CanDo 
+        <Components.ShowIf 
           action="feeds.view"
           displayNoPermissionMessage={true}
         >
-          <ListContainer
-            collection={ Feeds }
-            publication="feeds.list"
-            selector={{}}
-            terms={{}}
-            joins={ Feeds.getJoins() }
-            component={ Telescope.components.FeedsList }
-            cacheSubscription={ false }
-            limit={0}
-          />
-        </Telescope.components.CanDo>
+          const terms = terms{{}};
+        </Components.ShowIf>
       </div>
-    );
-  }
-}
+ };
+//    );
+//  }
+//}
 
-module.exports = FeedsPage;
-export default FeedsPage;
+FeedsPage.displayName = "FeedsPage";
+registerComponent('FeedsPage', FeedsPage);
+//module.exports = FeedsPage;
+//export default FeedsPage;

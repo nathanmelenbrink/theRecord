@@ -1,9 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import { intlShape } from 'react-intl';
-
-import Telescope from 'meteor/nova:lib';
-import NovaForm from "meteor/nova:forms";
-import { DocumentContainer } from "meteor/utilities:react-list-container";
+import { Components, registerComponent } from 'meteor/vulcan:core';
+//import NovaForm from "meteor/nova:forms";
+//import { DocumentContainer } from "meteor/utilities:react-list-container";
 
 import Feeds from '../collection.js';
 
@@ -20,19 +19,19 @@ class FeedsItem extends Component {
   }
 
   renderCategories() {
-    return this.props.feed.categoriesArray ? <Telescope.components.PostsCategories post={ this.props.feed } /> : "";
+    return this.props.feed.categoriesArray ? <Components.PostsCategories post={ this.props.feed } /> : "";
   }
 
   renderActions() {
     return this.props.feed.createdFromSettings
           ? <span>This feed has been added from your settings.json file, you cannot edit or remove it the client. Please make your modifications in your settings file.</span>
           : <div className="post-stats">
-              <Telescope.components.CanDo action="feeds.edit">
+              <Components.ShowIf action="feeds.edit">
                 <span className="posts-stats-item" title="Edit"><a onClick={this.editFeed}><Telescope.components.Icon name="pencil"/><span className="sr-only">Edit</span></a></span>
-              </Telescope.components.CanDo>
-              <Telescope.components.CanDo action="feeds.delete">
+              </Components.ShowIf>
+              <Components.ShowIf action="feeds.delete">
                 <span className="posts-stats-item" title="Delete"><a onClick={this.removeFeed}><Telescope.components.Icon name="close"/><span className="sr-only">Delete</span></a></span>
-              </Telescope.components.CanDo>
+              </Components.ShowIf>
             </div>
   }
 
@@ -72,30 +71,14 @@ class FeedsItem extends Component {
             // could be done another way I think, a lot of code hard to read imo
             this.state.edited
             ? <div>
-                <Telescope.components.CanDo action="feeds.edit">
+                <Components.ShowIf action="feeds.edit">
                   <div>
-                    <DocumentContainer
-                      collection={ Feeds }
-                      publication="feeds.single"
-                      selector={ { _id: feed._id } }
-                      terms={ { _id: feed._id } }
-                      joins={ Feeds.getJoins() }
-                      component={ NovaForm }
-                      componentProps={{
-                        collection: Feeds,
-                        currentUser,
-                        methodName: "feeds.edit",
-                        successCallback: () => {
-                          messages.flash("Feed edited.", "success");
-                          this.setState({ edited: false });
-                        },
-                      }}
-                    />
+                    DocumentContainer goes here. 
                     <div>
-                      <span>Or <a onClick={this.cancelEdit}>cancel edition</a></span>
+                      <span>Or <a onClick={this.cancelEdit}>cancel edit</a></span>
                     </div>
                   </div>
-                </Telescope.components.CanDo>
+                </Components.ShowIf>
               </div>
             : <div className="post-item-content">
                 <h3 className="posts-item-title">
@@ -108,8 +91,8 @@ class FeedsItem extends Component {
                   { feed.user
                     ? (
                       <div className="posts-item-user">
-                        <Telescope.components.UsersAvatar user={ feed.user } size="small"/>
-                        <Telescope.components.UsersName user={ feed.user }/>
+    
+                        <Components.UsersName user={ feed.user }/>
                       </div>
                     ) : null }
                   { this.renderActions() }
@@ -135,3 +118,21 @@ FeedsItem.contextTypes = {
 
 module.exports = FeedsItem;
 export default FeedsItem;
+
+// <DocumentContainer
+//                       collection={ Feeds }
+//                       publication="feeds.single"
+//                       selector={ { _id: feed._id } }
+//                       terms={ { _id: feed._id } }
+//                       joins={ Feeds.getJoins() }
+//                       component={ NovaForm }
+//                       componentProps={{
+//                         collection: Feeds,
+//                         currentUser,
+//                         methodName: "feeds.edit",
+//                         successCallback: () => {
+//                           messages.flash("Feed edited.", "success");
+//                           this.setState({ edited: false });
+//                         },
+//                       }}
+//                     />

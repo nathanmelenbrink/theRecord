@@ -1,13 +1,14 @@
 import Vulcan from 'meteor/vulcan:core';
+import { Components} from 'meteor/vulcan:core';
 
 import FeedsPage from './components/FeedsPage.jsx';
-Telescope.components.FeedsPage = FeedsPage;
+Components.FeedsPage = FeedsPage;
 
 import FeedsNewForm from './components/FeedsNewForm.jsx';
-Telescope.components.FeedsNewForm = FeedsNewForm;
+Components.FeedsNewForm = FeedsNewForm;
 
 import FeedsList from './components/FeedsList.jsx';
-Telescope.components.FeedsList = FeedsList;
+Components.FeedsList = FeedsList;
 
 import FeedsItem from './components/FeedsItem.jsx';
-Telescope.components.FeedsItem = FeedsItem;
+Components.FeedsItem = FeedsItem;

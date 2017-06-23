@@ -1,5 +1,5 @@
-import Posts from 'meteor/nova:posts';
-import PublicationsUtils from 'meteor/utilities:smart-publications';
+import Posts from 'meteor/vulcan:posts';
+//import PublicationsUtils from 'meteor/utilities:smart-publications';
 
 // used to keep track of which feed a post was imported from
 Posts.addField([
@@ -27,4 +27,4 @@ Posts.addField([
     }
   }
 ]);
-PublicationsUtils.addToFields(Posts.publishedFields.list, ['feedId', 'feedItemId']);
+//PublicationsUtils.addToFields(Posts.publishedFields.list, ['feedId', 'feedItemId']);
