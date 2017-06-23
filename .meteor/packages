@@ -23,7 +23,7 @@ vulcan:api
 vulcan:rss
 vulcan:subscribe
 
-############ Theme Packages ############
+############ Theme Packages ############s
 
 vulcan:base-components        # default ui components
 vulcan:base-styles            # default styling
