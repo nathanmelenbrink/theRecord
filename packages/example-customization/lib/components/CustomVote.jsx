@@ -6,8 +6,7 @@ import { Components, withCurrentUser, replaceComponent, withMessages } from 'met
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 import { withVote, hasUpvoted, hasDownvoted } from 'meteor/vulcan:voting';
-import { FormattedMessage, intlShape } from 'react-intl';
-
+import { FormattedMessage, intlShape } from 'meteor/vulcan:i18n';
 
 class CustomVote extends Component {
 

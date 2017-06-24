@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
-<img src="https://d3vv6lp55qjaqc.cloudfront.net/items/2B3C1z2V2y421p2I0P42/vulcan-logo-noborder.png" width="200">
->>>>>>> 5f95749f1751afb114cceb152610e73ef553e412
+
 
 # Vulcan (formerly Telescope)
 

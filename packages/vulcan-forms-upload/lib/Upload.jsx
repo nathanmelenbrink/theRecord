@@ -49,13 +49,13 @@ class Upload extends PureComponent {
     .then(res => res.json()) // json-ify the readable strem
     .then(body => {
       // use the https:// url given by cloudinary
-      const avatarUrl = body.secure_url;
+      //const avatarUrl = body.secure_url;
 
       // set the uploading status to false
       this.setState({
         preview: '',
         uploading: false,
-        value: avatarUrl,
+        //value: avatarUrl,
       });
 
       // tell vulcanForm to catch the value

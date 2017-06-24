@@ -2,7 +2,7 @@ import { Components, registerComponent, withMessages } from 'meteor/vulcan:core'
 import React, { PropTypes, Component } from 'react';
 import classNames from 'classnames';
 import { withVote, hasUpvoted, hasDownvoted } from 'meteor/vulcan:voting';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage, intlShape } from 'meteor/vulcan:i18n';
 import Users from 'meteor/vulcan:users';
 import moment from 'moment';
 

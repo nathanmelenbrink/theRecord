@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage} from 'meteor/vulcan:i18n';
 import { Components, replaceComponent } from 'meteor/vulcan:core';
 
 const CustomFooter = props => {

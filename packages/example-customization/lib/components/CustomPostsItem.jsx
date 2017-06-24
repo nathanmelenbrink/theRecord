@@ -1,11 +1,11 @@
 
-import { Components, getRawComponent, replaceComponent } from 'meteor/vulcan:core';
+import { Components, getRawComponent, replaceComponent, Utils } from 'meteor/vulcan:core';
 import React from 'react';
-import { FormattedMessage, FormattedRelative } from 'meteor/vulcan:i18n';
-
+import { FormattedMessage, intlShape } from 'meteor/vulcan:i18n';
+import moment from 'moment';
 import { Link } from 'react-router';
 import Posts from "meteor/vulcan:posts";
-import gql from 'graphql-tag';
+
 
 class CustomPostsItem extends getRawComponent('PostsItem') {
 
@@ -33,8 +33,8 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
 
           <div className="posts-item-meta">
             {post.user? <div className="posts-item-user"><Components.UsersName user={post.user}/></div> : null}
-            <div className="posts-item-date"><FormattedRelative value={post.postedAt}/></div>
-
+           
+            <div className="posts-item-date">{post.postedAt ? moment(new Date(post.postedAt)).fromNow() : <FormattedMessage id="posts.dateNotDefined"/>}</div>
 
             <div className="posts-item-date"> <Link to={post.link1} className="posts-item-date" target={Posts.getLinkTarget(post)}>
              {Utils.getDomain(post.link1)} 
@@ -69,21 +69,7 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
   }
 }
 
-CustomPostsItem.propTypes = {
-  currentUser: React.PropTypes.object,
-  post: React.PropTypes.object.isRequired
-};
 
-CustomPostsItem.fragment = gql`
-  fragment PostsItemFragment on Post {
-    _id
-    title
-    url
-    link1
-    link2
-    link3
-  }
-`;
 
 replaceComponent('PostsItem', CustomPostsItem);
 

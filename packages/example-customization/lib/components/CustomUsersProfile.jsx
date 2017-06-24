@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { Components, replaceComponent, getRawComponent, withDocument, withCurrentUser } from 'meteor/vulcan:core';
 import React, { PropTypes, Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage} from 'meteor/vulcan:i18n';
 import { Link } from 'react-router';
 
 const CustomUsersProfile = (props) => {

@@ -6,11 +6,7 @@ const Layout = ({currentUser, children}) =>
 
     <Components.HeadTags />
 
-<<<<<<< HEAD
-        <Components.HeadTags {...this.props} />
-=======
     {currentUser ? <Components.UsersProfileCheck currentUser={currentUser} documentId={currentUser._id} /> : null}
->>>>>>> 5f95749f1751afb114cceb152610e73ef553e412
 
     <Components.Header />
   

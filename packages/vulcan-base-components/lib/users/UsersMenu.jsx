@@ -13,7 +13,7 @@ const UsersMenu = ({currentUser, client}) =>
   <div className="users-menu">
     <Dropdown id="user-dropdown">
       <Dropdown.Toggle>
-        <Components.UsersAvatar size="small" user={currentUser} link={false} />
+       
         <div className="users-menu-name">{Users.getDisplayName(currentUser)}</div>
       </Dropdown.Toggle>
       <Dropdown.Menu>

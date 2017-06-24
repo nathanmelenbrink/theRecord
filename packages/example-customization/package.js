@@ -6,7 +6,7 @@ Package.describe({
 Package.onUse( function(api) {
 
   api.use([
-<<<<<<< HEAD
+
     'fourseven:scss',
     //'xavcz:vulcan-social-share',
     'vulcan:core',
@@ -15,12 +15,7 @@ Package.onUse( function(api) {
     'vulcan:base-components',
     'vulcan:posts',
     'vulcan:users'
-=======
-    'vulcan:core',
-    'example-forum',
 
-    'fourseven:scss@4.5.0',
->>>>>>> 5f95749f1751afb114cceb152610e73ef553e412
   ]);
 
   api.mainModule('server.js', 'server');
