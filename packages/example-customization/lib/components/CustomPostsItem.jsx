@@ -54,7 +54,7 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
 
         </div>
 
-        {this.renderCommenters()}
+   
 
 
       </div>
