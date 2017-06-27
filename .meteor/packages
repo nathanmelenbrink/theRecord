@@ -43,7 +43,7 @@ accounts-password
 ############ Your Packages ############
 
 example-forum
-example-customization
+# example-customization
 
 force-ssl
 xavcz:vulcan-post-by-feed

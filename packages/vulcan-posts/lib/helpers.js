@@ -12,7 +12,7 @@ import { Utils, getSetting } from 'meteor/vulcan:core';
  * @param {Object} post
  */
 Posts.getLink = function (post, isAbsolute = false, isRedirected = true) {
-  const url = isRedirected ? Telescope.utils.getOutgoingUrl(Telescope.utils.addHttp(post.link1)) : Telescope.utils.addHttp(post.link1);
+  const url = isRedirected ? Utils.getOutgoingUrl(Utils.addHttp(post.link1)) : Utils.addHttp(post.link1);
   return !!post.link1 ? url : this.getPageUrl(post, isAbsolute);
 };
 

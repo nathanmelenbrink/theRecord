@@ -27,7 +27,6 @@ ecmascript-runtime-client@0.4.2
 ecmascript-runtime-server@0.4.1
 ejson@1.0.13
 email@1.2.3
-example-customization@0.0.0
 example-forum@1.5.0
 force-ssl@1.0.14
 force-ssl-common@1.0.14
