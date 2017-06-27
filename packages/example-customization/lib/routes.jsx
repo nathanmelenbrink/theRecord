@@ -5,4 +5,6 @@ Browse to http://localhost:3000/my-custom-route to see it.
 
 import { addRoute, getComponent } from 'meteor/vulcan:core';
 
-addRoute({name: "myCustomRoute", path: "/my-custom-route", component: getComponent("MyCustomPage")});
+addRoute({name: "about", path: "/about", component: getComponent("MyCustomPage")});
+addRoute({name: "blog", path: "/blog", component: getComponent("BlogPage")});
+addRoute({name: "leaderboard", path: "/leaderboard", component: getComponent("UsersList")});

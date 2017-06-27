@@ -19,9 +19,11 @@ class CustomNewsletter extends getRawComponent('Newsletter') {
     return this.state.showBanner
       ? (
         <div className="newsletter">
-          <h4 className="newsletter-tagline">✉️<FormattedMessage id="newsletter.subscribe_prompt"/>✉️</h4>
-          {this.props.currentUser ? this.renderButton() : this.renderForm()}
+
+          <h4 className="newsletter-tagline">Subscribe to The Record</h4>
+          {this.context.currentUser ? this.renderButton() : this.renderForm()}
           <a onClick={this.dismissBanner} className="newsletter-close"><Components.Icon name="close"/></a>
+
         </div>
       ) : null;
   }

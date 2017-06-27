@@ -12,8 +12,10 @@ import { replaceComponent } from 'meteor/vulcan:core';
 const CustomLogo = ({logoUrl, siteTitle, currentUser}) => {
   return (
     <div>
-      <h1 className="logo-text"><IndexLink to="/">⭐{siteTitle}⭐</IndexLink></h1>
-      { currentUser ? <span className="logo-hello">Welcome {Users.getDisplayName(currentUser)} 👋</span> : null}
+    	<h1 className="logo-text"><IndexLink to="/"><img src='/logo.png' width = '400px'/></IndexLink>
+    	<span className="beta-tag"> beta</span></h1> 
+    	<p>Uninterpreted News.  
+    	<a href="/about"> About the Record.</a></p>
     </div>
   )
 }

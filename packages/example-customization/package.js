@@ -1,3 +1,4 @@
+
 Package.describe({
   name: "example-customization"
 });
@@ -5,10 +6,16 @@ Package.describe({
 Package.onUse( function(api) {
 
   api.use([
-    'vulcan:core',
-    'example-forum',
 
-    'fourseven:scss@4.5.0',
+    'fourseven:scss',
+    //'xavcz:vulcan-social-share',
+    'vulcan:core',
+    'vulcan:forms',
+    'vulcan:accounts',
+    'vulcan:base-components',
+    'vulcan:posts',
+    'vulcan:users'
+
   ]);
 
   api.mainModule('server.js', 'server');
