@@ -5,7 +5,7 @@ import { Readable } from 'stream';
 import iconv from 'iconv-lite';
 import moment from 'moment';
 
-import { getSetting } from 'meteor/vulcan:core';
+import { getSetting, newMutation } from 'meteor/vulcan:core';
 import Users from 'meteor/vulcan:users';
 import Posts from 'meteor/vulcan:posts';
 import Categories from 'meteor/vulcan:categories';
@@ -115,21 +115,24 @@ const feedHandler = {
         }
 
         newItemsCount++;
-
+        //console.log('// New Items Count = ' + newItemsCount);
+        currentUser = Users.findOne({_id: userId});
         let post = {
           title: he.decode(item.title),
           url: item.link,
+          link1: item.link,
           feedId: feedId,
           feedItemId: item.guid,
-          userId: userId,
+          userId: currentUser._id,
           categories: self.getItemCategories(item, feedCategories)
         };
 
         if (item.description) {
-          post.body = toMarkdown(he.decode(item.description));
+
+          post.title = toMarkdown(he.decode(item.description.replace(/<(?:.|\n)*?>/gm, '')));
           // a post body cannot exceed 3000 characters
-          if (post.body.length > 3000)
-            post.body = post.body.substring(0, 2999);
+          if (post.title.length > 400)
+            post.title = post.title.substring(0, 399);
         }
         
         // youtube fetch patch
@@ -153,10 +156,18 @@ const feedHandler = {
           post.postedAt = moment(item.pubdate).toDate();
 
         try {
-          Posts.methods.new(post);
+          //const currentUser = Users.findOne();
+          newMutation({
+            action: 'posts.new',
+            collection: Posts,
+            document: post, 
+            currentUser: currentUser,
+            validate: false
+          });
         } catch (error) {
           // catch errors so they don't stop the loop
           console.log(error);
+
         }
       }
 
@@ -175,7 +186,8 @@ export const fetchFeeds = function() {
   Feeds.find().forEach(function(feed) {
 
     // if feed doesn't specify a user, default to admin
-    const userId = !!feed.userId ? feed.userId : getFirstAdminUser()._id;
+    //const userId = !!feed.userId ? feed.userId : getFirstAdminUser()._id;
+    const userId = Users.findOne({username: feed.username})._id;
     const feedCategories = feed.categories;
     const feedId = feed._id;
 

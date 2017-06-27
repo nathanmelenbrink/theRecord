@@ -5,11 +5,15 @@
 // *Add functionality for flagging users 
 // *Forgot password emails not sending
 // *Edit Account - hide all fields except username / password, leave subscribe button (Nathan) 
+// Scale back reputations to 100
+// Trim RSS feeds to sentences 
+// Verify points functionality 
+// Add locations 
 
 
 //import Telescope from 'meteor/nova:lib';
 import moment from 'moment';
-import { addCallback, Utils } from 'meteor/vulcan:core';
+import { addCallback, removeCallback, Utils } from 'meteor/vulcan:core';
 import { operateOnItem, getVotePower } from 'meteor/vulcan:voting';
 import Users from 'meteor/vulcan:users';
 import Posts from 'meteor/vulcan:posts';
@@ -28,8 +32,8 @@ function PostsNewRateLimit (post, user) {
       maxPostsPer24Hours = Math.round(user.karma * 0.05) + 1;
 
     // check that user waits more than X seconds between posts
-    if(timeSinceLastPost < postInterval)
-      throw new Meteor.Error(604, 'please_wait'+(postInterval-timeSinceLastPost)+'seconds_before_posting_again');
+    // if(timeSinceLastPost < postInterval)
+    //  throw new Meteor.Error(604, 'please_wait'+(postInterval-timeSinceLastPost)+'seconds_before_posting_again');
 
     console.log(numberOfPostsInPast24Hours);
     // check that the user doesn't post more than Y posts per day
@@ -37,11 +41,6 @@ function PostsNewRateLimit (post, user) {
       throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxPostsPer24Hours+' posts per 24 hours. You will be allowed more posts as your Reputation increases.');
 
   //}
-  
-  // give the user karma points
-  //var userId = post.userId;
-  //Users.update({_id: userId}, {$inc: {"karma": 10}});
-
 
   // set the post URL field to link1
   //post.url = post.link1; 
@@ -82,15 +81,6 @@ function UpvotesNewRateLimit (post, user) {
       //this.context.messages.flash("Please log in first");
        //post.props.flash("Sorry, you cannot upvote more than " +maxUpvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation.");
         //  throw new Error({id: 'categories.invalid'});
-
-      // throw new Error("posts.max_per_day");
-  //}
-
-  // NEED TO UPDATE USER COUNT HERE IN SYNC
-  
-  // give the user karma points
-  //var userId = post.userId;
-  //Users.update({_id: userId}, {$inc: {"karma": 10}});
 
 
   return post;

@@ -1,6 +1,7 @@
 import { getFirstAdminUser } from './fetch_feeds';
 import Categories from 'meteor/vulcan:categories';
 import Feeds from '../collection.js';
+import Users from 'meteor/vulcan:users';
 
 // Load feeds from settings, if there are any
 Meteor.startup(() => {
@@ -23,10 +24,10 @@ Meteor.startup(() => {
       } else {
         // if not, create it only if there is an admin user
         if (!feed.userId) {
-          const firstAdminUser = getFirstAdminUser();
-
-          if (typeof firstAdminUser !== 'undefined') {
-            feed.userId = firstAdminUser._id;
+          //const firstAdminUser = getFirstAdminUser();
+          const feedUser = Users.findOne({username: feed.username});
+          if (typeof feedUser !== 'undefined') {
+            feed.userId = feedUser._id;
           } else {
             console.log('// No userId defined and no admin found, cannot create feed');
           }

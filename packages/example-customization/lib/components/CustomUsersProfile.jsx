@@ -62,8 +62,8 @@ const CustomUsersProfile = (props) => {
     const terms = {view: "userPosts", userId: user._id};
 
 
-  const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts);
-  const numberOfVotesInPast24Hours = Users.numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
+  const numberOfPostsInPast24Hours = 4; //Users.numberOfItemsInPast24Hours(user, Posts);
+  const numberOfVotesInPast24Hours = 4; //Users.numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
   const numberOfFlagsInPast24Hours = Users.numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
 
   const postsPerDay = Math.round(user.karma * 0.05) + 1;
