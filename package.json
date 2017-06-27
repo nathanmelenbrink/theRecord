@@ -5,10 +5,11 @@
     "node": "4.2.1",
     "npm": "2.14.7"
   },
-  "scripts": {
+"scripts": {
     "prestart": "sh prestart_vulcan.sh",
     "start": "meteor --settings settings.json",
-    "lint": "eslint --cache --ext .jsx,js packages"
+    "lint": "eslint --cache --ext .jsx,js packages",
+    "start-meteor-app": "meteor --settings settings.json"
   },
   "dependencies": {
     "analytics-node": "^2.4.1",
