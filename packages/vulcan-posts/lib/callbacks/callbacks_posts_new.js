@@ -13,7 +13,8 @@ import { addCallback, getSetting, Utils } from 'meteor/vulcan:core';
  */
 function PostsNewRateLimit (post, user) {
 
-  if(!Users.isAdmin(user)){
+  //if(!Users.isAdmin(user)){
+
 
     var timeSinceLastPost = Users.timeSinceLast(user, Posts),
       numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts),
@@ -28,11 +29,11 @@ function PostsNewRateLimit (post, user) {
     if(numberOfPostsInPast24Hours >= maxPostsPer24Hours)
       throw new Error(Utils.encodeIntlError({id: "posts.max_per_day", value: maxPostsPer24Hours}));
 
-  }
+  //}
 
   return post;
 }
-addCallback("posts.new.validate", PostsNewRateLimit);
+//addCallback("posts.new.validate", PostsNewRateLimit);
 
 //////////////////////////////////////////////////////
 // posts.new.sync                                   //

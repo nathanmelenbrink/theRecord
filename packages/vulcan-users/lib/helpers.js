@@ -189,18 +189,32 @@ Users.timeSinceLast = function (user, collection){
 Users.numberOfItemsInPast24Hours = function (user, collection) {
   var mNow = moment();
 
-  console.log(user);
-  console.log(collection);
+  //console.log(user);
+  //console.log(collection);
+  var newTime = mNow.subtract(24, 'hours').toDate();
 
   var items = collection.find({
     userId: user._id,
     createdAt: {
-      $gte: mNow.subtract(24, 'hours').toDate()
+      $gte: newTime
     }
   });
-  console.log(items.count());
+  console.log("items in past 24 hours = " + items.count());
   return items.count();
 };
+
+// Users.numberOfItemsInPast24Hours = function (user, collection) {
+//   var mNow = moment();
+//   var items = collection.find({
+//     userId: user._id,
+//     createdAt: {
+//       $gte: mNow.subtract(24, 'hours').toDate()
+//     }
+//   });
+//    console.log("items in past 24 hours = " + items.count());
+//   return items.count();
+// };
+
 
 Users.numberOfUpvotesInPast24Hours = function  (user){
     
@@ -208,15 +222,20 @@ Users.numberOfUpvotesInPast24Hours = function  (user){
       var mNow = moment();
       mNow.subtract(24, 'hours').toDate();
 
-      user.upvotedPosts.forEach(function (entry){ 
-        console.log(entry.votedAt); 
-        if(mNow.isSameOrBefore(entry.votedAt)){ 
-          console.log(entry.votedAt); 
-          console.log(mNow._d); 
-          items++; 
-        }
-      });
-      console.log(items);
+      if (user.upvotedPosts == null) {
+          //console.log("returning 0");
+          return 0;
+        } else {
+        user.upvotedPosts.forEach(function (entry){ 
+          //console.log(entry.votedAt); 
+          if(mNow.isSameOrBefore(entry.votedAt)){ 
+          //console.log(entry.votedAt); 
+          //console.log(mNow._d); 
+           items++; 
+         }
+        });
+      }
+    //  console.log(items);
       return items;
 }
 
@@ -226,14 +245,19 @@ Users.numberOfDownvotesInPast24Hours = function  (user){
       var mNow = moment();
       mNow.subtract(24, 'hours').toDate();
 
-      user.downvotedPosts.forEach(function (entry){ 
-        if(mNow.isSameOrBefore(entry.votedAt)){ 
-          console.log(entry.votedAt); 
-          console.log(mNow._d); 
-          items++; 
-        }
-      });
-      console.log(items);
+      if (user.downvotedPosts == null) {
+         // console.log("returning 0");
+          return 0;
+      } else {
+        user.downvotedPosts.forEach(function (entry){ 
+         if(mNow.isSameOrBefore(entry.votedAt)){ 
+          //console.log(entry.votedAt); 
+          //console.log(mNow._d); 
+           items++; 
+         }
+        });
+      }
+      //console.log(items);
       return items;
   }
 

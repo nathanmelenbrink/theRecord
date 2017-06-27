@@ -10,71 +10,36 @@ import { Link } from 'react-router';
 
 const CustomUsersProfile = (props) => {
 
-  // these should be helper functions in the User object, but how do you do that?
-  // function numberOfUpvotesInPast24Hours (user){
     
-  //    var items = 0;
-  //     var mNow = moment();
-  //     mNow.subtract(24, 'hours').toDate();
+    if (props.loading) {
 
-  //     user.upvotedPosts.forEach(function (entry){ 
-  //       if(mNow.isSameOrBefore(entry.votedAt)){ 
-  //         console.log(entry.votedAt); 
-  //         console.log(mNow._d); 
-  //         items++; 
-  //       }
-  //     });
-  //     console.log(items);
-  //     return items;
+      return <div className="page users-profile"><Components.Loading/></div>
 
-  // }
+    } else if (!props.document) {
 
-  function numberOfDownvotesInPast24Hours (user){
-      
-      var items = 0;
-      var mNow = moment();
-      mNow.subtract(24, 'hours').toDate();
-
-      user.downvotedPosts.forEach(function (entry){ 
-        if(mNow.isSameOrBefore(entry.votedAt)){ 
-          console.log(entry.votedAt); 
-          console.log(mNow._d); 
-          items++; 
-        }
-      });
-      console.log(items);
-      return items;
-  }
-  
-  if (props.loading) {
-
-    return <div className="page users-profile"><Components.Loading/></div>
-
-  } else if (!props.document) {
-
-    console.log(`// missing user (_id/slug: ${props.documentId || props.slug})`);
-    return <div className="page users-profile"><FormattedMessage id="app.404"/></div> 
-  
-  } else {
+      console.log(`// missing user (_id/slug: ${props.documentId || props.slug})`);
+      return <div className="page users-profile"><FormattedMessage id="app.404"/></div> 
+    
+    } else {
 
     
     const user = props.document;
     const terms = {view: "userPosts", userId: user._id};
 
 
-  const numberOfPostsInPast24Hours = 4; //Users.numberOfItemsInPast24Hours(user, Posts);
-  const numberOfVotesInPast24Hours = 4; //Users.numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
-  const numberOfFlagsInPast24Hours = Users.numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
+    const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts);
+    const numberOfVotesInPast24Hours = Users.numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
+    const numberOfFlagsInPast24Hours = Users.numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
 
-  const postsPerDay = Math.round(user.karma * 0.05) + 1;
-  const votesPerDay = Math.ceil(user.karma * 0.05) + 5;
-  const flagsPerDay = Math.ceil(user.karma * 0.01);
-  
-  const remainingPosts = postsPerDay - numberOfPostsInPast24Hours;
-  const remainingVotes = votesPerDay - numberOfVotesInPast24Hours;
-  const remainingFlags = flagsPerDay - numberOfFlagsInPast24Hours;
+    const postsPerDay = Math.round(user.karma * 0.01) + 1;
+    const votesPerDay = Math.ceil(user.karma * 0.02) + 5;
+    const flagsPerDay = Math.ceil(user.karma * 0.01);
+    
+    const remainingPosts = postsPerDay - numberOfPostsInPast24Hours;
+    const remainingVotes = votesPerDay - numberOfVotesInPast24Hours;
+    const remainingFlags = flagsPerDay - numberOfFlagsInPast24Hours;
 
-  return (
+    return (
     <div className="page users-profile">
     <Components.HeadTags url={Users.getProfileUrl(user, true)} title={Users.getDisplayName(user)}  />
       <h2 className="page-title">{Users.getDisplayName(user)}</h2>
