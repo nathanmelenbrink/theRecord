@@ -42,9 +42,9 @@ import Posts from 'meteor/vulcan:posts';
     // check that the user doesn't post more than Y posts per day
     if(numberOfPostsInPast24Hours >= maxPostsPer24Hours){
        console.log("trying to throw error ");
-       throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxPostsPer24Hours+' posts per 24 hours. You will be allowed more posts as your Reputation increases.');
+       //throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxPostsPer24Hours+' posts per 24 hours. You will be allowed more posts as your Reputation increases.');
 
-      //throw new Error(Utils.encodeIntlError({id: "posts.max_per_day", value: maxPostsPer24Hours}));
+      throw new Error(Utils.encodeIntlError({id: "posts.max_per_day", value: maxPostsPer24Hours}));
     }
 
     console.log("nm posts 24 hr: " + numberOfPostsInPast24Hours);
