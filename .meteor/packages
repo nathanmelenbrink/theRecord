@@ -3,31 +3,31 @@
 ############ Core Packages ############
 
 vulcan:core                       # core components and wrappers
-vulcan:forms                      # auto-generated forms
-vulcan:routing                    # routing and server-side rendering
-vulcan:users                      # user management and permissions
+# vulcan:forms                      # auto-generated forms
+# vulcan:routing                    # routing and server-side rendering
+# vulcan:users                      # user management and permissions
 
 ############ Features Packages ############
 
-vulcan:email
-vulcan:posts
+# vulcan:email
+# vulcan:posts
 # vulcan:comments
-vulcan:newsletter
-vulcan:notifications
+# vulcan:newsletter
+# vulcan:notifications
 # vulcan:getting-started
-vulcan:categories
-vulcan:voting
-vulcan:events
+# vulcan:categories
+# vulcan:voting
+# vulcan:events
 # vulcan:embedly
-vulcan:api
-vulcan:rss
-vulcan:subscribe
+# vulcan:api
+# vulcan:rss
+# vulcan:subscribe
 
 ############ Theme Packages ############s
 
-vulcan:base-components        # default ui components
-vulcan:base-styles            # default styling
-vulcan:email-templates        # default email templates for notifications
+# vulcan:base-components        # default ui components
+# vulcan:base-styles            # default styling
+# vulcan:email-templates        # default email templates for notifications
 
 
 ############ Language Packages ############
@@ -42,7 +42,7 @@ accounts-password
 
 ############ Your Packages ############
 
-example-forum
+ example-forum
 # example-customization
 
 force-ssl
