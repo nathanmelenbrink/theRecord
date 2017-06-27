@@ -42,8 +42,8 @@ accounts-password
 
 ############ Your Packages ############
 
- example-forum
+example-forum
 # example-customization
 
-force-ssl
+# force-ssl
 # xavcz:vulcan-post-by-feed

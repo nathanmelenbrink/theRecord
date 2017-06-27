@@ -28,8 +28,6 @@ ecmascript-runtime-server@0.4.1
 ejson@1.0.13
 email@1.2.3
 example-forum@1.5.0
-force-ssl@1.0.14
-force-ssl-common@1.0.14
 fourseven:scss@4.5.0
 geojson-utils@1.0.10
 hot-code-push@1.0.4
