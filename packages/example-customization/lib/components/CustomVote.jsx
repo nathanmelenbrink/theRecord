@@ -34,14 +34,9 @@ class CustomVote extends Component {
        mNow.subtract(24, 'hours').toDate();
 
        user.upvotedPosts.forEach(function (entry){ 
-         if(mNow.isSameOrBefore(entry.votedAt)){ 
-    //       console.log(entry.votedAt); 
-    //       console.log(mNow._d); 
-           items++; 
-         }
+         if(mNow.isSameOrBefore(entry.votedAt)){ items++;}
        });
 
-       //console.log(items);
        return items;
      }
 
@@ -62,7 +57,7 @@ class CustomVote extends Component {
        
       if (voteType == "upvote" && numberOfUpvotesInPast24Hours(user) >= maxUpvotesPer24Hours){
         console.log(numberOfUpvotesInPast24Hours(user));
-       //this.props.flash("Sorry, you cannot upvote more than " +maxUpvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation.");
+        this.props.flash("Sorry, you cannot upvote more than " +maxUpvotesPer24Hours+ " posts within a 24 hour period. Try creating a new post to increase your Reputation.");
       } else {
         console.log("voting");
         this.props.vote({document, voteType, collection, currentUser: this.props.currentUser}).then(result => {

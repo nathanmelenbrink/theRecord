@@ -26,10 +26,33 @@ const CustomUsersProfile = (props) => {
     const user = props.document;
     const terms = {view: "userPosts", userId: user._id};
 
+    function numberOfUpvotesInPast24Hours (user){
+       var items = 0;
+       var mNow = moment();
+       mNow.subtract(24, 'hours').toDate();
+
+       user.upvotedPosts.forEach(function (entry){ 
+         if(mNow.isSameOrBefore(entry.votedAt)){ items++;}
+       });
+
+       return items;
+   }
+
+   function numberOfDownvotesInPast24Hours (user){
+       var items = 0;
+       var mNow = moment();
+       mNow.subtract(24, 'hours').toDate();
+
+       user.downvotedPosts.forEach(function (entry){ 
+         if(mNow.isSameOrBefore(entry.votedAt)){ items++;}
+       });
+
+       return items;
+   }
 
     const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts);
-    const numberOfVotesInPast24Hours = Users.numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
-    const numberOfFlagsInPast24Hours = Users.numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
+    const numberOfVotesInPast24Hours = numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
+    const numberOfFlagsInPast24Hours = numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
 
     const postsPerDay = Math.round(user.karma * 0.01) + 1;
     const votesPerDay = Math.ceil(user.karma * 0.02) + 5;

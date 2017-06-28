@@ -33,14 +33,9 @@ class Flag extends Component {
        mNow.subtract(24, 'hours').toDate();
 
        user.downvotedPosts.forEach(function (entry){ 
-         if(mNow.isSameOrBefore(entry.votedAt)){ 
-    //       console.log(entry.votedAt); 
-    //       console.log(mNow._d); 
-           items++; 
-         }
+         if(mNow.isSameOrBefore(entry.votedAt)){ items++;}
        });
 
-       //console.log(items);
        return items;
      }
 
