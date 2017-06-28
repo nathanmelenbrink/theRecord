@@ -37,13 +37,13 @@ class CustomPostsItem extends getRawComponent('PostsItem') {
             <div className="posts-item-date">{post.postedAt ? moment(new Date(post.postedAt)).fromNow() : <FormattedMessage id="posts.dateNotDefined"/>}</div>
 
             <div className="posts-item-date"> <Link to={post.link1} className="posts-item-date" target={Posts.getLinkTarget(post)}>
-             {Utils.getDomain(post.link1)} 
+             {Utils.getDomain(Utils.addHttp(post.link1))} 
             </Link> </div>
             <div className="posts-item-date"> <Link to={post.link2} className="posts-item-date" target={Posts.getLinkTarget(post)}>
-              {Utils.getDomain(post.link2)} 
+              {Utils.getDomain(Utils.addHttp(post.link2))} 
             </Link> </div>
             <div className="posts-item-date"> <Link to={post.link3} className="posts-item-date" target={Posts.getLinkTarget(post)}>
-              {Utils.getDomain(post.link3)} 
+              {Utils.getDomain(Utils.addHttp(post.link3))} 
             </Link> </div>
             
             <div className="posts-item-date">  </div>

@@ -12,8 +12,8 @@ import { Utils, getSetting } from 'meteor/vulcan:core';
  * @param {Object} post
  */
 Posts.getLink = function (post, isAbsolute = false, isRedirected = true) {
-  const url = isRedirected ? Utils.getOutgoingUrl(post.url) : post.url;
-  return !!post.url ? url : Posts.getPageUrl(post, isAbsolute);
+  const url = isRedirected ? Utils.getOutgoingUrl(Utils.addHttp(post.link1)) : Utils.addHttp(post.link1);
+  return !!post.link1 ? url : Posts.getPageUrl(post, isAbsolute);
 };
 
 /**
@@ -29,7 +29,7 @@ Posts.getShareableLink = function (post) {
  * @param {Object} post
  */
 Posts.getLinkTarget = function (post) {
-  return !!post.url ? "_blank" : "";
+  return !!post.link1 ? "_blank" : "";
 };
 
 /**

@@ -6,8 +6,7 @@
 // *Forgot password emails not sending
 // *Edit Account - hide all fields except username / password, leave subscribe button (Nathan) 
 // Scale back reputations to 100
-// Trim RSS feeds to sentences 
-// Verify points functionality 
+// Fix remaining posts count
 // Add locations 
 
 
@@ -42,20 +41,21 @@ import Posts from 'meteor/vulcan:posts';
     // check that the user doesn't post more than Y posts per day
     if(numberOfPostsInPast24Hours >= maxPostsPer24Hours){
        console.log("trying to throw error ");
-       throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxPostsPer24Hours+' posts per 24 hours. You will be allowed more posts as your Reputation increases.');
+       //throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxPostsPer24Hours+' posts per 24 hours. You will be allowed more posts as your Reputation increases.');
 
-      //throw new Error(Utils.encodeIntlError({id: "posts.max_per_day", value: maxPostsPer24Hours}));
+      throw new Error(Utils.encodeIntlError({id: "posts.max_per_day", value: maxPostsPer24Hours}));
     }
 
-    console.log("nm posts 24 hr: " + numberOfPostsInPast24Hours);
+    //console.log("nm posts 24 hr: " + numberOfPostsInPast24Hours);
     
   //}
-  
+
   // set the post URL field to link1
   //post.url = post.link1; 
   post.link1 = Utils.addHttp(post.link1); // I had to change the addHttp function get this to work 
   post.link2 = Utils.addHttp(post.link2);
   post.link3 = Utils.addHttp(post.link3);
+
 
   return post;
 }
