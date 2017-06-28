@@ -61,37 +61,6 @@ import Posts from 'meteor/vulcan:posts';
 }
 addCallback("posts.new.validate", PostsNewRateLimit);
 
-// function CustomPostsNewRateLimit (post, user) {
-
-//   //if(!Users.isAdmin(user)){
-
-//     var timeSinceLastPost = Users.timeSinceLast(user, Posts),
-//       numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts),
-//       postInterval = 30,
-//       maxPostsPer24Hours = Math.round(user.karma * 0.01) + 1;
-
-//     // check that user waits more than X seconds between posts
-//     // if(timeSinceLastPost < postInterval)
-//     //  throw new Meteor.Error(604, 'please_wait'+(postInterval-timeSinceLastPost)+'seconds_before_posting_again');
-
-//     console.log("num posts past 24 = " + numberOfPostsInPast24Hours);
-//     // check that the user doesn't post more than Y posts per day
-//     if(numberOfPostsInPast24Hours >= maxPostsPer24Hours)
-//       throw new Error(Utils.encodeIntlError({id: "posts.max_per_day", value: maxPostsPer24Hours}));
-//       //throw new Meteor.Error(605, 'Sorry, you cannot submit more than '+maxPostsPer24Hours+' posts per 24 hours. You will be allowed more posts as your Reputation increases.');
-
-//   //}
-
-//   // set the post URL field to link1
-//   //post.url = post.link1; 
-//   post.link1 = Utils.addHttp(post.link1); // I had to change the addHttp function get this to work 
-//   post.link2 = Utils.addHttp(post.link2);
-//   post.link3 = Utils.addHttp(post.link3);
-
-//   return post;
-// }
-//addCallback("posts.new.validate", CustomPostsNewRateLimit);
-
 /**
  * @summary Upvotes Rate limiting
  */
