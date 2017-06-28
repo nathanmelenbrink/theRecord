@@ -109,6 +109,7 @@ function UpvotesNewRateLimit (post, user) {
         numberOfUpvotesInPast24Hours++; 
       }
     });
+
      
    // var numberOfUpvotesInPast24Hours = Users.numberOfUpvotesInPast24Hours(user),
     var maxUpvotesPer24Hours = Math.ceil(user.karma * 0.02) + 5;
@@ -127,7 +128,7 @@ function UpvotesNewRateLimit (post, user) {
 
   return post;
 }
-addCallback("upvote", UpvotesNewRateLimit);
+//addCallback("upvote", UpvotesNewRateLimit);
 
 
 /**

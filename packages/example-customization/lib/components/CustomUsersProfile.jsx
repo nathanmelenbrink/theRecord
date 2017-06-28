@@ -27,6 +27,7 @@ const CustomUsersProfile = (props) => {
     const terms = {view: "userPosts", userId: user._id};
 
     function numberOfUpvotesInPast24Hours (user){
+      if (user.upvotedPosts == null) return 0;
        var items = 0;
        var mNow = moment();
        mNow.subtract(24, 'hours').toDate();
@@ -39,6 +40,7 @@ const CustomUsersProfile = (props) => {
    }
 
    function numberOfDownvotesInPast24Hours (user){
+       if (user.downvotedPosts == null) return 0;
        var items = 0;
        var mNow = moment();
        mNow.subtract(24, 'hours').toDate();
