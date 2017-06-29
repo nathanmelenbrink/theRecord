@@ -5,7 +5,7 @@ const addJob = () => {
   SyncedCron.add({
     name: 'Post by RSS feed',
     schedule: function(parser) {
-      return parser.text('every 5 minutes');
+      return parser.text('every 30 minutes');
     }, 
     job: () => {
       if (Feeds.find().count()) {
