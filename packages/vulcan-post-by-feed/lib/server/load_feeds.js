@@ -5,6 +5,9 @@ import Users from 'meteor/vulcan:users';
 
 // Load feeds from settings, if there are any
 Meteor.startup(() => {
+  // clear the Feeds collection
+  Feeds.remove({});
+
   if (Meteor.settings && Meteor.settings.feeds) {
     Meteor.settings.feeds.forEach(feed => {
       // look for existing feed with same url

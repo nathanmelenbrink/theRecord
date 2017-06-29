@@ -11,7 +11,7 @@ const specificResolvers = {
   },
   Mutation: {
     increasePostViewCount(root, { postId }, context) {
-      return context.Posts.update({_id: postId}, { $inc: { viewCount: 1 }});
+      return null; //context.Posts.update({_id: postId}, { $inc: { viewCount: 1 }});
     }
   }
 };
@@ -37,7 +37,7 @@ const resolvers = {
       const restrictedPosts = Users.restrictViewableFields(currentUser, Posts, viewablePosts);
 
       // prime the cache
-      restrictedPosts.forEach(post => Posts.loader.prime(post._id, post));
+      //restrictedPosts.forEach(post => Posts.loader.prime(post._id, post));
 
       return restrictedPosts;
     },
@@ -51,7 +51,8 @@ const resolvers = {
     async resolver(root, {documentId, slug}, {currentUser, Users, Posts}) {
 
       // don't use Dataloader if post is selected by slug
-      const post = documentId ? await Posts.loader.load(documentId) : Posts.findOne({slug});
+      //const post = documentId ? await Posts.loader.load(documentId) : Posts.findOne({slug});
+      const post = Posts.findOne({slug});
 
       Utils.performCheck(Posts.checkAccess, currentUser, post, Posts, documentId);
 
