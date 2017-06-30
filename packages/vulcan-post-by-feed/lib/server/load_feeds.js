@@ -12,7 +12,7 @@ Meteor.startup(() => {
   Posts.find({
     // condition #1: users created since variable ago
     createdAt: {
-        $gte: new Date(Date.now() - 2*60*60 * 1000),
+        $gte: new Date(Date.now() - 72*60*60 * 1000),
     }
   }).forEach(function(post) {
     //console.log(post.createdAt);
