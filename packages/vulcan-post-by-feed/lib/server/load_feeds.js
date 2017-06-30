@@ -2,11 +2,30 @@ import { getFirstAdminUser } from './fetch_feeds';
 import Categories from 'meteor/vulcan:categories';
 import Feeds from '../collection.js';
 import Users from 'meteor/vulcan:users';
-
+import Posts from 'meteor/vulcan:posts';
+import moment from 'moment'; 
 // Load feeds from settings, if there are any
 Meteor.startup(() => {
   // clear the Feeds collection
   Feeds.remove({});
+
+  Posts.find({
+    // condition #1: users created since variable ago
+    createdAt: {
+        $gte: new Date(Date.now() - 2*60*60 * 1000),
+    }
+  }).forEach(function(post) {
+    //console.log(post.createdAt);
+      return Posts.remove({_id: post._id})
+  });
+
+  // Posts.find({$query: {}, $orderby: {$createdAt : -1}}).limit(1).forEach(function(post){
+  //   console.log('sorted post: ');
+  //   console.log(post);
+  //   return Posts.remove({_id: post._id})
+  // });
+
+   //Posts.remove({ createdAt: { $gte: new Date(Date.now() - 4*60*60 * 1000) } });
 
   if (Meteor.settings && Meteor.settings.feeds) {
     Meteor.settings.feeds.forEach(feed => {

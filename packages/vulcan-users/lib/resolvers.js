@@ -12,8 +12,8 @@ const specificResolvers = {
       } else {
         // user has already been cleaned up by Users.restrictViewableFields, so we
         // reload the full user object from the cache to access user.services
-        //const fullUser = await Users.loader.load(user._id);
-        return null; //Users.avatar.getUrl(fullUser);
+        const fullUser = await Users.loader.load(user._id);
+        return Users.avatar.getUrl(fullUser);
       }
     }
   },
@@ -67,9 +67,7 @@ const resolvers = {
 
     async resolver(root, {documentId, slug}, {currentUser, Users}) {
       // don't use Dataloader if user is selected by slug
-      //const user = documentId ? await Users.loader.load(documentId) : Users.findOne({slug});
-      const user = Users.findOne({slug});
-      
+      const user = documentId ? await Users.loader.load(documentId) : Users.findOne({slug});
       return Users.restrictViewableFields(currentUser, Users, user);
     },
 

@@ -138,12 +138,12 @@ Vulcan.removeGettingStartedContent = () => {
 Meteor.startup(function () {
   // insert dummy content only if createDummyContent hasn't happened and there aren't any posts or users in the db
   if (!Users.find().count()) {
-    createDummyUsers();
+    //createDummyUsers();
   }
   if (!Posts.find().count()) {
-    createDummyPosts();
+    //createDummyPosts();
   }
   if (!Comments.find().count()) {
-    createDummyComments();
+    //createDummyComments();
   }
 });
