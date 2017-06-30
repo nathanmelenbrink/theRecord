@@ -9,23 +9,14 @@ Meteor.startup(() => {
   // clear the Feeds collection
   Feeds.remove({});
 
-  Posts.find({
-    // condition #1: users created since variable ago
-    createdAt: {
-        $gte: new Date(Date.now() - 72*60*60 * 1000),
-    }
-  }).forEach(function(post) {
-    //console.log(post.createdAt);
-      return Posts.remove({_id: post._id})
-  });
-
-  // Posts.find({$query: {}, $orderby: {$createdAt : -1}}).limit(1).forEach(function(post){
-  //   console.log('sorted post: ');
-  //   console.log(post);
-  //   return Posts.remove({_id: post._id})
+  // temporary code to remove posts with absent users
+  // Posts.find({
+  //   createdAt: {
+  //       $gte: new Date(Date.now() - 72*60*60 * 1000),
+  //   }
+  // }).forEach(function(post) {
+  //     return Posts.remove({_id: post._id})
   // });
-
-   //Posts.remove({ createdAt: { $gte: new Date(Date.now() - 4*60*60 * 1000) } });
 
   if (Meteor.settings && Meteor.settings.feeds) {
     Meteor.settings.feeds.forEach(feed => {
