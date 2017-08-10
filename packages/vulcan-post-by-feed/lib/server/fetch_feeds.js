@@ -83,12 +83,12 @@ const feedHandler = {
     stream.pipe(feedParser);
 
     feedParser.on('meta', Meteor.bindEnvironment(function (meta) {
-      console.log('// Parsing RSS feed: '+ meta.title);
+      //console.log('// Parsing RSS feed: '+ meta.title);
 
       const currentFeed = Feeds.findOne({ _id: feedId }, { fields: { _id: 1, title: 1 } });
       if (!currentFeed.title || currentFeed.title !== meta.title) {
         Feeds.update({ _id: feedId }, { $set: { title: meta.title } });
-        console.log('// Feed title updated');
+        //console.log('// Feed title updated');
       }
     }));
 
@@ -110,7 +110,7 @@ const feedHandler = {
 
         // check if post already exists
         if (!!Posts.findOne({ feedItemId: item.guid })) {
-          console.log('// Feed item already imported');
+          //console.log('// Feed item already imported');
           continue;
         }
 

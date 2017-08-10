@@ -59,7 +59,7 @@ import Posts from 'meteor/vulcan:posts';
 
   return post;
 }
-addCallback("posts.new.validate", PostsNewRateLimit);
+//addCallback("posts.new.validate", PostsNewRateLimit);
 
 /**
  * @summary Upvotes Rate limiting

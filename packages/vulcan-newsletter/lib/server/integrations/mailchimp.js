@@ -14,10 +14,16 @@ API
 */
 
 const settings = getSetting('mailchimp');
+console.log(settings);
 
-if (settings) {
+//if (settings) {
   
-  const { apiKey, listId, fromName, fromEmail } = settings;
+  //const { apiKey, listId, fromName, fromEmail } = settings;
+  apiKey = getSetting('mailChimpAPIKey');
+  listId = getSetting('mailChimpListId');
+  fromName = 'The Record';
+  fromEmail = 'info@therecord.org';
+
   const mailChimpAPI = new MailChimpNPM.MailChimpAPI(apiKey, { version : '2.0' });
 
   const callSyncAPI = ( section, method, options, callback ) => {
@@ -118,4 +124,4 @@ if (settings) {
 
   }
 
-}
+//}

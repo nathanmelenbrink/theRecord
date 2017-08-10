@@ -188,12 +188,19 @@ Users.timeSinceLast = function (user, collection){
 
 Users.numberOfItemsInPast24Hours = function (user, collection) {
   var mNow = moment();
-  var items = collection.find({
-    userId: user._id,
-    createdAt: {
-      $gte: mNow.subtract(24, 'hours').toDate()
-    }
+  var items = Users.find({
+    _id: user._id
+    //userId: user._id,
+    //createdAt: {
+    //  $gte: mNow.subtract(24, 'hours').toDate()
+    //}
   });
+  console.log(items.count());
+  //const post = collection.findOne({}, {sort: {DateTime: -1, limit: 1}});
+  
+  const post = this.getDisplayName(user);//this.findLast(user, collection);
+  console.log(post);
+
   return items.count();
 };
 

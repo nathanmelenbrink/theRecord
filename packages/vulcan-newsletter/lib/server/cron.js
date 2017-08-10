@@ -31,16 +31,16 @@ var getSchedule = function (parser) {
   }
 
   const offsetInMinutes = new Date().getTimezoneOffset();
-  const GMTtime = moment.duration(getSetting('newsletterTime', defaultTime));
+  const GMTtime = moment.duration(defaultTime);
   const serverTime = GMTtime.subtract(offsetInMinutes, "minutes");
   const serverTimeString = addZero(serverTime.hours()) + ":" + addZero(serverTime.minutes());
 
-  // console.log("// scheduled for: (GMT): "+getSetting('newsletterTime', defaultTime));
-  // console.log("// server offset (minutes): "+offsetInMinutes);
-  // console.log("// server scheduled time (minutes): "+serverTime.asMinutes());
-  // console.log("// server scheduled time: "+serverTimeString);
+  console.log("// scheduled for: (GMT): "+defaultTime);
+  console.log("// server offset (minutes): "+offsetInMinutes);
+  console.log("// server scheduled time (minutes): "+serverTime.asMinutes());
+  console.log("// server scheduled time: "+serverTimeString);
 
-  return schedule.on(serverTimeString).time();
+  return schedule.on("serverTimeString").time();
 };
 
 Meteor.methods({
@@ -54,17 +54,20 @@ Meteor.methods({
 var addJob = function () {
   SyncedCron.add({
     name: 'scheduleNewsletter',
-    schedule: function(parser) {
+    //schedule: function(parser) {
+    //  console.log("// parser: "+getSchedule(parser));
       // parser is a later.parse object
-      return getSchedule(parser);
+     // return getSchedule(parser);
+     schedule(parser) {
+      return parser.text('every 2 hours');
     },
     job: function() {
       // only schedule newsletter campaigns in production
-      if (process.env.NODE_ENV === "production" || getSetting("enableNewsletterInDev", false)) {
+      //if (process.env.NODE_ENV === "production" || getSetting("enableNewsletterInDev", true)) {
         console.log("// Scheduling newsletter…"); // eslint-disable-line
         console.log(new Date()); // eslint-disable-line
         Newsletters.send();
-      }
+      //}
     }
   });
 };
@@ -72,5 +75,6 @@ var addJob = function () {
 Meteor.startup(function () {
   if (getSetting('enableNewsletter', true)) {
     addJob();
+    //console.log(SyncedCron.nextScheduledAtDate('scheduleNewsletter'));
   }
 });

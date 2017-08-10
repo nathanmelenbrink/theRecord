@@ -9,7 +9,7 @@ import Newsletters from '../modules/collection.js';
 import { Utils, getSetting } from 'meteor/vulcan:core';
 import htmlToText from 'html-to-text';
 
-const provider = getSetting('newsletterProvider', 'mailchimp'); // default to MailChimp
+const provider = 'mailchimp'; //getSetting('newsletterProvider', 'mailchimp'); // default to MailChimp
 
 // create new "newsletter" view for all posts from the past X days that haven't been scheduled yet
 Posts.addView("newsletter", terms => ({
@@ -280,7 +280,7 @@ Newsletters.send = (isTest = false) => {
     console.log('// Creating campaign…');
     console.log('// Subject: '+subject)
 
-    const newsletter = Newsletters[provider].send({ title, subject, text, html, isTest });
+    const newsletter = Newsletters.mailchimp.send({ title, subject, text, html, isTest });
 
     // if newsletter sending is successufl and this is not a test, mark posts as sent and log newsletter
     if (newsletter && !isTest) {

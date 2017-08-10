@@ -52,7 +52,27 @@ const CustomUsersProfile = (props) => {
        return items;
    }
 
-    const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts);
+   function postsInPast24Hours (user, collection){
+      var mNow = moment();
+      mNow.subtract(24, 'hours').toDate();
+      var count = 0;
+      var items = collection.find({
+          //userId: user._id//,
+          createdAt: {
+             $gte: mNow
+          }
+        });
+
+      const post = Users.findOne({}, {sort: {DateTime: -1, limit: 1}});
+      console.log(post);
+  
+      count = items.count();
+       return count;
+   }
+
+
+  
+    const numberOfPostsInPast24Hours = Users.numberOfItemsInPast24Hours(user, Posts); //postsInPast24Hours(user, Posts);
     const numberOfVotesInPast24Hours = numberOfUpvotesInPast24Hours(user);//Users.numberOfItemsInPast24Hours(user, Upvotes);
     const numberOfFlagsInPast24Hours = numberOfDownvotesInPast24Hours(user); //Users.numberOfItemsInPast24Hours(user, Flags);
 

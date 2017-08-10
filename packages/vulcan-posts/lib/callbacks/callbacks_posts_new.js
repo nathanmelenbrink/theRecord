@@ -2,6 +2,7 @@ import Posts from '../collection.js'
 import marked from 'marked';
 import Users from 'meteor/vulcan:users';
 import { addCallback, getSetting, Utils } from 'meteor/vulcan:core';
+import { createError } from 'apollo-errors';
 
 //////////////////////////////////////////////////////
 // posts.new.validate                               //
@@ -21,14 +22,21 @@ function PostsNewRateLimit (post, user) {
       maxPostsPer24Hours = Math.abs(parseInt(getSetting('maxPostsPerDay', 5)));
 
     // check that user waits more than X seconds between posts
-    if(timeSinceLastPost < postInterval)
-      throw new Error(Utils.encodeIntlError({id: "posts.rate_limit_error", value: postInterval-timeSinceLastPost}));
-
+    if(timeSinceLastPost < postInterval){
+      const RateLimitError = createError('posts.rate_limit_error', {message: 'posts.rate_limit_error'});
+      throw new RateLimitError({data: {break: true, value: postInterval-timeSinceLastPost}});
+    }
     // check that the user doesn't post more than Y posts per day
-    if(numberOfPostsInPast24Hours >= maxPostsPer24Hours)
-      throw new Error(Utils.encodeIntlError({id: "posts.max_per_day", value: maxPostsPer24Hours}));
-
+    if(numberOfPostsInPast24Hours >= maxPostsPer24Hours){
+      const RateLimitError = createError('posts.max_per_day', {message: 'posts.max_per_day'});
+      throw new RateLimitError({data: {break: true, value: maxPostsPer24Hours}});
+    }
   }
+
+  post.link1 = Utils.addHttp(post.link1); // I had to change the addHttp function get this to work 
+  post.link2 = Utils.addHttp(post.link2);
+  post.link3 = Utils.addHttp(post.link3);
+
 
   return post;
 }
